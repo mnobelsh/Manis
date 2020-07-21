@@ -7,10 +7,15 @@
 //
 
 import UIKit
-import ChameleonFramework
+
+extension UINavigationController {
+   open override var preferredStatusBarStyle: UIStatusBarStyle {
+      return topViewController?.preferredStatusBarStyle ?? .default
+   }
+}
 
 extension UIViewController {
-    func makeNavbarTransparent() {
+    func setTransparentNavbar() {
         let navbar = self.navigationController?.navigationBar
         navbar?.backgroundColor = .clear
         navbar?.shadowImage = UIImage()
@@ -18,6 +23,12 @@ extension UIViewController {
     }
     func hideNavbar() {
         self.navigationController?.navigationBar.isHidden = true
+    }
+    func setBlackStatusBarStyle() {
+        self.navigationController?.navigationBar.barStyle = .default
+    }
+    func setWhiteStatusBarStyle() {
+        self.navigationController?.navigationBar.barStyle = .black
     }
 }
 
@@ -36,6 +47,11 @@ extension UILabel {
 }
 
 extension UIView {
+    
+    func addSubview(_ view: UIView, completion: @escaping() -> Void) {
+        self.addSubview(view)
+        completion()
+    }
     
     enum CornerType {
         case topLeft,topRight,bottomLeft,bottomRight,allCorners
@@ -191,10 +207,10 @@ extension UIButton {
             self.configureRoundedCorners(corners: [.allCorners], radius: radius)
         }
         
-        if let isContrast = isContrastToBackGroundColor {
+        if let isContrast = isContrastToBackGroundColor, titleColor == nil {
             let color = UIColor(contrastingBlackOrWhiteColorOn: self.backgroundColor, isFlat: true)!
             isContrast ?  self.setAttributedTitle(NSAttributedString(string: title, attributes: [NSAttributedString.Key.foregroundColor : color, NSAttributedString.Key.font : UIFont(name: "Avenir-Heavy", size: 18)!]), for: .normal) : nil
         }
+
     }
 }
-

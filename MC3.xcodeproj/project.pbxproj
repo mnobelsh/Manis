@@ -18,9 +18,18 @@
 		FF457F1224B4A29E0052438A /* MC3Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF457F1124B4A29E0052438A /* MC3Tests.swift */; };
 		FF457F1D24B4A29E0052438A /* MC3UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF457F1C24B4A29E0052438A /* MC3UITests.swift */; };
 		FF457F2B24B4A2DA0052438A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FF457F2A24B4A2DA0052438A /* GoogleService-Info.plist */; };
+		FF4C7E2124C6E8D0000DCC7B /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4C7E2024C6E8D0000DCC7B /* SignInViewController.swift */; };
+		FF4C7E2324C6E8D9000DCC7B /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4C7E2224C6E8D9000DCC7B /* SignUpViewController.swift */; };
+		FF4C7E2524C6E8E3000DCC7B /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4C7E2424C6E8E3000DCC7B /* HomeViewController.swift */; };
+		FF4C7E2724C6E943000DCC7B /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4C7E2624C6E943000DCC7B /* FirebaseService.swift */; };
+		FF4C7E2924C6EE29000DCC7B /* MerchantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4C7E2824C6EE29000DCC7B /* MerchantViewController.swift */; };
+		FF4C7E2B24C6EE63000DCC7B /* AddReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4C7E2A24C6EE63000DCC7B /* AddReviewViewController.swift */; };
+		FF4C7E2D24C6EE7F000DCC7B /* AllReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4C7E2C24C6EE7F000DCC7B /* AllReviewViewController.swift */; };
+		FF4C7E3224C6EEF7000DCC7B /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4C7E3124C6EEF7000DCC7B /* ProfileViewController.swift */; };
+		FF4C7E3424C6EEFE000DCC7B /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4C7E3324C6EEFE000DCC7B /* EditProfileViewController.swift */; };
+		FF4C7E3724C6EF38000DCC7B /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4C7E3624C6EF38000DCC7B /* MapViewController.swift */; };
+		FF53917F24B8667400FFA33B /* NavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF53917E24B8667400FFA33B /* NavigationViewController.swift */; };
 		FF5D4FC424B4A70D00951879 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5D4FC324B4A70D00951879 /* Extensions.swift */; };
-		FF5D4FC624B4A85900951879 /* ExploreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5D4FC524B4A85900951879 /* ExploreViewController.swift */; };
-		FF5D4FCA24B4B61300951879 /* ExploreHeaderContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5D4FC924B4B61300951879 /* ExploreHeaderContainer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,9 +73,18 @@
 		FF457F1C24B4A29E0052438A /* MC3UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MC3UITests.swift; sourceTree = "<group>"; };
 		FF457F1E24B4A29E0052438A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FF457F2A24B4A2DA0052438A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		FF4C7E2024C6E8D0000DCC7B /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		FF4C7E2224C6E8D9000DCC7B /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		FF4C7E2424C6E8E3000DCC7B /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		FF4C7E2624C6E943000DCC7B /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
+		FF4C7E2824C6EE29000DCC7B /* MerchantViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantViewController.swift; sourceTree = "<group>"; };
+		FF4C7E2A24C6EE63000DCC7B /* AddReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddReviewViewController.swift; sourceTree = "<group>"; };
+		FF4C7E2C24C6EE7F000DCC7B /* AllReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllReviewViewController.swift; sourceTree = "<group>"; };
+		FF4C7E3124C6EEF7000DCC7B /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		FF4C7E3324C6EEFE000DCC7B /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
+		FF4C7E3624C6EF38000DCC7B /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		FF53917E24B8667400FFA33B /* NavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewController.swift; sourceTree = "<group>"; };
 		FF5D4FC324B4A70D00951879 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		FF5D4FC524B4A85900951879 /* ExploreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewController.swift; sourceTree = "<group>"; };
-		FF5D4FC924B4B61300951879 /* ExploreHeaderContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreHeaderContainer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,6 +196,34 @@
 			path = MC3UITests;
 			sourceTree = "<group>";
 		};
+		FF4C7E2E24C6EE85000DCC7B /* Merchant */ = {
+			isa = PBXGroup;
+			children = (
+				FF4C7E2824C6EE29000DCC7B /* MerchantViewController.swift */,
+				FF4C7E2A24C6EE63000DCC7B /* AddReviewViewController.swift */,
+				FF4C7E2C24C6EE7F000DCC7B /* AllReviewViewController.swift */,
+			);
+			path = Merchant;
+			sourceTree = "<group>";
+		};
+		FF4C7E2F24C6EE90000DCC7B /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				FF4C7E2024C6E8D0000DCC7B /* SignInViewController.swift */,
+				FF4C7E2224C6E8D9000DCC7B /* SignUpViewController.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		FF4C7E3524C6EF03000DCC7B /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				FF4C7E3124C6EEF7000DCC7B /* ProfileViewController.swift */,
+				FF4C7E3324C6EEFE000DCC7B /* EditProfileViewController.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 		FF5D4FBD24B4A6D500951879 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -189,6 +235,7 @@
 		FF5D4FBE24B4A6D900951879 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				FF4C7E2624C6E943000DCC7B /* FirebaseService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -196,7 +243,12 @@
 		FF5D4FBF24B4A6E200951879 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				FF5D4FC524B4A85900951879 /* ExploreViewController.swift */,
+				FF53917E24B8667400FFA33B /* NavigationViewController.swift */,
+				FF4C7E2424C6E8E3000DCC7B /* HomeViewController.swift */,
+				FF4C7E3624C6EF38000DCC7B /* MapViewController.swift */,
+				FF4C7E2F24C6EE90000DCC7B /* Auth */,
+				FF4C7E2E24C6EE85000DCC7B /* Merchant */,
+				FF4C7E3524C6EF03000DCC7B /* Profile */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -211,26 +263,9 @@
 		FF5D4FC224B4A6F400951879 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				FF5D4FC824B4B5F500951879 /* Explore */,
-				FF5D4FC724B4B5B300951879 /* Collection Views */,
 				FF457F0024B4A29B0052438A /* Main.storyboard */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		FF5D4FC724B4B5B300951879 /* Collection Views */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Collection Views";
-			sourceTree = "<group>";
-		};
-		FF5D4FC824B4B5F500951879 /* Explore */ = {
-			isa = PBXGroup;
-			children = (
-				FF5D4FC924B4B61300951879 /* ExploreHeaderContainer.swift */,
-			);
-			path = Explore;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -509,11 +544,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF4C7E3424C6EEFE000DCC7B /* EditProfileViewController.swift in Sources */,
+				FF53917F24B8667400FFA33B /* NavigationViewController.swift in Sources */,
 				FF457EFB24B4A29B0052438A /* AppDelegate.swift in Sources */,
 				FF5D4FC424B4A70D00951879 /* Extensions.swift in Sources */,
-				FF5D4FCA24B4B61300951879 /* ExploreHeaderContainer.swift in Sources */,
+				FF4C7E2124C6E8D0000DCC7B /* SignInViewController.swift in Sources */,
+				FF4C7E2524C6E8E3000DCC7B /* HomeViewController.swift in Sources */,
+				FF4C7E2724C6E943000DCC7B /* FirebaseService.swift in Sources */,
+				FF4C7E3224C6EEF7000DCC7B /* ProfileViewController.swift in Sources */,
+				FF4C7E2324C6E8D9000DCC7B /* SignUpViewController.swift in Sources */,
+				FF4C7E2D24C6EE7F000DCC7B /* AllReviewViewController.swift in Sources */,
 				FF457EFD24B4A29B0052438A /* SceneDelegate.swift in Sources */,
-				FF5D4FC624B4A85900951879 /* ExploreViewController.swift in Sources */,
+				FF4C7E2B24C6EE63000DCC7B /* AddReviewViewController.swift in Sources */,
+				FF4C7E2924C6EE29000DCC7B /* MerchantViewController.swift in Sources */,
+				FF4C7E3724C6EF38000DCC7B /* MapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
