@@ -1,15 +1,17 @@
 //
-//  HomeViewController.swift
+//  User.swift
 //  MC3
 //
 //  Created by Muhammad Nobel Shidqi on 21/07/20.
 //  Copyright © 2020 Muhammad Nobel Shidqi. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
-class MainViewController: UIViewController {
+
+struct User {
     
-
-
+    let name: String
+    let email: String
+    
 }

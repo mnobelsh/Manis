@@ -7,4 +7,9 @@
 //
 
 import Foundation
+import Firebase
 
+struct FirebaseService {
+    static let shared = FirebaseService()
+    
+}

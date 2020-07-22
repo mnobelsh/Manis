@@ -10,12 +10,39 @@ import UIKit
 
 class ProfileViewController: UIViewController {
 
+    var data: [String:Any]? = nil {
+        didSet {
+            if let data = data {
+                guard let email = data["email"] as? String else {return}
+                guard let name = data["name"] as? String else {return}
+                nameLabel.text = name
+                emailLabel.text = email
+                configureUI()
+            }
+        }
+    }
+    private var nameLabel = UILabel()
+    private var emailLabel = UILabel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        view.backgroundColor = .red
         // Do any additional setup after loading the view.
     }
     
+    func configureUI() {
+        self.view.addSubview(nameLabel)
+        nameLabel.font = UIFont.systemFont(ofSize: 24)
+        nameLabel.textColor = .white
+        nameLabel.setCenterXYAcnhor(in: self.view)
+        
+        self.view.addSubview(emailLabel)
+        emailLabel.font = UIFont.systemFont(ofSize: 24)
+        emailLabel.textColor = .white
+        emailLabel.setAnchor(top: nameLabel.bottomAnchor, paddingTop: 30)
+        emailLabel.setCenterXAnchor(in: self.view)
+    }
 
     /*
     // MARK: - Navigation
