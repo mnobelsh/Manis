@@ -10,6 +10,9 @@
 		3F282107865D1F6109C07657 /* Pods_MC3_MC3UITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A29C1A9AB60002507D10A2BC /* Pods_MC3_MC3UITests.framework */; };
 		4603FF3FB994E639F1CD3F69 /* Pods_MC3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB023E81723C5B3A0FE3D5F4 /* Pods_MC3.framework */; };
 		9FB684FBEEFDCCE5853D12C0 /* Pods_MC3Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AC842672A229DC392ADDA2E /* Pods_MC3Tests.framework */; };
+		FF3E490024C8508500719D14 /* UIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3E48FF24C8508500719D14 /* UIHelper.swift */; };
+		FF3E490224C86B6000719D14 /* Merchant.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3E490124C86B6000719D14 /* Merchant.swift */; };
+		FF3E490424C86D8600719D14 /* MerchantCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3E490324C86D8600719D14 /* MerchantCollectionCell.swift */; };
 		FF457EFB24B4A29B0052438A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF457EFA24B4A29B0052438A /* AppDelegate.swift */; };
 		FF457EFD24B4A29B0052438A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF457EFC24B4A29B0052438A /* SceneDelegate.swift */; };
 		FF457F0224B4A29B0052438A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF457F0024B4A29B0052438A /* Main.storyboard */; };
@@ -28,7 +31,6 @@
 		FF4C7E3224C6EEF7000DCC7B /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4C7E3124C6EEF7000DCC7B /* ProfileViewController.swift */; };
 		FF4C7E3424C6EEFE000DCC7B /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4C7E3324C6EEFE000DCC7B /* EditProfileViewController.swift */; };
 		FF4C7E3724C6EF38000DCC7B /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4C7E3624C6EF38000DCC7B /* MapViewController.swift */; };
-		FF4C7E3924C70301000DCC7B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4C7E3824C70301000DCC7B /* User.swift */; };
 		FF53917F24B8667400FFA33B /* NavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF53917E24B8667400FFA33B /* NavigationViewController.swift */; };
 		FF5D4FC424B4A70D00951879 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5D4FC324B4A70D00951879 /* Extensions.swift */; };
 /* End PBXBuildFile section */
@@ -60,6 +62,9 @@
 		AB023E81723C5B3A0FE3D5F4 /* Pods_MC3.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MC3.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D13998FCF07A3D61EB040CD1 /* Pods-MC3.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MC3.debug.xcconfig"; path = "Target Support Files/Pods-MC3/Pods-MC3.debug.xcconfig"; sourceTree = "<group>"; };
 		FABECA4AC6DAED7CC3311D8C /* Pods-MC3Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MC3Tests.release.xcconfig"; path = "Target Support Files/Pods-MC3Tests/Pods-MC3Tests.release.xcconfig"; sourceTree = "<group>"; };
+		FF3E48FF24C8508500719D14 /* UIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHelper.swift; sourceTree = "<group>"; };
+		FF3E490124C86B6000719D14 /* Merchant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Merchant.swift; sourceTree = "<group>"; };
+		FF3E490324C86D8600719D14 /* MerchantCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantCollectionCell.swift; sourceTree = "<group>"; };
 		FF457EF724B4A29B0052438A /* MC3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MC3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF457EFA24B4A29B0052438A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FF457EFC24B4A29B0052438A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -84,7 +89,6 @@
 		FF4C7E3124C6EEF7000DCC7B /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		FF4C7E3324C6EEFE000DCC7B /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		FF4C7E3624C6EF38000DCC7B /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		FF4C7E3824C70301000DCC7B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		FF53917E24B8667400FFA33B /* NavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewController.swift; sourceTree = "<group>"; };
 		FF5D4FC324B4A70D00951879 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -138,6 +142,14 @@
 				FABECA4AC6DAED7CC3311D8C /* Pods-MC3Tests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		FF3E48FC24C84FDC00719D14 /* Colletion View */ = {
+			isa = PBXGroup;
+			children = (
+				FF3E490324C86D8600719D14 /* MerchantCollectionCell.swift */,
+			);
+			path = "Colletion View";
 			sourceTree = "<group>";
 		};
 		FF457EEE24B4A29B0052438A = {
@@ -230,6 +242,7 @@
 			isa = PBXGroup;
 			children = (
 				FF5D4FC324B4A70D00951879 /* Extensions.swift */,
+				FF3E48FF24C8508500719D14 /* UIHelper.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -258,7 +271,7 @@
 		FF5D4FC124B4A6E900951879 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				FF4C7E3824C70301000DCC7B /* User.swift */,
+				FF3E490124C86B6000719D14 /* Merchant.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -266,6 +279,7 @@
 		FF5D4FC224B4A6F400951879 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FF3E48FC24C84FDC00719D14 /* Colletion View */,
 				FF457F0024B4A29B0052438A /* Main.storyboard */,
 			);
 			path = Views;
@@ -547,6 +561,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF3E490424C86D8600719D14 /* MerchantCollectionCell.swift in Sources */,
 				FF4C7E3424C6EEFE000DCC7B /* EditProfileViewController.swift in Sources */,
 				FF53917F24B8667400FFA33B /* NavigationViewController.swift in Sources */,
 				FF457EFB24B4A29B0052438A /* AppDelegate.swift in Sources */,
@@ -554,10 +569,11 @@
 				FF4C7E2124C6E8D0000DCC7B /* SignInViewController.swift in Sources */,
 				FF4C7E2524C6E8E3000DCC7B /* MainViewController.swift in Sources */,
 				FF4C7E2724C6E943000DCC7B /* FirebaseService.swift in Sources */,
+				FF3E490024C8508500719D14 /* UIHelper.swift in Sources */,
 				FF4C7E3224C6EEF7000DCC7B /* ProfileViewController.swift in Sources */,
-				FF4C7E3924C70301000DCC7B /* User.swift in Sources */,
 				FF4C7E2324C6E8D9000DCC7B /* SignUpViewController.swift in Sources */,
 				FF4C7E2D24C6EE7F000DCC7B /* AllReviewViewController.swift in Sources */,
+				FF3E490224C86B6000719D14 /* Merchant.swift in Sources */,
 				FF457EFD24B4A29B0052438A /* SceneDelegate.swift in Sources */,
 				FF4C7E2B24C6EE63000DCC7B /* AddReviewViewController.swift in Sources */,
 				FF4C7E2924C6EE29000DCC7B /* MerchantViewController.swift in Sources */,
