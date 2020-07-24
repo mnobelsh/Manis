@@ -171,9 +171,6 @@ extension UIView {
 }
 
 extension UITextField {
-    enum ContrastColorType {
-        case light,dark
-    }
     func configureInputTextField(placeholder: String, isSecureTextEntry: Bool, contrastColorTo: UIColor? = nil) {
         self.isSecureTextEntry = isSecureTextEntry ? true : false
         

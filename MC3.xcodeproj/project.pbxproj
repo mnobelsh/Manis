@@ -13,6 +13,8 @@
 		FF3E490024C8508500719D14 /* UIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3E48FF24C8508500719D14 /* UIHelper.swift */; };
 		FF3E490224C86B6000719D14 /* Merchant.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3E490124C86B6000719D14 /* Merchant.swift */; };
 		FF3E490424C86D8600719D14 /* MerchantCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3E490324C86D8600719D14 /* MerchantCollectionCell.swift */; };
+		FF3F72F224C981DA00D201FA /* SectionTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3F72F124C981DA00D201FA /* SectionTitleView.swift */; };
+		FF3F72F424C994D100D201FA /* AvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3F72F324C994D100D201FA /* AvatarImageView.swift */; };
 		FF457EFB24B4A29B0052438A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF457EFA24B4A29B0052438A /* AppDelegate.swift */; };
 		FF457EFD24B4A29B0052438A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF457EFC24B4A29B0052438A /* SceneDelegate.swift */; };
 		FF457F0224B4A29B0052438A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF457F0024B4A29B0052438A /* Main.storyboard */; };
@@ -65,6 +67,8 @@
 		FF3E48FF24C8508500719D14 /* UIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHelper.swift; sourceTree = "<group>"; };
 		FF3E490124C86B6000719D14 /* Merchant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Merchant.swift; sourceTree = "<group>"; };
 		FF3E490324C86D8600719D14 /* MerchantCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantCollectionCell.swift; sourceTree = "<group>"; };
+		FF3F72F124C981DA00D201FA /* SectionTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionTitleView.swift; sourceTree = "<group>"; };
+		FF3F72F324C994D100D201FA /* AvatarImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarImageView.swift; sourceTree = "<group>"; };
 		FF457EF724B4A29B0052438A /* MC3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MC3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF457EFA24B4A29B0052438A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FF457EFC24B4A29B0052438A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -148,6 +152,8 @@
 			isa = PBXGroup;
 			children = (
 				FF3E490324C86D8600719D14 /* MerchantCollectionCell.swift */,
+				FF3F72F124C981DA00D201FA /* SectionTitleView.swift */,
+				FF3F72F324C994D100D201FA /* AvatarImageView.swift */,
 			);
 			path = "Colletion View";
 			sourceTree = "<group>";
@@ -566,8 +572,10 @@
 				FF53917F24B8667400FFA33B /* NavigationViewController.swift in Sources */,
 				FF457EFB24B4A29B0052438A /* AppDelegate.swift in Sources */,
 				FF5D4FC424B4A70D00951879 /* Extensions.swift in Sources */,
+				FF3F72F224C981DA00D201FA /* SectionTitleView.swift in Sources */,
 				FF4C7E2124C6E8D0000DCC7B /* SignInViewController.swift in Sources */,
 				FF4C7E2524C6E8E3000DCC7B /* MainViewController.swift in Sources */,
+				FF3F72F424C994D100D201FA /* AvatarImageView.swift in Sources */,
 				FF4C7E2724C6E943000DCC7B /* FirebaseService.swift in Sources */,
 				FF3E490024C8508500719D14 /* UIHelper.swift in Sources */,
 				FF4C7E3224C6EEF7000DCC7B /* ProfileViewController.swift in Sources */,

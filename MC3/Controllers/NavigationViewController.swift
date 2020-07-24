@@ -15,7 +15,7 @@ class NavigationViewController: UINavigationController {
     
     override init(rootViewController: UIViewController) {
         super.init(rootViewController: rootViewController)
-        setTransparentNavbar()
+        navigationBar.isHidden = true
     }
     
     required init?(coder aDecoder: NSCoder) {

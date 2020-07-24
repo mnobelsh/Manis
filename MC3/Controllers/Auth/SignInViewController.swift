@@ -9,10 +9,26 @@
 import UIKit
 
 class SignInViewController: UIViewController {
+    
+    private lazy var passwordTf: UITextField = {
+        let tf = UITextField()
+        tf.configureInputTextField(placeholder: "Password", isSecureTextEntry: true, contrastColorTo: self.view.backgroundColor)
+        return tf
+    }()
+    
+    private lazy var passwordView: UIView = {
+       let view = UIView()
+        view.configureTextFieldView(icon: UIImage(systemName: "lock")?.withRenderingMode(.alwaysOriginal), textField: passwordTf, contrastColorTo: self.view.backgroundColor)
+        return view
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.view.backgroundColor = .white
+        self.view.addSubview(passwordView) {
+            self.passwordView.setCenterXYAcnhor(in: self.view)
+            self.passwordView.setAnchor(right: self.view.rightAnchor, left: self.view.leftAnchor, paddingRight: 20, paddingLeft: 20)
+        }
         // Do any additional setup after loading the view.
     }
     
