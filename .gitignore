@@ -90,5 +90,4 @@ fastlane/test_output
 iOSInjectionProject/
 
 Podfile.lock
-project.pbxproj
 Manifest.lock
