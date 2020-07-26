@@ -18,13 +18,15 @@ class MerchantCollectionCell: UICollectionViewCell {
         didSet {
             if let data = data {
                 nameLabel.text = data.name
+                addressLabel.text = data.address
+                lovedLabel.text = "By \(data.lovedCount) Peoples"
             }
         }
     }
     
     private var descriptionContainerView: UIView = {
         let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 0.9165894985, green: 0.9167430997, blue: 0.9165692329, alpha: 1)
+        view.backgroundColor = #colorLiteral(red: 0.9496210217, green: 0.9497799277, blue: 0.9496001601, alpha: 1)
         view.configureRoundedCorners(corners: [.topLeft,.topRight], radius: 3)
         view.configureRoundedCorners(corners: [.bottomLeft,.bottomRight], radius: 10)
         return view
@@ -61,9 +63,26 @@ class MerchantCollectionCell: UICollectionViewCell {
     private var nameLabel: UILabel = {
         let label = UILabel()
         label.configureHeadingLabel(title: "Merchant Name", fontSize: 12, textColor: .black)
-        label.setSize(height: 25)
+        label.setSize(height: 15)
         label.numberOfLines = 1
         return label
+    }()
+    private var addressLabel: UILabel = {
+        let label = UILabel()
+        label.configureTextLabel(title: "Merchant's Address", fontSize: 9, textColor: .darkGray)
+        label.setSize(height: 15)
+        return label
+    }()
+    
+    private var lovedLabel: UILabel = {
+        let label = UILabel()
+        label.configureTextLabel(title: "By 1000 Peoples", fontSize: 14, textColor: .darkGray)
+        return label
+    }()
+    private var loveImageView: UIImageView = {
+        let imageView = UIImageView(image: UIImage(systemName: "heart.fill")?.withTintColor(.systemPink, renderingMode: .alwaysOriginal))
+        imageView.setSize(width: 20, height: 20)
+        return imageView
     }()
     
     override init(frame: CGRect) {
@@ -71,7 +90,6 @@ class MerchantCollectionCell: UICollectionViewCell {
         self.backgroundColor = .systemBackground
         self.configureRoundedCorners(corners: [.allCorners], radius: 10)
         self.configureShadow(shadowColor: .lightGray, radius: 5)
-        
     }
     
     func configureTrendingCell() {
@@ -87,22 +105,37 @@ class MerchantCollectionCell: UICollectionViewCell {
             self.nameLabel.setSize(height: 35)
         }
         
+        self.addSubview(loveImageView) {
+            self.loveImageView.setAnchor(bottom: self.rankNumberView.bottomAnchor, left: self.rankNumberView.rightAnchor, paddingBottom: 8, paddingLeft: 16)
+        }
+
+        self.addSubview(lovedLabel) {
+            self.lovedLabel.setAnchor(right: self.rightAnchor, left: self.loveImageView.rightAnchor, paddingLeft: 8)
+            self.lovedLabel.setCenterYAnchor(in: self.loveImageView)
+        }
+        
     }
     
     func configureMerchantCell() {
         
         self.addSubview(descriptionContainerView) {
             self.descriptionContainerView.setAnchor(right: self.rightAnchor, bottom: self.bottomAnchor, left: self.leftAnchor)
-            self.descriptionContainerView.setSize(height: 55)
+            self.descriptionContainerView.setSize(height: 65)
             
             self.descriptionContainerView.addSubview(self.nameLabel) {
-                self.nameLabel.setAnchor(top: self.descriptionContainerView.topAnchor, right: self.descriptionContainerView.rightAnchor, left: self.descriptionContainerView.leftAnchor, paddingLeft: 4)
+                self.nameLabel.setAnchor(top: self.descriptionContainerView.topAnchor, right: self.descriptionContainerView.rightAnchor, left: self.descriptionContainerView.leftAnchor, paddingTop: 6, paddingLeft: 4)
             }
+            
+            self.descriptionContainerView.addSubview(self.addressLabel) {
+                self.addressLabel.setAnchor(top: self.nameLabel.bottomAnchor, right: self.descriptionContainerView.rightAnchor, left: self.descriptionContainerView.leftAnchor, paddingTop: 6, paddingLeft: 4)
+            }
+
         }
         
         self.addSubview(merchantImageView) {
             self.merchantImageView.setAnchor(top: self.topAnchor, right: self.rightAnchor, bottom: self.descriptionContainerView.topAnchor, left: self.leftAnchor)
         }
+        
 
     }
     

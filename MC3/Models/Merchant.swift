@@ -11,4 +11,6 @@ import Foundation
 struct Merchant: Hashable {
     var id: String
     var name: String
+    var address: String
+    var lovedCount: Int
 }
