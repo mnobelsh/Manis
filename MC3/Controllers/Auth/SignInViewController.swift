@@ -10,37 +10,60 @@ import UIKit
 
 class SignInViewController: UIViewController {
     
-    private lazy var passwordTf: UITextField = {
-        let tf = UITextField()
-        tf.configureInputTextField(placeholder: "Password", isSecureTextEntry: true, contrastColorTo: self.view.backgroundColor)
-        return tf
-    }()
+    var starButton: UIButton!
+    private var stars: [UIButton]!
+    private var horizontalStack: UIStackView!
     
-    private lazy var passwordView: UIView = {
-       let view = UIView()
-        view.configureTextFieldView(icon: UIImage(systemName: "lock")?.withRenderingMode(.alwaysOriginal), textField: passwordTf, contrastColorTo: self.view.backgroundColor)
-        return view
-    }()
-
+    var userRating: Int = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .white
-        self.view.addSubview(passwordView) {
-            self.passwordView.setCenterXYAcnhor(in: self.view)
-            self.passwordView.setAnchor(right: self.view.rightAnchor, left: self.view.leftAnchor, paddingRight: 20, paddingLeft: 20)
+
+        stars = configureStar(rating: 5)
+        
+        horizontalStack = UIStackView(arrangedSubviews: stars)
+        horizontalStack.alignment = .center
+        horizontalStack.axis = .horizontal
+        horizontalStack.distribution = .fillEqually
+        horizontalStack.spacing = 4
+        horizontalStack.setSize(width: 150, height: 95)
+        
+        self.view.addSubview(horizontalStack) {
+            self.horizontalStack.setCenterXYAcnhor(in: self.view)
         }
-        // Do any additional setup after loading the view.
+        
     }
     
+    func configureStar(rating: Int) -> [UIButton] {
+        var buttonSet: [UIButton] = []
+        
+        for _ in 0..<rating {
+            starButton = UIButton()
+            starButton.setImage(UIImage(systemName: "star.fill")?.withTintColor(.white, renderingMode: .alwaysOriginal), for: .normal)
+            starButton.contentMode = .scaleAspectFit
+            starButton.backgroundColor = .clear
+            starButton.isUserInteractionEnabled = true
+            starButton.addTarget(self, action: #selector(starDidTapped(_:)), for: .touchUpInside)
+            buttonSet.append(starButton)
+        }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        return buttonSet
     }
-    */
-
+    
+    @objc func starDidTapped(_ button: UIButton) {
+        
+        horizontalStack.arrangedSubviews.forEach { (buttonView) in
+            let btn = buttonView as! UIButton
+            btn.setImage(UIImage(systemName: "star.fill")?.withTintColor(.white, renderingMode: .alwaysOriginal), for: .normal)
+        }
+        
+        let maxIndex = horizontalStack.arrangedSubviews.firstIndex(of: button)!
+        userRating = maxIndex+1
+        
+        for idx in 0...maxIndex {
+            stars[idx].setImage(UIImage(systemName: "star.fill")?.withTintColor(.systemYellow, renderingMode: .alwaysOriginal), for: .normal)
+        }
+        
+        print("USER RATING : \(userRating)")
+    }
 }

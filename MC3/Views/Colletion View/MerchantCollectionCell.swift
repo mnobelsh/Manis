@@ -20,6 +20,7 @@ class MerchantCollectionCell: UICollectionViewCell {
                 nameLabel.text = data.name
                 addressLabel.text = data.address
                 lovedLabel.text = "By \(data.lovedCount) Peoples"
+                merchantImageView.image = #imageLiteral(resourceName: "doger")
             }
         }
     }
@@ -36,27 +37,20 @@ class MerchantCollectionCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFill
         imageView.backgroundColor = .systemBackground
         imageView.configureRoundedCorners(corners: [.topLeft,.topRight], radius: 10)
-        imageView.image = #imageLiteral(resourceName: "dessert_dummy")
         imageView.layer.masksToBounds = true
         return imageView
     }()
     
-    var rankLabel: UILabel = {
-        let label = UILabel()
-        label.configureHeadingLabel(title: "1", fontSize: 20, textColor: UIColor.white)
-        label.setSize(width: 50, height: 50)
-        label.textAlignment = .center
-        return label
-    }()
-    private lazy var rankNumberView: UIView = {
-        let view = UIView()
+    var rank: Int? {
+        didSet {
+            rankNumberView.image = UIImage(named: "trending\(rank!)")
+        }
+    }
+    private lazy var rankNumberView: UIImageView = {
+        let view = UIImageView()
         view.setSize(width: 70, height: 70)
         view.configureRoundedCorners(corners: [.allCorners], radius: 8)
-        view.backgroundColor = UIColor.randomFlat()
-        view.addSubview(rankLabel) {
-            self.rankLabel.setCenterXYAcnhor(in: view)
-            self.rankLabel.textColor = UIColor(contrastingBlackOrWhiteColorOn: view.backgroundColor, isFlat: true)
-        }
+        view.image = UIImage(named: "trending1")
         return view
     }()
     

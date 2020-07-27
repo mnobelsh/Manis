@@ -37,7 +37,9 @@
 		FF5D4FC424B4A70D00951879 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5D4FC324B4A70D00951879 /* Extensions.swift */; };
 		FFD493D724CB628300078E34 /* MainHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD493D624CB628300078E34 /* MainHeaderView.swift */; };
 		FFD493D924CD69B300078E34 /* SearchResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD493D824CD69B300078E34 /* SearchResultView.swift */; };
-		FFD493DC24CD969E00078E34 /* CustomCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD493DB24CD969E00078E34 /* CustomCollectionViewCell.swift */; };
+		FFD493DC24CD969E00078E34 /* SortingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD493DB24CD969E00078E34 /* SortingCollectionViewCell.swift */; };
+		FFD493DF24CEC5A300078E34 /* SearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD493DE24CEC5A300078E34 /* SearchResultCell.swift */; };
+		FFD493E124CECAB700078E34 /* Sorting.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD493E024CECAB700078E34 /* Sorting.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,7 +102,9 @@
 		FF5D4FC324B4A70D00951879 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		FFD493D624CB628300078E34 /* MainHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHeaderView.swift; sourceTree = "<group>"; };
 		FFD493D824CD69B300078E34 /* SearchResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultView.swift; sourceTree = "<group>"; };
-		FFD493DB24CD969E00078E34 /* CustomCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCollectionViewCell.swift; sourceTree = "<group>"; };
+		FFD493DB24CD969E00078E34 /* SortingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingCollectionViewCell.swift; sourceTree = "<group>"; };
+		FFD493DE24CEC5A300078E34 /* SearchResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCell.swift; sourceTree = "<group>"; };
+		FFD493E024CECAB700078E34 /* Sorting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sorting.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,7 +163,7 @@
 			children = (
 				FF3E490324C86D8600719D14 /* MerchantCollectionCell.swift */,
 				FF3F72F124C981DA00D201FA /* SectionTitleView.swift */,
-				FFD493DB24CD969E00078E34 /* CustomCollectionViewCell.swift */,
+				FFD493DB24CD969E00078E34 /* SortingCollectionViewCell.swift */,
 			);
 			path = "Colletion View";
 			sourceTree = "<group>";
@@ -284,6 +288,7 @@
 			isa = PBXGroup;
 			children = (
 				FF3E490124C86B6000719D14 /* Merchant.swift */,
+				FFD493E024CECAB700078E34 /* Sorting.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -291,6 +296,7 @@
 		FF5D4FC224B4A6F400951879 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FFD493DD24CEC57F00078E34 /* Table View */,
 				FF3E48FC24C84FDC00719D14 /* Colletion View */,
 				FFD493DA24CD69BF00078E34 /* Main View Controller */,
 				FF3F72F324C994D100D201FA /* AvatarImageView.swift */,
@@ -306,6 +312,14 @@
 				FFD493D824CD69B300078E34 /* SearchResultView.swift */,
 			);
 			path = "Main View Controller";
+			sourceTree = "<group>";
+		};
+		FFD493DD24CEC57F00078E34 /* Table View */ = {
+			isa = PBXGroup;
+			children = (
+				FFD493DE24CEC5A300078E34 /* SearchResultCell.swift */,
+			);
+			path = "Table View";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -590,12 +604,14 @@
 				FF4C7E3424C6EEFE000DCC7B /* EditProfileViewController.swift in Sources */,
 				FF53917F24B8667400FFA33B /* NavigationViewController.swift in Sources */,
 				FF457EFB24B4A29B0052438A /* AppDelegate.swift in Sources */,
+				FFD493E124CECAB700078E34 /* Sorting.swift in Sources */,
 				FF5D4FC424B4A70D00951879 /* Extensions.swift in Sources */,
 				FF3F72F224C981DA00D201FA /* SectionTitleView.swift in Sources */,
 				FF4C7E2124C6E8D0000DCC7B /* SignInViewController.swift in Sources */,
 				FF4C7E2524C6E8E3000DCC7B /* MainViewController.swift in Sources */,
 				FF3F72F424C994D100D201FA /* AvatarImageView.swift in Sources */,
 				FF4C7E2724C6E943000DCC7B /* FirebaseService.swift in Sources */,
+				FFD493DF24CEC5A300078E34 /* SearchResultCell.swift in Sources */,
 				FF3E490024C8508500719D14 /* UIHelper.swift in Sources */,
 				FF4C7E3224C6EEF7000DCC7B /* ProfileViewController.swift in Sources */,
 				FF4C7E2324C6E8D9000DCC7B /* SignUpViewController.swift in Sources */,
@@ -605,7 +621,7 @@
 				FF4C7E2B24C6EE63000DCC7B /* AddReviewViewController.swift in Sources */,
 				FF4C7E2924C6EE29000DCC7B /* MerchantViewController.swift in Sources */,
 				FF4C7E3724C6EF38000DCC7B /* MapViewController.swift in Sources */,
-				FFD493DC24CD969E00078E34 /* CustomCollectionViewCell.swift in Sources */,
+				FFD493DC24CD969E00078E34 /* SortingCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

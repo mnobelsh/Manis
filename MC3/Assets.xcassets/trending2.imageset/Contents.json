@@ -1,12 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "C6E7YLpU4AAU0YV.jpg",
+      "filename" : "trending2.pdf",
       "idiom" : "universal"
     }
   ],
   "info" : {
     "author" : "xcode",
     "version" : 1
+  },
+  "properties" : {
+    "preserves-vector-representation" : true
   }
 }

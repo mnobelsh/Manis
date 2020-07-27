@@ -9,44 +9,56 @@
 import UIKit
 import ChameleonFramework
 
-enum MainCollectionViewSection: Int {
-    case trendings = 2, nearby = 0, rating = 1
-}
 typealias MainCollectionDataSource = UICollectionViewDiffableDataSource<MainCollectionViewSection,Merchant>
 typealias MainCollectionSnapshot = NSDiffableDataSourceSnapshot<MainCollectionViewSection,Merchant>
+typealias SearchResultTableViewDataSource = UITableViewDiffableDataSource<SearchResultTableViewSection, Merchant>
+typealias SearchResultSnapshot = NSDiffableDataSourceSnapshot<SearchResultTableViewSection, Merchant>
+
 
 class MainViewController: UIViewController {
     
     // MARK: - Properties
-    private var exploreDessert: [Merchant] = [Merchant(id: UUID().uuidString, name: "Es Doger", address: "Jl. Serpong Raya 1", lovedCount: 120),
-                                              Merchant(id: UUID().uuidString, name: "Es Campur", address: "Jl. Serpong Raya 12", lovedCount: 75),
-                                              Merchant(id: UUID().uuidString, name: "Es Goyobod", address: "Jl. Serpong Raya 3", lovedCount: 90),
-                                              Merchant(id: UUID().uuidString, name: "Es Campur", address: "Jl. Serpong Raya 5", lovedCount: 50),
-                                              Merchant(id: UUID().uuidString, name: "Es Doger", address: "Jl. Serpong Raya 6", lovedCount: 100)]
-    private var nearbyMerchants: [Merchant] =  [Merchant(id: UUID().uuidString, name: "Es Cincau Mang Ucup", address: "Jl. Serpong Raya 10", lovedCount: 111),
-                                                Merchant(id: UUID().uuidString, name: "Es Teler Uhuy", address: "Jl. Serpong Raya 13", lovedCount: 111),
-                                                Merchant(id: UUID().uuidString, name: "Es Pisang Ijo Prikitiew", address: "Jl. Serpong Raya 56", lovedCount: 111),]
-    private var highestRatingMerchants: [Merchant] = [Merchant(id: UUID().uuidString, name: "Es Puter Linlin", address: "Jl. Serpong Raya 99", lovedCount: 111),
-                                                      Merchant(id: UUID().uuidString, name: "Es Slendang Mayang Sari", address: "Jl. Serpong Raya 11", lovedCount: 111),
-                                                      Merchant(id: UUID().uuidString, name: "Es Bahenol", address: "Jl. Serpong Raya 17", lovedCount: 111),]
-    private var collectionView: UICollectionView!
     private var collectionViewDataSource: MainCollectionDataSource?
     private var collectionViewSnapshot: MainCollectionSnapshot?
+    private var tableViewDataSource: SearchResultTableViewDataSource?
+    private var tableViewSnapShot: SearchResultSnapshot?
     
     private lazy var scrollView: UIScrollView = {
         let scrollV = UIScrollView()
         scrollV.frame = self.view.bounds
         scrollV.contentInset = .zero
         scrollV.automaticallyAdjustsScrollIndicatorInsets = false
-        scrollV.contentSize = CGSize(width: self.view.frame.width, height: 1350)
+        scrollV.contentSize = CGSize(width: self.view.frame.width, height: 1150)
         scrollV.showsHorizontalScrollIndicator = false
         scrollV.contentInsetAdjustmentBehavior = .never
         scrollV.alwaysBounceVertical = false
 
         return scrollV
     }()
-    private var headerContainerView: MainHeaderView!
-    private var searchResultView: SearchResultView!
+    private lazy var collectionView: UICollectionView = {
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: configureMainCollectionViewLayout())
+        
+        cv.backgroundColor = .clear
+        cv.delegate = self
+        cv.isScrollEnabled = false
+        
+        cv.register(MerchantCollectionCell.self, forCellWithReuseIdentifier: MerchantCollectionCell.identifier)
+        cv.register(SectionTitleView.self, forSupplementaryViewOfKind: SectionTitleView.kind, withReuseIdentifier: SectionTitleView.identifier)
+        
+        return cv
+    }()
+    private lazy var headerContainerView: MainHeaderView = {
+        let headerView = MainHeaderView(frame: .init(x: 0, y: -MainHeaderView.height, width: self.view.frame.width, height: MainHeaderView.height))
+        headerView.delegate = self
+        headerView.configureSearchBar(delegate: self)
+        headerView.configureCollectionView(delegate: self, dataSource: self)
+        return headerView
+    }()
+    private lazy var searchResultView: SearchResultView = {
+        let searchView = SearchResultView(frame: .init(x: 0, y: self.scrollView.frame.height + ( self.scrollView.frame.height - MainHeaderView.height), width: self.view.frame.width, height: SearchResultView.height))
+        searchView.configureTableView(delegate: self)
+        return searchView
+    }()
     
     // MARK: - Lifecycles
     override func viewDidLoad() {
@@ -64,19 +76,11 @@ class MainViewController: UIViewController {
     
     // MARK: - Helpers
     private func configureComponents() {
-        configureCollectionView()
-
+        configureDiffableDataSource()
+        
         let hideKeyboardTapGesture = UITapGestureRecognizer(target: self, action: #selector(hideSearchBarKeyboard))
         hideKeyboardTapGesture.cancelsTouchesInView = false
         self.view.addGestureRecognizer(hideKeyboardTapGesture)
-        
-        self.headerContainerView = MainHeaderView(frame: .init(x: 0, y: -MainHeaderView.height, width: self.view.frame.width, height: MainHeaderView.height))
-        self.headerContainerView.delegate = self
-        self.headerContainerView.configureSearchBarDelegate(delegate: self)
-        self.headerContainerView.configureCollectionViewDelegateAndDataSource(delegate: self, dataSource: self)
-        
-        self.searchResultView = SearchResultView(frame: .init(x: 0, y: self.scrollView.frame.height + ( self.scrollView.frame.height - MainHeaderView.height), width: self.view.frame.width, height: SearchResultView.height))
-
     }
     
     func configureUI() {
@@ -90,59 +94,16 @@ class MainViewController: UIViewController {
         }
         
         self.scrollView.addSubview(searchResultView)
-        
     }
     
     // MARK: - Collection View Configuration
-    private func configureCollectionView() {
-        
-        let collectionViewLayout = UICollectionViewCompositionalLayout { (sectionIndex, env) -> NSCollectionLayoutSection? in
-            var item: NSCollectionLayoutItem!
-            var group: NSCollectionLayoutGroup!
-            var section: NSCollectionLayoutSection!
-            let sectionTitleSupplementaryItem = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40)), elementKind: SectionTitleView.kind, alignment: .topLeading)
-            
-            if sectionIndex == MainCollectionViewSection.trendings.rawValue {
-                
-                item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
-                
-                group = NSCollectionLayoutGroup.vertical(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(110)), subitems: [item])
-                group.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
-                
-                section = NSCollectionLayoutSection(group: group)
-                section.contentInsets.trailing = 8
-            } else {
-                
-                item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
-                item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
-                
-                group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .absolute(165), heightDimension: .absolute(200)), subitems: [item])
-                
-                
-                section = NSCollectionLayoutSection(group: group)
-                section.orthogonalScrollingBehavior = .continuous
-                
-            }
-
-            section.contentInsets.leading = 8
-            section.contentInsets.bottom = 15
-            section.boundarySupplementaryItems = [sectionTitleSupplementaryItem]
-            
-            return section
-        }
-        
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
-        
-        collectionView.backgroundColor = .clear
-        collectionView.delegate = self
-        collectionView.isScrollEnabled = false
-        self.collectionView.register(MerchantCollectionCell.self, forCellWithReuseIdentifier: MerchantCollectionCell.identifier)
-        self.collectionView.register(SectionTitleView.self, forSupplementaryViewOfKind: SectionTitleView.kind, withReuseIdentifier: SectionTitleView.identifier)
-        
+    private func configureDiffableDataSource() {
         configureCollectionViewDataSource()
         configureCollectionViewSectionTitleView()
         configureCollectionViewSnapshot()
         
+        configureTableViewDataSource()
+        configureTableViewSnapshot()
     }
     
     private func configureCollectionViewSectionTitleView() {
@@ -174,7 +135,7 @@ class MainViewController: UIViewController {
             cell.data = merchant
 
             if indexPath.section == MainCollectionViewSection.trendings.rawValue {
-                cell.rankLabel.text = "\(indexPath.row+1)"
+                cell.rank = indexPath.row+1
                 cell.configureTrendingCell()
             } else {
                 cell.configureMerchantCell()
@@ -188,10 +149,26 @@ class MainViewController: UIViewController {
     private func configureCollectionViewSnapshot() {
         collectionViewSnapshot = MainCollectionSnapshot()
         collectionViewSnapshot!.appendSections([.nearby,.rating,.trendings])
-        collectionViewSnapshot!.appendItems(exploreDessert, toSection: .trendings)
-        collectionViewSnapshot!.appendItems(nearbyMerchants, toSection: .nearby)
-        collectionViewSnapshot!.appendItems(highestRatingMerchants, toSection: .rating)
+        collectionViewSnapshot!.appendItems(Merchant.trendingsDessert, toSection: .trendings)
+        collectionViewSnapshot!.appendItems(Merchant.nearbyMerchants, toSection: .nearby)
+        collectionViewSnapshot!.appendItems(Merchant.highestRatingMerchants, toSection: .rating)
         collectionViewDataSource?.apply(collectionViewSnapshot!, animatingDifferences: true, completion: nil)
+    }
+    
+    private func configureTableViewDataSource() {
+        tableViewDataSource = UITableViewDiffableDataSource(tableView: searchResultView.resultTableView, cellProvider: { (tableview, indexPath, merchant) -> UITableViewCell? in
+            
+            guard let cell = tableview.dequeueReusableCell(withIdentifier: SearchResultCell.identifier, for: indexPath) as? SearchResultCell else {return UITableViewCell()}
+            cell.merchant = merchant
+            return cell
+        })
+    }
+    
+    private func configureTableViewSnapshot() {
+        tableViewSnapShot = SearchResultSnapshot()
+        tableViewSnapShot?.appendSections([.result])
+        tableViewSnapShot?.appendItems(Merchant.searchResult, toSection: .result)
+        tableViewDataSource?.apply(tableViewSnapShot!, animatingDifferences: true, completion: nil)
     }
     
     // MARK: - Targets
@@ -203,10 +180,7 @@ class MainViewController: UIViewController {
 
 // MARK: - Main Header View Delegate
 extension MainViewController: MainHeaderViewDelegate {
-    func showSearchHeaderView() {
 
-    }
-    
     func hideSearchHeaderView() {
         self.scrollView.isScrollEnabled = true
         self.headerContainerView.isSearchViewHidden = true
@@ -214,6 +188,7 @@ extension MainViewController: MainHeaderViewDelegate {
             self.collectionView.alpha = 1
             self.searchResultView.frame.origin.y = self.scrollView.frame.height + ( self.scrollView.frame.height - MainHeaderView.height)
         }
+        
     }
     
     func avatarDidTapped() {
@@ -221,7 +196,7 @@ extension MainViewController: MainHeaderViewDelegate {
     }
     
     func locationDidChanged(locationLabel: UILabel) {
-        print("DEBUGS : LOCATION LABEL TAPPED \(locationLabel.text)")
+        print("DEBUGS : LOCATION LABEL TAPPED \(locationLabel.text!)")
     }
     
 }
@@ -230,36 +205,57 @@ extension MainViewController: MainHeaderViewDelegate {
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return Sorting.types.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomCollectionViewCell.identifier, for: indexPath) as? CustomCollectionViewCell else {return UICollectionViewCell()}
-        
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SortingCollectionViewCell.identifier, for: indexPath) as? SortingCollectionViewCell else {return UICollectionViewCell()}
+        cell.cellData = Sorting.types[indexPath.row]
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == self.collectionView {
+            
             let merchant = collectionViewDataSource?.itemIdentifier(for: indexPath)
             print("SELECTED MERCHANT : \(merchant!.name)")
+            
         } else if collectionView == self.headerContainerView.sortingCollectionView {
             
-            
+            collectionView.subviews.forEach { (view) in
+                guard let cell = view as? SortingCollectionViewCell else {return}
+                cell.backgroundColor = cell.isSelected ?  .darkGray : .systemBackground
+                cell.setLabelColorContrastToBackground()
+            }
+            collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 120, height: collectionView.frame.height - 10)
+        return CGSize(width: 130, height: collectionView.frame.height - 10)
     }
     
+}
+
+// MARK: - Table View Delegate
+extension MainViewController: UITableViewDelegate {
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        var height: CGFloat = (self.view.frame.height - MainHeaderView.height) / 5
+        height = height < 130 ? 130 : height
+        return height
+    }
 }
 
 // MARK: - Search Bar Delegate
 extension MainViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
+        self.headerContainerView.resetSortingCellAppereance()
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
@@ -273,4 +269,5 @@ extension MainViewController: UISearchBarDelegate {
     }
     
 }
+
 

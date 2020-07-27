@@ -168,6 +168,29 @@ extension UIView {
         }
 
     }
+    
+    
+    func configureRatingView(withRating rating: String, textColor: UIColor) {
+        
+        let starView = UIImageView(image: UIImage(systemName: "star.fill")?.withTintColor(.systemYellow, renderingMode: .alwaysOriginal))
+        starView.contentMode = .scaleAspectFit
+        starView.backgroundColor = .clear
+        starView.setSize(width: 20, height: 20)
+        
+        self.addSubview(starView) {
+            starView.setAnchor(left: self.leftAnchor)
+            starView.setCenterYAnchor(in: self)
+        }
+        
+        let ratingLabel = UILabel()
+        ratingLabel.backgroundColor = .clear
+        ratingLabel.configureHeadingLabel(title: rating, fontSize: 14, textColor: textColor)
+        
+        self.addSubview(ratingLabel) {
+            ratingLabel.setAnchor(top: self.topAnchor, right: self.rightAnchor, bottom: self.bottomAnchor, left: starView.rightAnchor, paddingTop: 4, paddingBottom: 4, paddingLeft: 8)
+        }
+        
+    }
 }
 
 extension UITextField {

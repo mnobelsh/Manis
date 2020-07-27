@@ -40,13 +40,14 @@ class MainHeaderView: UIView {
     }()
     
     private var mappinImageView: UIImageView = {
-        let imageView = UIImageView(image: UIImage(systemName: "mappin")?.withTintColor(.systemPink, renderingMode: .alwaysOriginal))
-        imageView.setSize(width: 30, height: 30)
+        let imageView = UIImageView(image: UIImage(named: "UserLocation"))
+        imageView.contentMode = .scaleAspectFit
+        imageView.setSize(width: 24, height: 30)
         return imageView
     }()
     private lazy var locationLabel: UILabel = {
         let label = UILabel()
-        label.configureHeadingLabel(title: "User's Location", textColor: .black)
+        label.configureHeadingLabel(title: "Kemanggisan", textColor: .black)
         label.isUserInteractionEnabled = true
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(locationLabelTapped))
         label.addGestureRecognizer(tapGesture)
@@ -75,7 +76,7 @@ class MainHeaderView: UIView {
         cv.backgroundColor = .clear
         cv.showsHorizontalScrollIndicator = false
         
-        cv.register(CustomCollectionViewCell.self, forCellWithReuseIdentifier: CustomCollectionViewCell.identifier)
+        cv.register(SortingCollectionViewCell.self, forCellWithReuseIdentifier: SortingCollectionViewCell.identifier)
         
         return cv
     }()
@@ -84,7 +85,6 @@ class MainHeaderView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-
         self.addSubview(avatarImageView) {
             self.avatarImageView.setAnchor(top: self.safeAreaLayoutGuide.topAnchor, right: self.rightAnchor, paddingTop: 10, paddingRight: 24)
         }
@@ -92,9 +92,8 @@ class MainHeaderView: UIView {
             self.mappinImageView.setAnchor(bottom: self.avatarImageView.bottomAnchor, left: self.leftAnchor, paddingLeft: 16)
         }
         self.addSubview(locationLabel) {
-            self.locationLabel.text = "Duren Sawit"
-            self.locationLabel.setAnchor(right: self.avatarImageView.leftAnchor, left: self.mappinImageView.rightAnchor, paddingRight: 16, paddingLeft: 8)
-            self.locationLabel.setCenterYAnchor(in: self.mappinImageView)
+            self.locationLabel.setAnchor(right: self.avatarImageView.leftAnchor, bottom: self.mappinImageView.bottomAnchor, left: self.mappinImageView.rightAnchor, paddingRight: 16, paddingLeft: 8)
+
         }
         self.addSubview(searchBar) {
             self.searchBar.frame = CGRect(x: 16, y: self.frame.height - 55, width: self.frame.width - 32, height: 45)
@@ -143,13 +142,26 @@ class MainHeaderView: UIView {
         }
     }
     
-    func configureCollectionViewDelegateAndDataSource(delegate : UICollectionViewDelegate? = nil, dataSource: UICollectionViewDataSource? = nil) {
+    func configureCollectionView(delegate : UICollectionViewDelegate? = nil, dataSource: UICollectionViewDataSource? = nil) {
         self.sortingCollectionView.delegate = delegate
         self.sortingCollectionView.dataSource = dataSource
     }
     
-    func configureSearchBarDelegate(delegate : UISearchBarDelegate? = nil) {
+    func configureSearchBar(delegate : UISearchBarDelegate) {
         self.searchBar.delegate = delegate
+    }
+        
+    private func resetSearchAppereance() {
+        resetSortingCellAppereance()
+        self.searchBar.text?.removeAll()
+    }
+    
+    func resetSortingCellAppereance() {
+        self.sortingCollectionView.subviews.forEach { (view) in
+            guard let cell = view as? SortingCollectionViewCell else {return}
+            cell.backgroundColor = .systemBackground
+            cell.setLabelColorContrastToBackground()
+        }
     }
     
     // MARK: - Targets
@@ -160,7 +172,10 @@ class MainHeaderView: UIView {
     @objc private func locationLabelTapped() {
         delegate?.locationDidChanged(locationLabel: self.locationLabel)
     }
+    
     @objc private func hideSearchHeader() {
         delegate?.hideSearchHeaderView()
+        resetSearchAppereance()
     }
+    
 }
