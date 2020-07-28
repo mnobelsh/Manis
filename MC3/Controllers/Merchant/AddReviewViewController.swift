@@ -127,7 +127,13 @@ class AddReviewViewController: UIViewController {
     }()
     
     @objc func badgeDidTapped(_ button: UIButton){
-        button.setImage(UIImage(named: "selectedBadge2"), for: .normal)
+        button.isSelected = !button.isSelected
+        if button.isSelected == true {
+            button.setImage(UIImage(named : "bigBadge2"), for: .normal)
+        } else {
+            button.setImage(UIImage(named : "selectedBadge2"), for: .normal)
+        }
+        
     }
     
     private lazy var badge2: UIButton = {
@@ -138,7 +144,12 @@ class AddReviewViewController: UIViewController {
     }()
     
     @objc func badgeDidTapped2(_ button: UIButton){
-        button.setImage(UIImage(named: "selectedBadge3"), for: .normal)
+        button.isSelected = !button.isSelected
+        if button.isSelected == true {
+           button.setImage(UIImage(named : "bigBadge3"), for: .normal)
+       } else {
+           button.setImage(UIImage(named : "selectedBadge3"), for: .normal)
+       }
     }
     
     private lazy var badge3: UIButton = {
@@ -149,7 +160,12 @@ class AddReviewViewController: UIViewController {
     }()
     
     @objc func badgeDidTapped3(_ button: UIButton){
-        button.setImage(UIImage(named: "selectedBadge1"), for: .normal)
+        button.isSelected = !button.isSelected
+        if button.isSelected == true {
+            button.setImage(UIImage(named : "bigBadge1"), for: .normal)
+        } else {
+            button.setImage(UIImage(named : "selectedBadge1"), for: .normal)
+        }
     }
     
     private lazy var badgesStacks: UIStackView = {
