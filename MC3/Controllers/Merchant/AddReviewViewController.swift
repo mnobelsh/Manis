@@ -10,21 +10,249 @@ import UIKit
 
 class AddReviewViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    //MARK: - CCOMPONENTS
 
-        // Do any additional setup after loading the view.
+    //Rating
+    private lazy var ratingLabel: UILabel = {
+        let alabel = UILabel()
+        alabel.configureHeadingLabel(title: "Rating", fontSize: 20, textColor: .black)
+        return alabel
+    }()
+
+    private lazy var badLabel: UILabel = {
+        let label = UILabel()
+        label.configureTextLabel(title: "Very bad", fontSize: 12, textColor: .black)
+        return label
+    }()
+
+    var starsButton: UIButton!
+    private var stars: [UIButton]!
+    
+    var userRating: Int = 0
+        
+    //
+    func configureStar(rating: Int) -> [UIButton] {
+        var buttonSet: [UIButton] = []
+
+        for _ in 0..<rating {
+            starsButton = UIButton()
+            starsButton.setImage(UIImage(named: "BigNotSelectedStar"), for: .normal)
+            starsButton.contentMode = .scaleAspectFit
+            starsButton.backgroundColor = .clear
+            starsButton.isUserInteractionEnabled = true
+            starsButton.addTarget(self, action: #selector(starDidTapped(_:)), for: .touchUpInside)
+            buttonSet.append(starsButton)
+        }
+        return buttonSet
+    }
+
+    private lazy var stackStar: UIStackView = {
+        print("DEBUGS Rating")
+        
+        stars = configureStar(rating: 5)
+
+        let stack = UIStackView(arrangedSubviews: stars)
+        stack.axis = .horizontal
+        stack.distribution = .fillEqually
+        stack.spacing = 4
+        return stack
+    }()
+    
+    @objc func starDidTapped(_ button: UIButton){
+        stackStar.arrangedSubviews.forEach{ (buttonView) in
+                let btn = buttonView as! UIButton
+            btn.setImage(UIImage(named: "BigNotSelectedStar"), for: .normal)
+        }
+        
+        let maxIndex = stackStar.arrangedSubviews.firstIndex(of: button)!
+        userRating = maxIndex+1
+        
+        for idx in 0...maxIndex{
+            stars[idx].setImage(UIImage(named: "BigSelectedStar"), for: .normal)
+        }
+    }
+
+    private lazy var goodLabel: UILabel = {
+        let label = UILabel()
+        label.configureTextLabel(title: "Very goof", fontSize: 12, textColor: .black)
+        return label
+    }()
+
+    private lazy var ratingStack: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [badLabel, stackStar , goodLabel])
+        stack.axis = .horizontal
+        stack.alignment = .fill
+        stack.distribution = .equalSpacing
+        stack.spacing = 7
+
+        return stack
+    }()
+    
+    //Badges
+    private lazy var badgesLabel: UILabel = {
+        let label = UILabel()
+        label.configureHeadingLabel(title: "Badges", fontSize: 20, textColor: .black)
+        return label
+    }()
+    
+//    private lazy var badgesImage: UIButton = {
+//        let button = UIButton()
+//        button.setImage(UIImage(named: "bigBadge2"), for: .normal)
+//        return button
+//    }()
+    
+//    private lazy var badgesView1: UIView = {
+//        let bView = UIView()
+//        bView.configureBadges(badge: UIImage(named: "bigBadge2"), nameB: "Great Taste")
+//        return bView
+//    }()
+//
+//    private lazy var badgesView2: UIView = {
+//        let bView = UIView()
+//        bView.configureBadges(badge: UIImage(named: "bigBadge1"), nameB: "Clean Tools")
+//        return bView
+//    }()
+//
+//    private lazy var badgesView3: UIView = {
+//        let bView = UIView()
+//        bView.configureBadges(badge: UIImage(named: "bigBadge3"), nameB: "Clean Ice")
+//        return bView
+//    }()
+    
+    private lazy var badge1: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "bigBadge2"), for: .normal)
+        button.addTarget(self, action: #selector(badgeDidTapped(_:)), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc func badgeDidTapped(_ button: UIButton){
+        button.setImage(UIImage(named: "selectedBadge2"), for: .normal)
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    private lazy var badge2: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "bigBadge3"), for: .normal)
+        button.addTarget(self, action: #selector(badgeDidTapped2(_:)), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc func badgeDidTapped2(_ button: UIButton){
+        button.setImage(UIImage(named: "selectedBadge3"), for: .normal)
     }
-    */
+    
+    private lazy var badge3: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "bigBadge1"), for: .normal)
+        button.addTarget(self, action: #selector(badgeDidTapped3(_:)), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc func badgeDidTapped3(_ button: UIButton){
+        button.setImage(UIImage(named: "selectedBadge1"), for: .normal)
+    }
+    
+    private lazy var badgesStacks: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [badge1,badge2,badge3])
+        stack.axis = .horizontal
+        stack.alignment = .fill
+        stack.distribution = .fillEqually
+        stack.spacing = 4
+        
+        return stack
+    }()
+    
+    //COMMENT
+    private lazy var commentLabel: UILabel = {
+        let label = UILabel()
+        label.configureHeadingLabel(title: "Comment", fontSize: 20, textColor: .black)
+        return label
+    }()
+    
+    private lazy var commentView: UITextView = {
+        let textView = UITextView()
+        textView.setSize( height: 145)
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.isScrollEnabled = false
+        textView.font = UIFont(name: "Avenir-Medium", size: 12)
+        textView.text = "kjnsiunqwudnaksj sd iqwndiansdkja iausnd auwnajnsd iauwdakjsnd aiundkjsnd awdnakjsnd"
+        textView.layer.cornerRadius = 10
+        textView.layer.borderWidth = 1
+        textView.layer.borderColor = UIColor.gray.cgColor
+        textView.sizeToFit()
+        textView.layoutIfNeeded()
+        
+        return textView
+    }()
+    
+    //PHOTOS
+    
+    private lazy var photoLabel: UILabel = {
+        let label = UILabel()
+        label.configureHeadingLabel(title: "Photo", fontSize: 20, textColor: .black)
+        return label
+    }()
+    
+    private lazy var pickerButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "addPhotoButton"), for: .normal)
+        button.contentMode = .scaleToFill
+        button.setSize(width: 51, height: 51)
+        button.backgroundColor = .clear
+        
+        return button
+    }()
+    
+    private lazy var saveButton: UIButton = {
+        let button = UIButton()
+        button.configureButton(title: "Save", titleColor: .black, backgroundColor: .blue, cornerRadius: 8)
+        button.setSize(width: 170, height: 50)
+        return button
+    }()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        
+        view.addSubview(ratingLabel){
+            self.ratingLabel.setAnchor(top: self.view.topAnchor, left: self.view.leftAnchor, paddingTop: 120, paddingRight: 15, paddingBottom: 15, paddingLeft: 15)
+        }
+        
+        view.addSubview(ratingStack){
+            self.ratingStack.setAnchor(top: self.ratingLabel.bottomAnchor, left: self.view.leftAnchor, paddingTop: 8, paddingRight: 15, paddingBottom: 15, paddingLeft: 15)
+        }
+        
+        view.addSubview(badgesLabel){
+            self.badgesLabel.setAnchor(top: self.ratingStack.bottomAnchor, left: self.view.leftAnchor, paddingTop: 15, paddingRight: 15, paddingBottom: 15, paddingLeft: 15)
+        }
+        
+        view.addSubview(badgesStacks){
+            self.badgesStacks.setAnchor(top: self.badgesLabel.bottomAnchor,right: self.view.rightAnchor, left: self.view.leftAnchor
+                , paddingRight: 15, paddingBottom: 15, paddingLeft: 15)
+        }
+        
+        view.addSubview(commentLabel){
+            self.commentLabel.setAnchor(top: self.badgesStacks.bottomAnchor, left: self.view.leftAnchor, paddingTop: 30, paddingRight: 15, paddingBottom: 10, paddingLeft: 15)
+        }
+        
+        view.addSubview(commentView){
+            self.commentView.setAnchor(top: self.commentLabel.bottomAnchor, right: self.view.rightAnchor,left: self.view.leftAnchor, paddingTop: 15, paddingRight: 15, paddingBottom: 15, paddingLeft: 15)
+        }
 
+        view.addSubview(photoLabel){
+            self.photoLabel.setAnchor(top: self.commentView.bottomAnchor,left: self.view.leftAnchor, paddingTop: 15, paddingRight: 15, paddingBottom: 15, paddingLeft: 15)
+        }
+        
+        view.addSubview(pickerButton){
+            self.pickerButton.setAnchor(top: self.photoLabel.bottomAnchor, left: self.view.leftAnchor, paddingTop: 8, paddingRight: 15, paddingBottom: 8, paddingLeft: 15)
+        }
+        
+        view.addSubview(saveButton){
+            self.saveButton.setAnchor(bottom: self.view.bottomAnchor, paddingRight: 20, paddingBottom: 30, paddingLeft: 20)
+            self.saveButton.setCenterXAnchor(in: self.view)
+        }
+        
+        
+        // Do any additional setup after loading the view.
+    }
 }

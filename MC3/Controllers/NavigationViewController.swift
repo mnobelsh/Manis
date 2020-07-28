@@ -11,7 +11,7 @@ import ChameleonFramework
 
 class NavigationViewController: UINavigationController {
     
-    static let shared = NavigationViewController(rootViewController: MainViewController())
+    static let shared = NavigationViewController(rootViewController: AddReviewViewController())
     
     override init(rootViewController: UIViewController) {
         super.init(rootViewController: rootViewController)

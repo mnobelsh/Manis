@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0108556A24CA93C6002C777B /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0108556924CA93C6002C777B /* Review.swift */; };
+		0108556C24CAE2A3002C777B /* AllReviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0108556B24CAE2A3002C777B /* AllReviewVC.swift */; };
+		0108556E24CAE3E7002C777B /* ReviewCollectionViewCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0108556D24CAE3E7002C777B /* ReviewCollectionViewCells.swift */; };
+		0108557624CE1050002C777B /* AvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0108557524CE1050002C777B /* AvatarImageView.swift */; };
 		3F282107865D1F6109C07657 /* Pods_MC3_MC3UITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A29C1A9AB60002507D10A2BC /* Pods_MC3_MC3UITests.framework */; };
 		4603FF3FB994E639F1CD3F69 /* Pods_MC3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB023E81723C5B3A0FE3D5F4 /* Pods_MC3.framework */; };
 		9FB684FBEEFDCCE5853D12C0 /* Pods_MC3Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AC842672A229DC392ADDA2E /* Pods_MC3Tests.framework */; };
@@ -27,7 +31,6 @@
 		FF4C7E2724C6E943000DCC7B /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4C7E2624C6E943000DCC7B /* FirebaseService.swift */; };
 		FF4C7E2924C6EE29000DCC7B /* MerchantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4C7E2824C6EE29000DCC7B /* MerchantViewController.swift */; };
 		FF4C7E2B24C6EE63000DCC7B /* AddReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4C7E2A24C6EE63000DCC7B /* AddReviewViewController.swift */; };
-		FF4C7E2D24C6EE7F000DCC7B /* AllReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4C7E2C24C6EE7F000DCC7B /* AllReviewViewController.swift */; };
 		FF4C7E3224C6EEF7000DCC7B /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4C7E3124C6EEF7000DCC7B /* ProfileViewController.swift */; };
 		FF4C7E3424C6EEFE000DCC7B /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4C7E3324C6EEFE000DCC7B /* EditProfileViewController.swift */; };
 		FF4C7E3724C6EF38000DCC7B /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4C7E3624C6EF38000DCC7B /* MapViewController.swift */; };
@@ -53,6 +56,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0108556924CA93C6002C777B /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
+		0108556B24CAE2A3002C777B /* AllReviewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllReviewVC.swift; sourceTree = "<group>"; };
+		0108556D24CAE3E7002C777B /* ReviewCollectionViewCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewCollectionViewCells.swift; sourceTree = "<group>"; };
+		0108557524CE1050002C777B /* AvatarImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarImageView.swift; sourceTree = "<group>"; };
 		1F58DBF8F61A4F2C6D7C214E /* Pods-MC3-MC3UITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MC3-MC3UITests.release.xcconfig"; path = "Target Support Files/Pods-MC3-MC3UITests/Pods-MC3-MC3UITests.release.xcconfig"; sourceTree = "<group>"; };
 		6AA73C471E0FB93B45737454 /* Pods-MC3.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MC3.release.xcconfig"; path = "Target Support Files/Pods-MC3/Pods-MC3.release.xcconfig"; sourceTree = "<group>"; };
 		6AC842672A229DC392ADDA2E /* Pods_MC3Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MC3Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -85,7 +92,6 @@
 		FF4C7E2624C6E943000DCC7B /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		FF4C7E2824C6EE29000DCC7B /* MerchantViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantViewController.swift; sourceTree = "<group>"; };
 		FF4C7E2A24C6EE63000DCC7B /* AddReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddReviewViewController.swift; sourceTree = "<group>"; };
-		FF4C7E2C24C6EE7F000DCC7B /* AllReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllReviewViewController.swift; sourceTree = "<group>"; };
 		FF4C7E3124C6EEF7000DCC7B /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		FF4C7E3324C6EEFE000DCC7B /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		FF4C7E3624C6EF38000DCC7B /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -148,6 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				FF3E490324C86D8600719D14 /* MerchantCollectionCell.swift */,
+				0108556D24CAE3E7002C777B /* ReviewCollectionViewCells.swift */,
 			);
 			path = "Colletion View";
 			sourceTree = "<group>";
@@ -215,7 +222,7 @@
 			children = (
 				FF4C7E2824C6EE29000DCC7B /* MerchantViewController.swift */,
 				FF4C7E2A24C6EE63000DCC7B /* AddReviewViewController.swift */,
-				FF4C7E2C24C6EE7F000DCC7B /* AllReviewViewController.swift */,
+				0108556B24CAE2A3002C777B /* AllReviewVC.swift */,
 			);
 			path = Merchant;
 			sourceTree = "<group>";
@@ -258,6 +265,7 @@
 		FF5D4FBF24B4A6E200951879 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				0108557524CE1050002C777B /* AvatarImageView.swift */,
 				FF53917E24B8667400FFA33B /* NavigationViewController.swift */,
 				FF4C7E2424C6E8E3000DCC7B /* MainViewController.swift */,
 				FF4C7E3624C6EF38000DCC7B /* MapViewController.swift */,
@@ -272,6 +280,7 @@
 			isa = PBXGroup;
 			children = (
 				FF3E490124C86B6000719D14 /* Merchant.swift */,
+				0108556924CA93C6002C777B /* Review.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -561,7 +570,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0108556C24CAE2A3002C777B /* AllReviewVC.swift in Sources */,
+				0108557624CE1050002C777B /* AvatarImageView.swift in Sources */,
 				FF3E490424C86D8600719D14 /* MerchantCollectionCell.swift in Sources */,
+				0108556A24CA93C6002C777B /* Review.swift in Sources */,
 				FF4C7E3424C6EEFE000DCC7B /* EditProfileViewController.swift in Sources */,
 				FF53917F24B8667400FFA33B /* NavigationViewController.swift in Sources */,
 				FF457EFB24B4A29B0052438A /* AppDelegate.swift in Sources */,
@@ -572,8 +584,8 @@
 				FF3E490024C8508500719D14 /* UIHelper.swift in Sources */,
 				FF4C7E3224C6EEF7000DCC7B /* ProfileViewController.swift in Sources */,
 				FF4C7E2324C6E8D9000DCC7B /* SignUpViewController.swift in Sources */,
-				FF4C7E2D24C6EE7F000DCC7B /* AllReviewViewController.swift in Sources */,
 				FF3E490224C86B6000719D14 /* Merchant.swift in Sources */,
+				0108556E24CAE3E7002C777B /* ReviewCollectionViewCells.swift in Sources */,
 				FF457EFD24B4A29B0052438A /* SceneDelegate.swift in Sources */,
 				FF4C7E2B24C6EE63000DCC7B /* AddReviewViewController.swift in Sources */,
 				FF4C7E2924C6EE29000DCC7B /* MerchantViewController.swift in Sources */,

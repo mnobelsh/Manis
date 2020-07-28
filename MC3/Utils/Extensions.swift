@@ -135,8 +135,8 @@ extension UIView {
         setCenterYAnchor(in: view)
     }
     
-    func configureTextFieldView(icon: UIImage? = nil, textField tf: UITextField, contrastColorTo: UIColor? = nil) {
-        self.setSize(height: 55)
+    func configureTextFieldView(icon: UIImage? = nil, textField tf: UITextField, errorLabel: String, contrastColorTo: UIColor? = nil) {
+        self.setSize(height: 44)
         
         let border = UIView()
         border.setSize(height: 1)
@@ -144,13 +144,14 @@ extension UIView {
         border.configureRoundedCorners(corners: [.allCorners], radius: 0.5)
         self.addSubview(border)
         
-        if let icon = icon {
+        if let icon = icon{
             let iconView = UIImageView(image: icon)
             iconView.contentMode = .scaleAspectFit
             iconView.setSize(width: 24, height: 24)
+            
             if let contrastColor = contrastColorTo {
                 iconView.tintColor = UIColor(contrastingBlackOrWhiteColorOn: contrastColor, isFlat: true)
-            } 
+            }
             self.addSubview(iconView)
             iconView.setCenterYAnchor(in: self)
             iconView.setAnchor(left: self.leftAnchor)
@@ -158,6 +159,12 @@ extension UIView {
             self.addSubview(tf)
             tf.setCenterYAnchor(in: iconView)
             tf.setAnchor(right: self.rightAnchor, left: iconView.rightAnchor, paddingLeft: 16)
+            
+            let error = UILabel()
+            error.configureTextLabel(title: "", fontSize: 10, textColor: .red)
+            self.addSubview(error)
+            error.setAnchor(top: tf.bottomAnchor,right: tf.rightAnchor,left: tf.leftAnchor , paddingTop: 15, paddingRight: 5, paddingBottom: 5, paddingLeft: 0)
+            error.text = errorLabel
             
             border.setAnchor(right: self.rightAnchor, bottom: self.bottomAnchor, left: iconView.rightAnchor, paddingLeft: 16)
         } else {
@@ -168,6 +175,26 @@ extension UIView {
         }
 
     }
+    
+//    func configureBadges(badge: UIImage?, nameB: String){
+//        self.setSize(height: 96)
+//        if badge != nil{
+//            let badgeView = UIImageView(image: badge)
+//            badgeView.setSize(width: 84, height: 84)
+//            badgeView.contentMode = .scaleAspectFit
+//
+//            self.addSubview(badgeView)
+//            badgeView.setCenterYAnchor(in: self)
+//            badgeView.setAnchor( left: self.leftAnchor)
+//
+//            let names = UILabel()
+//            names.configureHeadingLabel(title: "", fontSize: 12, textColor: .black)
+//            self.addSubview(names)
+//            names.setAnchor(top: badgeView.bottomAnchor , paddingRight: 8,paddingLeft: 8)
+//            names.setCenterXAnchor(in: badgeView)
+//            names.text = nameB
+//        }
+//    }
 }
 
 extension UITextField {
@@ -213,4 +240,7 @@ extension UIButton {
         }
 
     }
+    
+    
+    
 }
