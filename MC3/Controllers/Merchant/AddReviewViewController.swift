@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddReviewViewController: UIViewController {
+class AddReviewViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     //MARK: - CCOMPONENTS
 
@@ -27,6 +27,7 @@ class AddReviewViewController: UIViewController {
 
     var starsButton: UIButton!
     private var stars: [UIButton]!
+    let imagePicker = UIImagePickerController()
     
     var userRating: Int = 0
         
@@ -133,7 +134,6 @@ class AddReviewViewController: UIViewController {
         } else {
             button.setImage(UIImage(named : "selectedBadge2"), for: .normal)
         }
-        
     }
     
     private lazy var badge2: UIButton = {
@@ -215,9 +215,39 @@ class AddReviewViewController: UIViewController {
         button.contentMode = .scaleToFill
         button.setSize(width: 51, height: 51)
         button.backgroundColor = .clear
+        button.addTarget(self, action: #selector(picker(_:)), for: .touchUpInside)
         
         return button
     }()
+    
+    @objc func picker(_ button: UIButton){
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        alert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: {(button) in
+            self.imagePicker.sourceType = .photoLibrary
+            self.present(self.imagePicker, animated: true, completion: nil)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: {(button) in
+            self.imagePicker.sourceType = .camera
+            self.present(self.imagePicker, animated: true, completion: nil)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let pickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage else { return }
+        //addImageView() then show the picture here:
+        // add image view
+        // push image view in array of image view
+        // change the newest image view image
+        //imageView.image = pickedImage
+        
+        dismiss(animated: true, completion: nil)
+    }
     
     private lazy var saveButton: UIButton = {
         let button = UIButton()
@@ -267,6 +297,9 @@ class AddReviewViewController: UIViewController {
             self.saveButton.setAnchor(bottom: self.view.bottomAnchor, paddingRight: 20, paddingBottom: 30, paddingLeft: 20)
             self.saveButton.setCenterXAnchor(in: self.view)
         }
+        
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = true
         
         
         // Do any additional setup after loading the view.
