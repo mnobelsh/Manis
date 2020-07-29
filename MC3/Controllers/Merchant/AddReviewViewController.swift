@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddReviewViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class AddReviewViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate {
 
     //MARK: - CCOMPONENTS
 
@@ -21,7 +21,7 @@ class AddReviewViewController: UIViewController, UIImagePickerControllerDelegate
 
     private lazy var badLabel: UILabel = {
         let label = UILabel()
-        label.configureTextLabel(title: "Very bad", fontSize: 12, textColor: .black)
+        label.configureCustomLabel(title: "Very bad", fontType: "Book", fontSize: 12, textColor: .black)
         return label
     }()
 
@@ -75,7 +75,7 @@ class AddReviewViewController: UIViewController, UIImagePickerControllerDelegate
 
     private lazy var goodLabel: UILabel = {
         let label = UILabel()
-        label.configureTextLabel(title: "Very goof", fontSize: 12, textColor: .black)
+        label.configureCustomLabel(title: "Very good", fontType: "Book", fontSize: 12, textColor: .black)
         return label
     }()
 
@@ -178,6 +178,32 @@ class AddReviewViewController: UIViewController, UIImagePickerControllerDelegate
         return stack
     }()
     
+    private lazy var badge1Label: UILabel = {
+        let label = UILabel()
+        label.configureCustomLabel(title: "Great Taste", fontType: "Heavy", fontSize: 12, textColor: .black)
+        return label
+    }()
+    private lazy var badge2Label: UILabel = {
+        let label = UILabel()
+        label.configureCustomLabel(title: "Clean Tools", fontType: "Heavy", fontSize: 12, textColor: .black)
+        return label
+    }()
+    private lazy var badge3Label: UILabel = {
+        let label = UILabel()
+        label.configureCustomLabel(title: "Clean Ice", fontType: "Heavy", fontSize: 12, textColor: .black)
+        return label
+    }()
+    
+    private lazy var badgesLabelStacks: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [badge1Label,badge2Label,badge3Label])
+        stack.axis = .horizontal
+        stack.alignment = .fill
+        stack.distribution = .fillProportionally
+        stack.spacing = 50
+        
+        return stack
+    }()
+    
     //COMMENT
     private lazy var commentLabel: UILabel = {
         let label = UILabel()
@@ -191,15 +217,30 @@ class AddReviewViewController: UIViewController, UIImagePickerControllerDelegate
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.isScrollEnabled = false
         textView.font = UIFont(name: "Avenir-Medium", size: 12)
-        textView.text = "kjnsiunqwudnaksj sd iqwndiansdkja iausnd auwnajnsd iauwdakjsnd aiundkjsnd awdnakjsnd"
+        textView.text = "Write your review here..."
+        textView.textColor = UIColor.lightGray
         textView.layer.cornerRadius = 10
         textView.layer.borderWidth = 1
-        textView.layer.borderColor = UIColor.gray.cgColor
+        textView.layer.borderColor = UIColor.systemGray4.cgColor
         textView.sizeToFit()
         textView.layoutIfNeeded()
         
         return textView
     }()
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == UIColor.lightGray {
+            textView.text = nil
+            textView.textColor = UIColor.black
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.text = "Write your review here..."
+            textView.textColor = UIColor.lightGray
+        }
+    }
     
     //PHOTOS
     
@@ -209,11 +250,17 @@ class AddReviewViewController: UIViewController, UIImagePickerControllerDelegate
         return label
     }()
     
+    private lazy var optionalLabel: UILabel = {
+        let label = UILabel()
+        label.configureCustomLabel(title: "(optional)", fontType: "Book", fontSize: 20, textColor: .black)
+        return label
+    }()
+    
     private lazy var pickerButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "addPhotoButton"), for: .normal)
         button.contentMode = .scaleToFill
-        button.setSize(width: 51, height: 51)
+        button.setSize(width: 100, height: 125)
         button.backgroundColor = .clear
         button.addTarget(self, action: #selector(picker(_:)), for: .touchUpInside)
         
@@ -240,18 +287,15 @@ class AddReviewViewController: UIViewController, UIImagePickerControllerDelegate
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let pickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage else { return }
-        //addImageView() then show the picture here:
-        // add image view
-        // push image view in array of image view
-        // change the newest image view image
         //imageView.image = pickedImage
+        pickerButton.setImage(pickedImage, for: .normal)
         
         dismiss(animated: true, completion: nil)
     }
     
     private lazy var saveButton: UIButton = {
         let button = UIButton()
-        button.configureButton(title: "Save", titleColor: .black, backgroundColor: .blue, cornerRadius: 8)
+        button.configureButton(title: "Save", titleColor: .black, backgroundColor: UIColor(hexString: "#FFAC60"), cornerRadius: 8)
         button.setSize(width: 170, height: 50)
         return button
     }()
@@ -273,20 +317,27 @@ class AddReviewViewController: UIViewController, UIImagePickerControllerDelegate
         }
         
         view.addSubview(badgesStacks){
-            self.badgesStacks.setAnchor(top: self.badgesLabel.bottomAnchor,right: self.view.rightAnchor, left: self.view.leftAnchor
-                , paddingRight: 15, paddingBottom: 15, paddingLeft: 15)
+            self.badgesStacks.setAnchor(top: self.badgesLabel.bottomAnchor,right: self.view.rightAnchor, left: self.view.leftAnchor, paddingTop: 8, paddingRight: 15, paddingBottom: 15, paddingLeft: 15)
+        }
+        
+        view.addSubview(badgesLabelStacks){
+            self.badgesLabelStacks.setAnchor(top: self.badgesStacks.bottomAnchor,right: self.view.rightAnchor, left: self.view.leftAnchor, paddingTop: 4, paddingRight: 15, paddingBottom: 15, paddingLeft: 45)
         }
         
         view.addSubview(commentLabel){
-            self.commentLabel.setAnchor(top: self.badgesStacks.bottomAnchor, left: self.view.leftAnchor, paddingTop: 30, paddingRight: 15, paddingBottom: 10, paddingLeft: 15)
+            self.commentLabel.setAnchor(top: self.badgesLabelStacks.bottomAnchor, left: self.view.leftAnchor, paddingTop: 30, paddingRight: 15, paddingBottom: 10, paddingLeft: 15)
         }
         
         view.addSubview(commentView){
-            self.commentView.setAnchor(top: self.commentLabel.bottomAnchor, right: self.view.rightAnchor,left: self.view.leftAnchor, paddingTop: 15, paddingRight: 15, paddingBottom: 15, paddingLeft: 15)
+            self.commentView.setAnchor(top: self.commentLabel.bottomAnchor, right: self.view.rightAnchor,left: self.view.leftAnchor, paddingTop: 8, paddingRight: 15, paddingBottom: 15, paddingLeft: 15)
         }
 
         view.addSubview(photoLabel){
             self.photoLabel.setAnchor(top: self.commentView.bottomAnchor,left: self.view.leftAnchor, paddingTop: 15, paddingRight: 15, paddingBottom: 15, paddingLeft: 15)
+        }
+        
+        view.addSubview(optionalLabel){
+            self.optionalLabel.setAnchor(top: self.commentView.bottomAnchor, left: self.photoLabel.rightAnchor, paddingTop: 15, paddingRight: 15, paddingBottom: 15, paddingLeft: 5)
         }
         
         view.addSubview(pickerButton){
@@ -300,6 +351,7 @@ class AddReviewViewController: UIViewController, UIImagePickerControllerDelegate
         
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
+        commentView.delegate = self
         
         
         // Do any additional setup after loading the view.
