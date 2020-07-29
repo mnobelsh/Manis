@@ -34,13 +34,19 @@ extension UIViewController {
 
 extension UILabel {
     func configureHeadingLabel(title: String, fontSize size: CGFloat? = nil, textColor color: UIColor? = nil) {
-        self.font = UIFont(name: "Avenir-Heavy", size: size ?? 22)
+        self.font = UIFont(name: "Avenir-Black", size: size ?? 22)
         self.text = title
         self.textColor = color ?? UIColor.label
     }
     
     func configureTextLabel(title: String, fontSize size: CGFloat? = nil, textColor color: UIColor? = nil) {
         self.font = UIFont(name: "Avenir", size: size ?? 14)
+        self.text = title
+        self.textColor = color ?? UIColor.label
+    }
+    
+    func configureCustomLabel(title: String, fontType: String, fontSize size: CGFloat? = nil, textColor color: UIColor? = nil) {
+        self.font = UIFont(name: "Avenir-\(fontType)", size: size ?? 14)
         self.text = title
         self.textColor = color ?? UIColor.label
     }
