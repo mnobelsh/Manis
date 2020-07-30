@@ -34,6 +34,14 @@ class WelcomeViewController: UIViewController, UIScrollViewDelegate {
             let pageView = UIView(frame: CGRect(x: CGFloat(i) * view.frame.size.width, y: 0, width: view.frame.size.width, height: view.frame.size.height))
             scrollView.addSubview(pageView)
             
+            if i < titles.count - 1 {
+                let skipButton = UIButton(frame: CGRect(x: pageView.frame.size.width - 85, y: 25, width: 85, height: 40))
+                skipButton.setTitleColor(.systemBlue, for: .normal)
+                skipButton.setTitle("Skip", for: .normal)
+                skipButton.titleLabel?.font = UIFont(name: "Avenir", size: 22)
+                pageView.addSubview(skipButton)
+            }
+            
             let imageView = UIImageView(frame: CGRect(x: 0, y: pageView.frame.size.height/4, width: pageView.frame.size.width, height: pageView.frame.size.height/3))
             
             let titleLabel = UILabel(frame: CGRect(x: 50, y: 50, width: pageView.frame.size.width - 100, height: 120))
@@ -57,9 +65,9 @@ class WelcomeViewController: UIViewController, UIScrollViewDelegate {
                 button.setTitle("Get Started", for: .normal)
             } else {
                 button.setTitle("Next", for: .normal)
+                button.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
             }
             button.titleLabel?.font = UIFont(name: "Avenir", size: 22)
-            button.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
             button.tag = i+1
             pageView.addSubview(button)
         }
@@ -92,7 +100,7 @@ class WelcomeViewController: UIViewController, UIScrollViewDelegate {
     }()
     
     fileprivate func setUpBottomControls() {
-        NSLayoutConstraint.activate([pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor), pageControl.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -100)])
+        NSLayoutConstraint.activate([pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor), pageControl.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -200)])
     }
         
 }
