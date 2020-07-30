@@ -182,31 +182,65 @@ extension UIView {
 
     }
     
-//    func configureBadges(badge: UIImage?, nameB: String){
-//        self.setSize(height: 96)
-//        if badge != nil{
-//            let badgeView = UIImageView(image: badge)
-//            badgeView.setSize(width: 84, height: 84)
-//            badgeView.contentMode = .scaleAspectFit
-//
-//            self.addSubview(badgeView)
-//            badgeView.setCenterYAnchor(in: self)
-//            badgeView.setAnchor( left: self.leftAnchor)
-//
-//            let names = UILabel()
-//            names.configureHeadingLabel(title: "", fontSize: 12, textColor: .black)
-//            self.addSubview(names)
-//            names.setAnchor(top: badgeView.bottomAnchor , paddingRight: 8,paddingLeft: 8)
-//            names.setCenterXAnchor(in: badgeView)
-//            names.text = nameB
-//        }
-//    }
+    func configureRatingView(withRating rating: String, textColor: UIColor) {
+        
+        let starView = UIImageView(image: UIImage(systemName: "star.fill")?.withTintColor(.systemYellow, renderingMode: .alwaysOriginal))
+        starView.contentMode = .scaleAspectFit
+        starView.backgroundColor = .clear
+        starView.setSize(width: 20, height: 20)
+        
+        self.addSubview(starView) {
+            starView.setAnchor(left: self.leftAnchor)
+            starView.setCenterYAnchor(in: self)
+        }
+        
+        let ratingLabel = UILabel()
+        ratingLabel.backgroundColor = .clear
+        ratingLabel.configureHeadingLabel(title: rating, fontSize: 14, textColor: textColor)
+        
+        self.addSubview(ratingLabel) {
+            ratingLabel.setAnchor(top: self.topAnchor, right: self.rightAnchor, bottom: self.bottomAnchor, left: starView.rightAnchor, paddingTop: 4, paddingBottom: 4, paddingLeft: 8)
+        }
+        
+    }
+    
+    func configureBadge(badge: UIImage,title: String,total: String){
+        self.setSize(height: 120)
+        let img = UIImageView(image: badge)
+        img.contentMode = .scaleAspectFit
+        img.backgroundColor = .clear
+        
+        self.addSubview(img){
+            img.setAnchor(top: self.topAnchor,right: self.rightAnchor,left: self.leftAnchor, paddingTop: 0, paddingRight: 8, paddingBottom: 8, paddingLeft: 0)
+            
+        }
+        
+        let titlelabel = UILabel()
+        titlelabel.backgroundColor = .clear
+//        titlelabel.configureHeadingLabel(title: title, fontSize: 12, textColor: .black)
+        titlelabel.font = UIFont(name: "Avenir-Medium", size: 12)
+        titlelabel.text = title
+        titlelabel.textColor = .black
+        
+        self.addSubview(titlelabel){
+            titlelabel.setAnchor(top: img.bottomAnchor, paddingTop: 0)
+            titlelabel.setCenterXAnchor(in: img)
+        }
+        
+        let totalLabel = UILabel()
+        totalLabel.backgroundColor = .clear
+        totalLabel.font = UIFont(name: "Avenir-Medium", size: 12)
+        totalLabel.text = total
+        totalLabel.textColor = .black
+        
+        self.addSubview(totalLabel){
+            totalLabel.setAnchor(top: titlelabel.bottomAnchor, paddingTop: 0)
+            totalLabel.setCenterXAnchor(in: img)
+        }
+    }
 }
 
 extension UITextField {
-    enum ContrastColorType {
-        case light,dark
-    }
     func configureInputTextField(placeholder: String, isSecureTextEntry: Bool, contrastColorTo: UIColor? = nil) {
         self.isSecureTextEntry = isSecureTextEntry ? true : false
         
@@ -246,7 +280,4 @@ extension UIButton {
         }
 
     }
-    
-    
-    
 }
