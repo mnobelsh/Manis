@@ -21,6 +21,14 @@ class ProfileViewController: UIViewController {
         }
     }
     
+    private lazy var profileImage: UIImageView = {
+        let img = UIImageView()
+        img.image = UIImage(named: "profilePictureBig")
+        img.setSize(width: 120, height: 120)
+        
+        return img
+    }()
+    
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.configureCustomLabel(title: "JohnDoe", fontType: "Heavy", fontSize: 18, textColor: .black)
@@ -140,16 +148,22 @@ class ProfileViewController: UIViewController {
         
         view.backgroundColor = .white
         
+        view.addSubview(profileImage){
+            self.profileImage.setCenterXAnchor(in: self.view)
+            self.profileImage.setAnchor(top: self.view.topAnchor, paddingTop: 150, paddingRight: 8, paddingBottom: 8, paddingLeft: 8)
+        }
+        
         view.addSubview(nameLabel){
             self.nameLabel.setCenterXAnchor(in: self.view)
-            self.nameLabel.setAnchor(top: self.view.topAnchor, paddingTop: 120, paddingRight: 15, paddingBottom: 15, paddingLeft: 15)
+            self.nameLabel.setAnchor(top: self.profileImage.bottomAnchor, paddingTop: 8, paddingRight: 15, paddingBottom: 15, paddingLeft: 15)
         }
         
         view.addSubview(topButtonStacks){
-            self.topButtonStacks.setAnchor(top: self.nameLabel.bottomAnchor,right: self.view.rightAnchor, left: self.view.leftAnchor, paddingTop: 8, paddingRight: 15, paddingBottom: 15, paddingLeft: 15)
+            self.topButtonStacks.setAnchor(top: self.nameLabel.bottomAnchor,right: self.view.rightAnchor, left: self.view.leftAnchor, paddingTop: 60, paddingRight: 15, paddingBottom: 15, paddingLeft: 15)
         }
         
         view.addSubview(topButtonLabelStacks){
+            self.topButtonLabelStacks.setCenterXAnchor(in: self.view)
             self.topButtonLabelStacks.setAnchor(top: self.topButtonStacks.bottomAnchor,right: self.view.rightAnchor, left: self.view.leftAnchor, paddingTop: 8, paddingRight: 15, paddingBottom: 15, paddingLeft: 15)
         }
         
@@ -158,6 +172,7 @@ class ProfileViewController: UIViewController {
         }
         
         view.addSubview(bottomButtonLabelStacks){
+            self.bottomButtonLabelStacks.setCenterXAnchor(in: self.view)
             self.bottomButtonLabelStacks.setAnchor(top: self.bottomButtonStacks.bottomAnchor,right: self.view.rightAnchor, left: self.view.leftAnchor, paddingTop: 8, paddingRight: 15, paddingBottom: 15, paddingLeft: 15)
         }
     }
