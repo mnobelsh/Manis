@@ -19,7 +19,7 @@ class AllReviewVC: UIViewController {
     
     private lazy var addButton: UIButton = {
         let button = UIButton()
-        button.configureButton(title: "Add Review", titleColor: .black, backgroundColor: .blue, cornerRadius: 8)
+        button.configureButton(title: "Add Review", titleColor: .black, backgroundColor: UIColor(hexString: "9CE4E5"), cornerRadius: 8)
         button.setSize(width: 170, height: 50)
         return button
     }()
@@ -28,10 +28,10 @@ class AllReviewVC: UIViewController {
         [Review(id: UUID().uuidString, userName: "Bambang"),
          Review(id: UUID().uuidString, userName: "Nobal"),
          Review(id: UUID().uuidString, userName: "Sukma"),
-         Review(id: UUID().uuidString, userName: "Dik"),
+         Review(id: UUID().uuidString, userName: "kamu"),
          Review(id: UUID().uuidString, userName: "I"),
          Review(id: UUID().uuidString, userName: "Hate"),
-         Review(id: UUID().uuidString, userName: "This")]
+         Review(id: UUID().uuidString, userName: "U")]
     
     override func viewDidLoad() {
         super.viewDidLoad()
