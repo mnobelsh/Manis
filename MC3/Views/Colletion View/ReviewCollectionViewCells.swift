@@ -27,58 +27,55 @@ class ReviewCollectionViewCells: UICollectionViewCell, UITextViewDelegate {
     }()
     
     //STARS
-    private lazy var starButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(systemName: "star.fill"), for: .normal)
-        button.tintColor = .systemYellow
-        
-        button.contentMode = .scaleAspectFit
-        button.backgroundColor = .clear
-        button.isUserInteractionEnabled = false
-        //add target
-        
-        return button
-    }()
     
+    var starsButton: UIButton!
     private var stars: [UIButton]!
-    private var userRating: Int = 0
+    let imagePicker = UIImagePickerController()
     
+    var userRating: Int = 0
+        
+    //
     func configureStar(rating: Int) -> [UIButton] {
         var buttonSet: [UIButton] = []
-        
+
         for _ in 0..<rating {
-            buttonSet.append(starButton)
+            starsButton = UIButton()
+            starsButton.setImage(UIImage(named: "SmallSelectedStar"), for: .normal)
+            starsButton.contentMode = .scaleAspectFit
+            starsButton.backgroundColor = .clear
+            starsButton.isUserInteractionEnabled = false
+            buttonSet.append(starsButton)
         }
         return buttonSet
     }
-    
+
     private lazy var stackStar: UIStackView = {
-        self.stars = configureStar(rating: 5)
         print("DEBUGS Rating")
         
+        stars = configureStar(rating: 5)
+
         let stack = UIStackView(arrangedSubviews: stars)
         stack.axis = .horizontal
         stack.distribution = .fillEqually
         stack.spacing = 4
         return stack
     }()
-
     
     private lazy var badgeGreatTaste: UIImageView = {
         let img = UIImageView()
-        img.image = UIImage(systemName: "moon.stars")
+        img.image = UIImage(systemName: "smallBadge2")
         return img
     }()
     
     private lazy var badgeCleanTools: UIImageView = {
         let img = UIImageView()
-        img.image = UIImage(systemName: "starolife")
+        img.image = UIImage(systemName: "smallBadge3")
         return img
     }()
     
     private lazy var badgeCleanIce: UIImageView = {
         let img = UIImageView()
-        img.image = UIImage(systemName: "wand.and.stars")
+        img.image = UIImage(systemName: "smallBadge1")
         return img
     }()
     
@@ -87,6 +84,7 @@ class ReviewCollectionViewCells: UICollectionViewCell, UITextViewDelegate {
         stack.axis = .horizontal
         stack.alignment = .leading
         stack.distribution = .fillProportionally
+        stack.spacing = 8
         return stack
     }()
     
@@ -105,7 +103,7 @@ class ReviewCollectionViewCells: UICollectionViewCell, UITextViewDelegate {
     
     private lazy var reviewPhotos: UIImageView = {
         let img = UIImageView()
-        img.image = UIImage(named: "esdoger2.JPG" )
+        img.image = #imageLiteral(resourceName: "doger")
         img.setSize(width: 99, height: 123)
         
         return img
@@ -147,37 +145,7 @@ class ReviewCollectionViewCells: UICollectionViewCell, UITextViewDelegate {
             self.reviewPhotos.setAnchor(top: self.commentView.bottomAnchor, left: self.leftAnchor, paddingTop: 8, paddingRight: 8, paddingBottom: 8, paddingLeft: 8)
         }
     }
-    
-//    func configureStarRating(rate: Double){
-//        //RATING
-//                var buttonArray: [String] = []
-//                var rating = rate
-//
-//
-////        for index in 0...Int(rating.round(.down)) {
-////                    buttonArray.append("Button\(index)")
-////                }
-//
-//        for (index,element) in buttonArray.enumerated(){
-//            let oneBtn: UIButton = {
-//                let button = UIButton()
-//                button.setImage(UIImage(systemName: "star"), for: .normal)
-//                button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
-//                button.tag = index
-//                return button
-//            }()
-//            self.addSubview(stackStar){
-//                self.stackStar.addArrangedSubview(oneBtn)
-//                self.stackStar.setAnchor(top: self.nameLabel.bottomAnchor, left: self.leftAnchor, paddingTop: 8, paddingRight: 8,  paddingLeft: 8)
-//                    }
-//                    print(index)
-//
-//        //            if buttonArray.count >= 4{
-//        //                break
-//        //            }
-//                }
-//    }
-    
+
     func whenTapped(){
         
     }
