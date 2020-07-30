@@ -107,7 +107,7 @@ class MainHeaderView: UIView {
             self.sortingCollectionView.alpha = 0
         }
         
-        self.backgroundColor = .white
+        self.backgroundColor = .black
         self.configureRoundedCorners(corners: [.bottomRight,.bottomLeft], radius: 12)
         self.configureShadow(shadowColor: .lightGray, radius: 6)
     }

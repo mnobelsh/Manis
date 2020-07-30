@@ -1,8 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "picture-1553573170.JPG",
-      "idiom" : "universal"
+      "filename" : "doger.JPG",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
     }
   ],
   "info" : {

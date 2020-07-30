@@ -217,8 +217,10 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == self.collectionView {
             
-            let merchant = collectionViewDataSource?.itemIdentifier(for: indexPath)
-            print("SELECTED MERCHANT : \(merchant!.name)")
+            let merchantVC = MerchantViewController()
+            merchantVC.merchant = collectionViewDataSource?.itemIdentifier(for: indexPath)
+            self.navigationController?.pushViewController(merchantVC, animated: true)
+//            print("SELECTED MERCHANT : \(merchant!.name)")
             
         } else if collectionView == self.headerContainerView.sortingCollectionView {
             

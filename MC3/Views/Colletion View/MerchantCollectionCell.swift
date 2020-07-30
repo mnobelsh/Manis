@@ -20,7 +20,7 @@ class MerchantCollectionCell: UICollectionViewCell {
                 nameLabel.text = data.name
                 addressLabel.text = data.address
                 lovedLabel.text = "By \(data.lovedCount) Peoples"
-                merchantImageView.image = #imageLiteral(resourceName: "doger")
+                merchantImageView.image = #imageLiteral(resourceName: "profile")
             }
         }
     }
