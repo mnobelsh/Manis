@@ -171,6 +171,8 @@ extension UIView {
             self.addSubview(error)
             error.setAnchor(top: tf.bottomAnchor,right: tf.rightAnchor,left: tf.leftAnchor , paddingTop: 15, paddingRight: 5, paddingBottom: 5, paddingLeft: 0)
             error.text = errorLabel
+            error.isHidden = true
+            error.tag = 500
             
             border.setAnchor(right: self.rightAnchor, bottom: self.bottomAnchor, left: iconView.rightAnchor, paddingLeft: 16)
         } else {
@@ -180,6 +182,14 @@ extension UIView {
             border.setAnchor(right: self.rightAnchor, bottom: self.bottomAnchor, left: self.leftAnchor)
         }
 
+    }
+    
+    func showErrorTextField(){
+        for view in self.subviews {
+            if view.tag == 500 {
+                view.isHidden = false
+            }
+        }
     }
     
     func configureRatingView(withRating rating: String, textColor: UIColor) {
