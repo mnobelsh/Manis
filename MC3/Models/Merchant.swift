@@ -7,56 +7,61 @@
 //
 
 import Foundation
+import CoreLocation
 
 struct Merchant: Hashable {
     
-    static var trendingsDessert: [Merchant] = [Merchant(id: UUID().uuidString, name: "Es Doger", address: "Jl. Serpong Raya 1", lovedCount: 120, menu: []),
-                                               Merchant(id: UUID().uuidString, name: "Es Campur", address: "Jl. Serpong Raya 12", lovedCount: 75, menu: []),
-                                               Merchant(id: UUID().uuidString, name: "Es Goyobod", address: "Jl. Serpong Raya 3", lovedCount: 90, menu: [])]
-    static var nearbyMerchants: [Merchant] =  [Merchant(id: UUID().uuidString, name: "Es Cincau Mang Ucup", address: "Jl. Serpong Raya 10", lovedCount: 111, menu: []),
-                                               Merchant(id: UUID().uuidString, name: "Es Teler Uhuy", address: "Jl. Serpong Raya 13", lovedCount: 111, menu: []),
-                                               Merchant(id: UUID().uuidString, name: "Es Pisang Ijo Prikitiew", address: "Jl. Serpong Raya 56", lovedCount: 111, menu: []),]
-    static var highestRatingMerchants: [Merchant] = [Merchant(id: UUID().uuidString, name: "Es Puter Linlin", address: "Jl. Serpong Raya 99", lovedCount: 111, menu: []),
-                                                     Merchant(id: UUID().uuidString, name: "Es Slendang Mayang Sari", address: "Jl. Serpong Raya 11", lovedCount: 111, menu: []),
-                                                     Merchant(id: UUID().uuidString, name: "Es Bahenol", address: "Jl. Serpong Raya 17", lovedCount: 111, menu: []),]
+    static var trendingsDessert: [Merchant] = [Merchant(id: UUID().uuidString, name: "Es Doger", address: "Jl. Serpong Raya 1", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+                                               Merchant(id: UUID().uuidString, name: "Es Campur", address: "Jl. Serpong Raya 12", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+                                               Merchant(id: UUID().uuidString, name: "Es Goyobod", address: "Jl. Serpong Raya 3", lovedBy: [], menu: [], badges: [], phoneNumber: "000")]
+    static var nearbyMerchants: [Merchant] =  [Merchant(id: UUID().uuidString, name: "Es Cincau Mang Ucup", address: "Jl. Serpong Raya 10", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+                                               Merchant(id: UUID().uuidString, name: "Es Teler Uhuy", address: "Jl. Serpong Raya 13", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+                                               Merchant(id: UUID().uuidString, name: "Es Pisang Ijo Prikitiew", address: "Jl. Serpong Raya 56", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),]
+    static var highestRatingMerchants: [Merchant] = [Merchant(id: UUID().uuidString, name: "Es Puter Linlin", address: "Jl. Serpong Raya 99", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+                                                     Merchant(id: UUID().uuidString, name: "Es Slendang Mayang Sari", address: "Jl. Serpong Raya 11", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+                                                     Merchant(id: UUID().uuidString, name: "Es Bahenol", address: "Jl. Serpong Raya 17", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),]
     
     static var searchResult: [Merchant] = [
-        Merchant(id: UUID().uuidString, name: "Es goyang lidah", address: "Jl. Hayam Wuruk", lovedCount: 100, menu: []),
-        Merchant(id: UUID().uuidString, name: "Es goyang gayung", address: "Jl. Hayam Wuruk", lovedCount: 100, menu: []),
-        Merchant(id: UUID().uuidString, name: "Es goyang lihay", address: "Jl. Hayam Wuruk", lovedCount: 100, menu: []),
-        Merchant(id: UUID().uuidString, name: "Es goyang ngebor", address: "Jl. Hayam Wuruk", lovedCount: 100, menu: []),
-        Merchant(id: UUID().uuidString, name: "Es goyang asik", address: "Jl. Hayam Wuruk", lovedCount: 100, menu: []),
-        Merchant(id: UUID().uuidString, name: "Es goyang yang", address: "Jl. Hayam Wuruk", lovedCount: 100, menu: []),
+        Merchant(id: UUID().uuidString, name: "Es goyang lidah", address: "Jl. Hayam Wuruk", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+        Merchant(id: UUID().uuidString, name: "Es goyang gayung", address: "Jl. Hayam Wuruk", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+        Merchant(id: UUID().uuidString, name: "Es goyang lihay", address: "Jl. Hayam Wuruk", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+        Merchant(id: UUID().uuidString, name: "Es goyang ngebor", address: "Jl. Hayam Wuruk", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+        Merchant(id: UUID().uuidString, name: "Es goyang asik", address: "Jl. Hayam Wuruk", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+        Merchant(id: UUID().uuidString, name: "Es goyang yang", address: "Jl. Hayam Wuruk", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
     ]
     
     static var highestRatingAllMerchants: [Merchant] = [
-        Merchant(id: UUID().uuidString, name: "Es Puter Linlin", address: "Jl. Serpong Raya 99", lovedCount: 111, menu: []),
-        Merchant(id: UUID().uuidString, name: "Es Slendang Mayang Sari", address: "Jl. Serpong Raya 11", lovedCount: 111, menu: []),
-        Merchant(id: UUID().uuidString, name: "Es Bahenol", address: "Jl. Serpong Raya 17", lovedCount: 111, menu: []),
-        Merchant(id: UUID().uuidString, name: "Es Puter Linlin", address: "Jl. Serpong Raya 99", lovedCount: 111, menu: []),
-        Merchant(id: UUID().uuidString, name: "Es Slendang Mayang Sari", address: "Jl. Serpong Raya 11", lovedCount: 111, menu: []),
-        Merchant(id: UUID().uuidString, name: "Es Bahenol", address: "Jl. Serpong Raya 17", lovedCount: 111, menu: []),
-        Merchant(id: UUID().uuidString, name: "Es Puter Linlin", address: "Jl. Serpong Raya 99", lovedCount: 111, menu: []),
-        Merchant(id: UUID().uuidString, name: "Es Slendang Mayang Sari", address: "Jl. Serpong Raya 11", lovedCount: 111, menu: []),
-        Merchant(id: UUID().uuidString, name: "Es Bahenol", address: "Jl. Serpong Raya 17", lovedCount: 111, menu: []),
-        Merchant(id: UUID().uuidString, name: "Es Puter Linlin", address: "Jl. Serpong Raya 99", lovedCount: 111, menu: []),
-        Merchant(id: UUID().uuidString, name: "Es Slendang Mayang Sari", address: "Jl. Serpong Raya 11", lovedCount: 111, menu: []),
-        Merchant(id: UUID().uuidString, name: "Es Bahenol", address: "Jl. Serpong Raya 17", lovedCount: 111, menu: []),
+        Merchant(id: UUID().uuidString, name: "Es Puter Linlin", address: "Jl. Serpong Raya 99", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+        Merchant(id: UUID().uuidString, name: "Es Slendang Mayang Sari", address: "Jl. Serpong Raya 11", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+        Merchant(id: UUID().uuidString, name: "Es Bahenol", address: "Jl. Serpong Raya 17", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+        Merchant(id: UUID().uuidString, name: "Es Puter Linlin", address: "Jl. Serpong Raya 99", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+        Merchant(id: UUID().uuidString, name: "Es Slendang Mayang Sari", address: "Jl. Serpong Raya 11", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+        Merchant(id: UUID().uuidString, name: "Es Bahenol", address: "Jl. Serpong Raya 17", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+        Merchant(id: UUID().uuidString, name: "Es Puter Linlin", address: "Jl. Serpong Raya 99", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+        Merchant(id: UUID().uuidString, name: "Es Slendang Mayang Sari", address: "Jl. Serpong Raya 11", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+        Merchant(id: UUID().uuidString, name: "Es Bahenol", address: "Jl. Serpong Raya 17", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+        Merchant(id: UUID().uuidString, name: "Es Puter Linlin", address: "Jl. Serpong Raya 99", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+        Merchant(id: UUID().uuidString, name: "Es Slendang Mayang Sari", address: "Jl. Serpong Raya 11", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+        Merchant(id: UUID().uuidString, name: "Es Bahenol", address: "Jl. Serpong Raya 17", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
     ]
     
     
-    static let openingHours = "opening_hours"
-    static let photos = "photos"
-    static let menu = "menu"
-    static let location = "location"
-    static let lovedCount = "loved"
-    static let address = "address"
-    static let name = "name"
+    static let openingHoursField = "opening_hours"
+    static let photosField = "photos"
+    static let menuField = "menu"
+    static let locationField = "location"
+    static let lovedByField = "lovedBy"
+    static let addressField = "address"
+    static let nameField = "name"
+    static let badgeField = "badges"
+    static let phoneNumberField = "phone_number"
     
     var id: String
     var name: String
     var address: String
-    var lovedCount: Int
+    var lovedBy: [String]
     var menu: [Menu]
+    var badges: [Badge]
+    var phoneNumber: String
     
 }

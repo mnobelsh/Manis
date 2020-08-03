@@ -66,9 +66,6 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         locationHandler.requestLocation()
-//        print("DEBUGS : ",locationHandler.manager.location)
-//        let placeMark = MKPlacemark(coordinate: locationHandler.manager.location!.coordinate)
-//        print("DEBUGS : \(placeMark.title)")
         configureComponents()
         configureUI()
     }
@@ -76,6 +73,24 @@ class MainViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+//        let menus: [[String: Any]] = [
+//            [Menu.titleField : "Es Cincau Hitam", Menu.priceField : 17000],
+//            [Menu.titleField : "Es Cincau Hijau", Menu.priceField : 16500],
+//        ]
+//        let merchantdata: [String:Any] = [
+//            Merchant.nameField : "Es Cincai Hijau Hulk",
+//            Merchant.addressField: "Jalan Hayam Wuruk 5",
+//            Merchant.menuField: menus,
+//            Merchant.badgeField: [Badge](),
+//            Merchant.lovedByField: [String](),
+//            Merchant.phoneNumberField: "89172101",
+//            Merchant.locationField: locationHandler.manager.location!
+//        ]
+//        FirebaseService.shared.registerMerchant(merchantData: merchantdata) {
+//            print("Success add new merchant!")
+//        }
+      
         UIView.animate(withDuration: 0.35) {
             self.headerContainerView.frame.origin.y = 0
         }
