@@ -8,7 +8,9 @@
 
 import UIKit
 
-class EditProfileViewController: UIViewController {
+class EditProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    let imagePicker = UIImagePickerController()
     
     private lazy var profileImage: UIImageView = {
         let img = UIImageView()
@@ -18,10 +20,15 @@ class EditProfileViewController: UIViewController {
         return img
     }()
     
-    private lazy var labelPhoto:UILabel = {
+    private lazy var labelChangePhoto:UILabel = {
         let label = UILabel()
+        label.isUserInteractionEnabled = true
         label.configureTextLabel(title: "Change Photo", fontSize: 14, textColor: .link)
         label.textAlignment = .center
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(labelPicker(_:)))
+        label.addGestureRecognizer(tapGesture)
+        
         return label
     }()
     
@@ -51,7 +58,7 @@ class EditProfileViewController: UIViewController {
             return view
         }()
         
-    private lazy var labelChange:UILabel = {
+    private lazy var labelChangePass:UILabel = {
         let ChangePass = UILabel()
         ChangePass.configureTextLabel(title: "Change Password", fontSize: 14, textColor: .link)
         return ChangePass
@@ -86,24 +93,27 @@ class EditProfileViewController: UIViewController {
             self.profileImage.setAnchor(top: self.view.topAnchor, paddingTop: 150, paddingRight: 8, paddingBottom: 8, paddingLeft: 8)
         }
         
-        view.addSubview(labelPhoto){
-            self.labelPhoto.setAnchor(top: self.profileImage.bottomAnchor, right: self.view.rightAnchor,  left: self.view.leftAnchor, paddingTop: 8, paddingRight: 8, paddingBottom: 8, paddingLeft: 8)
+        view.addSubview(labelChangePhoto){
+            self.labelChangePhoto.setAnchor(top: self.profileImage.bottomAnchor, right: self.view.rightAnchor,  left: self.view.leftAnchor, paddingTop: 8, paddingRight: 8, paddingBottom: 8, paddingLeft: 8)
         }
         
         view.addSubview(stackk){
             self.stackk.setCenterYAnchor(in: self.view)
-            self.stackk.setAnchor(top: self.labelPhoto.bottomAnchor ,right: self.view.rightAnchor, left: self.view.leftAnchor, paddingRight: 20, paddingLeft: 20)
+            self.stackk.setAnchor(top: self.labelChangePhoto.bottomAnchor ,right: self.view.rightAnchor, left: self.view.leftAnchor, paddingRight: 20, paddingLeft: 20)
         }
         
-        view.addSubview(labelChange){
-            self.labelChange.setAnchor(top: self.stackk.bottomAnchor, left: self.view.leftAnchor, paddingTop: 50, paddingRight: 20, paddingBottom: 20, paddingLeft: 20)
+        view.addSubview(labelChangePass){
+            self.labelChangePass.setAnchor(top: self.stackk.bottomAnchor, left: self.view.leftAnchor, paddingTop: 50, paddingRight: 20, paddingBottom: 20, paddingLeft: 20)
         }
         
         view.addSubview(button){
-            self.button.setAnchor(top: self.labelChange.bottomAnchor, paddingTop: 50, paddingRight: 20, paddingBottom: 20, paddingLeft: 20)
+            self.button.setAnchor(top: self.labelChangePass.bottomAnchor, paddingTop: 50, paddingRight: 20, paddingBottom: 20, paddingLeft: 20)
             self.button.setCenterXAnchor(in: self.view)
         }
         // Do any additional setup after loading the view.
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = true
+        
     }
     
     @objc func saveButtonTapped(_ button: UIButton){
@@ -111,4 +121,30 @@ class EditProfileViewController: UIViewController {
         self.navigationController?.pushViewController(ProfileVC, animated: true)
     }
     
+    @objc func labelPicker(_ sender: UILabel){
+        print("DEBUGS : UILabel CLICKED")
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        alert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: {(label) in
+            self.imagePicker.sourceType = .photoLibrary
+            self.present(self.imagePicker, animated: true, completion: nil)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: {(label) in
+            self.imagePicker.sourceType = .camera
+            self.present(self.imagePicker, animated: true, completion: nil)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let pickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage else { return }
+        //imageView.image = pickedImage
+        profileImage.image = pickedImage
+        
+        dismiss(animated: true, completion: nil)
+    }
 }

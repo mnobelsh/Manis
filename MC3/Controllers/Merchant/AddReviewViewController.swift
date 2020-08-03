@@ -96,30 +96,6 @@ class AddReviewViewController: UIViewController, UIImagePickerControllerDelegate
         return label
     }()
     
-//    private lazy var badgesImage: UIButton = {
-//        let button = UIButton()
-//        button.setImage(UIImage(named: "bigBadge2"), for: .normal)
-//        return button
-//    }()
-    
-//    private lazy var badgesView1: UIView = {
-//        let bView = UIView()
-//        bView.configureBadges(badge: UIImage(named: "bigBadge2"), nameB: "Great Taste")
-//        return bView
-//    }()
-//
-//    private lazy var badgesView2: UIView = {
-//        let bView = UIView()
-//        bView.configureBadges(badge: UIImage(named: "bigBadge1"), nameB: "Clean Tools")
-//        return bView
-//    }()
-//
-//    private lazy var badgesView3: UIView = {
-//        let bView = UIView()
-//        bView.configureBadges(badge: UIImage(named: "bigBadge3"), nameB: "Clean Ice")
-//        return bView
-//    }()
-    
     private lazy var badge1: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "bigBadge2"), for: .normal)
@@ -297,12 +273,17 @@ class AddReviewViewController: UIViewController, UIImagePickerControllerDelegate
         let button = UIButton()
         button.configureButton(title: "Save", titleColor: .black, backgroundColor: UIColor(hexString: "#FFAC60"), cornerRadius: 8)
         button.setSize(width: 170, height: 50)
+        button.addTarget(self, action: #selector(saveButtonTapped(_:)), for: .touchUpInside)
         return button
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        
+        setTransparentNavbar()
+        self.navigationController?.navigationBar.isHidden = false
+        self.navigationController?.navigationBar.tintColor = .black
         
         view.addSubview(ratingLabel){
             self.ratingLabel.setAnchor(top: self.view.topAnchor, left: self.view.leftAnchor, paddingTop: 120, paddingRight: 15, paddingBottom: 15, paddingLeft: 15)
@@ -356,4 +337,10 @@ class AddReviewViewController: UIViewController, UIImagePickerControllerDelegate
         
         // Do any additional setup after loading the view.
     }
+    
+    @objc func saveButtonTapped(_ button: UIButton){
+        let backVC = AllReviewVC()
+        self.navigationController?.pushViewController(backVC, animated: true)
+    }
+    
 }
