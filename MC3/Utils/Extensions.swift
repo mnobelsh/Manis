@@ -211,6 +211,41 @@ extension UIView {
         return false
     }
     
+    func checkEmptyTextField() {
+        var isEmpty = false
+        for view in self.subviews {
+            if let textField = view as? UITextField {
+                if textField.text == "" {
+                    isEmpty = true
+                }
+            }
+            if let errorLabel = view as? UILabel {
+                if isEmpty {
+                    errorLabel.isHidden = false
+                } else {
+                    errorLabel.isHidden = true
+                }
+            }
+        }
+    }
+    
+    func getTextFromTextField() -> String? {
+        for view in self.subviews {
+            if let textField = view as? UITextField {
+                return textField.text
+            }
+        }
+        return nil
+    }
+    
+    func changeErrorLabelTextField(label: String){
+        for view in self.subviews {
+            if let errorLabel = view as? UILabel {
+                errorLabel.text = label
+            }
+        }
+    }
+    
     func configureRatingView(withRating rating: String, textColor: UIColor) {
         
         let starView = UIImageView(image: UIImage(systemName: "star.fill")?.withTintColor(.systemYellow, renderingMode: .alwaysOriginal))

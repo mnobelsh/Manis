@@ -79,20 +79,42 @@ class ChangePasswordViewController: UIViewController {
     }()
     
     @objc func saveDidTap(_ button:UIButton) {
+        var canSave = true
         if textViewCurrentPassword.isEmptyTextField() {
             textViewCurrentPassword.showErrorTextField()
-        } else {
-            textViewCurrentPassword.hideErrorTextField()
+            canSave = false
         }
         if textViewNewPassword.isEmptyTextField() {
             textViewNewPassword.showErrorTextField()
-        } else {
-            textViewNewPassword.hideErrorTextField()
+            canSave = false
         }
         if textViewRepeatNewPassword.isEmptyTextField() {
             textViewRepeatNewPassword.showErrorTextField()
-        } else {
-            textViewRepeatNewPassword.hideErrorTextField()
+            canSave = false
+        }
+
+//        textViewCurrentPassword.checkEmptyTextField()
+//        textViewNewPassword.checkEmptyTextField()
+//        textViewRepeatNewPassword.checkEmptyTextField()
+        
+        if canSave {
+            // check if currentPassword is true
+//            if currentPassword is true {
+//
+//            } else {
+//                textViewCurrentPassword.changeErrorLabelTextField(label: "Wrong password!")
+//                textViewCurrentPassword.showErrorTextField()
+//            }
+            
+            let newPass = textViewNewPassword.getTextFromTextField()
+            let repeatNewPass = textViewRepeatNewPassword.getTextFromTextField()
+            if newPass == repeatNewPass {
+                print("PASSWORD CHANGE")
+                // change password nya, jangan lupa newPass nya masi optional
+            } else {
+                textViewRepeatNewPassword.changeErrorLabelTextField(label: "Password doesn't match!")
+                textViewRepeatNewPassword.showErrorTextField()
+            }
         }
     }
     
