@@ -30,6 +30,7 @@ class AddReviewViewController: UIViewController, UIImagePickerControllerDelegate
     let imagePicker = UIImagePickerController()
     
     var userRating: Int = 0
+
         
     //
     func configureStar(rating: Int) -> [UIButton] {
@@ -71,6 +72,8 @@ class AddReviewViewController: UIViewController, UIImagePickerControllerDelegate
         for idx in 0...maxIndex{
             stars[idx].setImage(UIImage(named: "BigSelectedStar"), for: .normal)
         }
+        print("DEBUGS : \(userRating)")
+        
     }
 
     private lazy var goodLabel: UILabel = {
@@ -105,7 +108,7 @@ class AddReviewViewController: UIViewController, UIImagePickerControllerDelegate
     
     @objc func badgeDidTapped(_ button: UIButton){
         button.isSelected = !button.isSelected
-        if button.isSelected == true {
+        if button.isSelected == false {
             button.setImage(UIImage(named : "bigBadge2"), for: .normal)
         } else {
             button.setImage(UIImage(named : "selectedBadge2"), for: .normal)
@@ -121,7 +124,7 @@ class AddReviewViewController: UIViewController, UIImagePickerControllerDelegate
     
     @objc func badgeDidTapped2(_ button: UIButton){
         button.isSelected = !button.isSelected
-        if button.isSelected == true {
+        if button.isSelected == false {
            button.setImage(UIImage(named : "bigBadge3"), for: .normal)
        } else {
            button.setImage(UIImage(named : "selectedBadge3"), for: .normal)
@@ -137,7 +140,7 @@ class AddReviewViewController: UIViewController, UIImagePickerControllerDelegate
     
     @objc func badgeDidTapped3(_ button: UIButton){
         button.isSelected = !button.isSelected
-        if button.isSelected == true {
+        if button.isSelected == false {
             button.setImage(UIImage(named : "bigBadge1"), for: .normal)
         } else {
             button.setImage(UIImage(named : "selectedBadge1"), for: .normal)
@@ -216,6 +219,9 @@ class AddReviewViewController: UIViewController, UIImagePickerControllerDelegate
             textView.text = "Write your review here..."
             textView.textColor = UIColor.lightGray
         }
+        let userInput: String
+        userInput = textView.text
+        print("DEBUGS : \(userInput)")
     }
     
     //PHOTOS
@@ -341,6 +347,7 @@ class AddReviewViewController: UIViewController, UIImagePickerControllerDelegate
     @objc func saveButtonTapped(_ button: UIButton){
         let backVC = AllReviewVC()
         self.navigationController?.pushViewController(backVC, animated: true)
+//        self.navigationController?.dismiss(animated: true, completion: nil)
     }
     
 }
