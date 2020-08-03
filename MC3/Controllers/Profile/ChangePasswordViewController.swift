@@ -100,8 +100,8 @@ class ChangePasswordViewController: UIViewController {
         if canSave {
             // check if currentPassword is true
 //            if currentPassword is false {
-    //                textViewCurrentPassword.changeErrorLabelTextField(label: "Wrong password!")
-    //                textViewCurrentPassword.showErrorTextField()
+//                    textViewCurrentPassword.changeErrorLabelTextField(label: "Wrong password!")
+//                    textViewCurrentPassword.showErrorTextField()
 //
 //            } else {
             let newPass = textViewNewPassword.getTextFromTextField()

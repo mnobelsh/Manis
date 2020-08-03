@@ -96,6 +96,7 @@ class SignUpViewController: UIViewController {
         override func viewDidLoad() {
             super.viewDidLoad()
             view.backgroundColor = .white
+            self.title = "Register"
             view.addSubview(stackk){
                 self.stackk.setCenterYAnchor(in: self.view)
                 self.stackk.setAnchor(right: self.view.rightAnchor, left: self.view.leftAnchor, paddingRight: 20, paddingLeft: 20)
