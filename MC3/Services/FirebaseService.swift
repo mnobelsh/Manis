@@ -91,13 +91,21 @@ struct FirebaseService {
         guard let merchantName = merchantData[Merchant.name] as? String else {return}
         let uuid = UUID().uuidString.split(separator: Character("-")).last!
         let merchantID = merchantName.trimmingCharacters(in: .whitespacesAndNewlines) + uuid
+        guard let location = merchantData[Merchant.location] as? CLLocation else {return}
         
         MERCHANT_REF.document(merchantID).setData(merchantData) { (error) in
             if let err = error {
                 print("ERROR : ",err.localizedDescription)
                 return
             }
-            completion()
+            
+            self.geofireStore.setLocation(location: location, forDocumentWithID: merchantID) { (error) in
+                if let err = error {
+                    print(err.localizedDescription)
+                    return
+                }
+                completion()
+            }
         }
     }
     
