@@ -114,6 +114,9 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .white
+        self.navigationController?.navigationBar.isHidden = false
+        self.navigationController?.navigationBar.tintColor = .black
+        self.title = "Profile"
         
         view.addSubview(profileImage){
             self.profileImage.setCenterXAnchor(in: self.view)

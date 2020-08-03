@@ -39,6 +39,7 @@ class WelcomeViewController: UIViewController, UIScrollViewDelegate {
                 skipButton.setTitleColor(.systemBlue, for: .normal)
                 skipButton.setTitle("Skip", for: .normal)
                 skipButton.titleLabel?.font = UIFont(name: "Avenir", size: 22)
+                skipButton.addTarget(self, action: #selector(didTapSkipButton(_:)), for: .touchUpInside)
                 pageView.addSubview(skipButton)
             }
             
@@ -85,8 +86,14 @@ class WelcomeViewController: UIViewController, UIScrollViewDelegate {
     @objc func didTapButton(_ button:UIButton) {
         if pageControl.currentPage < 2 {
             pageControl.currentPage = pageControl.currentPage + 1
+        } else {
+            self.navigationController?.pushViewController(MainViewController(), animated: true)
         }
         scrollView.setContentOffset(CGPoint(x: view.frame.size.width * CGFloat(button.tag), y: scrollView.contentOffset.y), animated: true)
+    }
+    
+    @objc func didTapSkipButton(_ button:UIButton) {
+        self.navigationController?.pushViewController(MainViewController(), animated: true)
     }
 
     private lazy var pageControl: UIPageControl = {

@@ -56,8 +56,14 @@ class SignInViewController: UIViewController {
     private lazy var labelRegist: UILabel = {
         let label = UILabel()
         label.configureTextLabel(title: "Don't have an account? Register here", fontSize: 14, textColor: .link)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(goToRegister(_:)))
+        label.addGestureRecognizer(tapGesture)
         return label
     }()
+    
+    @objc func goToRegister(_ button: UIButton){
+        self.navigationController?.pushViewController(SignUpViewController(), animated: true)
+    }
     
     
     override func viewDidLoad() {

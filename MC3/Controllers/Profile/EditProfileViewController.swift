@@ -58,14 +58,17 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     private lazy var textViewEmail: UIView = {
         let view = UIView()
         view.configureTextFieldView(icon: UIImage(systemName: "envelope.fill"), textField: emailField, errorLabel: "", contrastColorTo: .white)
-        view.setSize(height: 100)
+        view.setSize(height: 40)
         
         return view
     }()
         
     private lazy var labelChangePass:UILabel = {
         let ChangePass = UILabel()
-        ChangePass.configureTextLabel(title: "Change Password", fontSize: 14, textColor: .link)
+        ChangePass.configureTextLabel(title: "Change Password", fontSize: 18, textColor: .link)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapChangePassword(_:)))
+        ChangePass.addGestureRecognizer(tapGesture)
+        
         return ChangePass
     }()
     
@@ -75,7 +78,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         stack.axis = .vertical
         stack.alignment = .fill
         stack.distribution = .fill
-        stack.spacing = 40
+        stack.spacing = 20
         
         return stack
     }()
@@ -100,6 +103,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         setTransparentNavbar()
         self.navigationController?.navigationBar.isHidden = false
         self.navigationController?.navigationBar.tintColor = .black
+        self.title = "Edit Profile"
         
         view.addSubview(profileImage){
             self.profileImage.setCenterXAnchor(in: self.view)
@@ -139,6 +143,10 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
 //        let ProfileVC = ProfileViewController()
 //        self.navigationController?.pushViewController(ProfileVC, animated: true)
 //        self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func didTapChangePassword(_ button: UIButton){
+        self.navigationController?.pushViewController(ChangePasswordViewController(), animated: true)
     }
     
     @objc func labelPicker(_ sender: UILabel){
