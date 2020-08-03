@@ -149,7 +149,7 @@ class MerchantViewController: UIViewController {
     
     private lazy var photos: UIImageView = {
         let img = UIImageView()
-        img.image = #imageLiteral(resourceName: "doger")
+        img.image = #imageLiteral(resourceName: "es cendol logo")
         img.setSize(width: 150, height: 150)
         return img
     }()
