@@ -36,12 +36,15 @@ class AllReviewVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        setTransparentNavbar()
         configureCollectionViews()
         
         view.addSubview(addButton){
             self.addButton.setCenterXAnchor(in: self.view)
             self.addButton.setAnchor( bottom: self.view.bottomAnchor, paddingTop: 8, paddingRight: 8, paddingBottom: 25, paddingLeft: 8)
         }
+        self.navigationController?.navigationBar.isHidden = false
+        self.navigationController?.navigationBar.tintColor = .black
     }
     
     private var collectionView: UICollectionView!

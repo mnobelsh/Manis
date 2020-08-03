@@ -12,7 +12,6 @@ class ProfileViewController: UIViewController {
 
     var data: [String:Any]? = nil {
         didSet {
-            
             if let data = data {
                 guard let name = data["name"] as? String else {return}
                 nameLabel.text = name
@@ -43,10 +42,6 @@ class ProfileViewController: UIViewController {
         return button
     }()
     
-    @objc func favButtonTapped(_ button: UIButton){
-        print("Favorite Button Tapped")
-    }
-    
     private lazy var reviewsButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "yourReviewsButton"), for: .normal)
@@ -55,10 +50,6 @@ class ProfileViewController: UIViewController {
 
         return button
     }()
-    
-    @objc func reviewsButtonTapped(_ button: UIButton){
-        print("Review Button Tapped")
-    }
     
     private lazy var leftButtonStacks: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [favButton,favLabel,editProfileButton,editLabel])
@@ -89,10 +80,6 @@ class ProfileViewController: UIViewController {
         return button
     }()
     
-    @objc func editProfileButtonTapped(_ button: UIButton){
-        print("Edit Button Tapped")
-    }
-    
     private lazy var logoutButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "logoutButton"), for: .normal)
@@ -101,10 +88,6 @@ class ProfileViewController: UIViewController {
 
         return button
     }()
-    
-    @objc func logoutButtonTapped(_ button: UIButton){
-        print("Logout Button Tapped")
-    }
     
     private lazy var rightButtonStacks: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [reviewsButton,reviewLabel,logoutButton,logoutLabel])
@@ -153,8 +136,27 @@ class ProfileViewController: UIViewController {
     
     func configureUI() {
         self.view.addSubview(nameLabel)
-        
-        
     }
 
+    
+    @objc func favButtonTapped(_ button: UIButton){
+        print("Favorite Button Tapped")
+    }
+    
+    @objc func reviewsButtonTapped(_ button: UIButton){
+        print("Review Button Tapped")
+        let ReviewVC = AllReviewVC()
+        self.navigationController?.pushViewController(ReviewVC, animated: true)
+    }
+    
+    @objc func editProfileButtonTapped(_ button: UIButton){
+        print("Edit Button Tapped")
+        let editVC = EditProfileViewController()
+        self.navigationController?.pushViewController(editVC, animated: true)
+    }
+    
+    @objc func logoutButtonTapped(_ button: UIButton){
+        print("Logout Button Tapped")
+    }
+    
 }

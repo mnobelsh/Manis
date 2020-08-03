@@ -103,7 +103,7 @@ class ReviewCollectionViewCells: UICollectionViewCell, UITextViewDelegate {
     
     private lazy var reviewPhotos: UIImageView = {
         let img = UIImageView()
-        img.image = #imageLiteral(resourceName: "doger")
+        img.image = #imageLiteral(resourceName: "esdoger2")
         img.setSize(width: 99, height: 123)
         
         return img

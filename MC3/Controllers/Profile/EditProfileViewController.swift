@@ -12,8 +12,8 @@ class EditProfileViewController: UIViewController {
     
     private lazy var profileImage: UIImageView = {
         let img = UIImageView()
-        img.image = UIImage(named: "esdoger2.JPG")
-        img.setSize(width: 200, height: 250)
+        img.image = UIImage(named: "profilePictureBig")
+        img.setSize(width: 120, height: 120)
         
         return img
     }()
@@ -57,12 +57,6 @@ class EditProfileViewController: UIViewController {
         return ChangePass
     }()
     
-    private lazy var LogOut:UILabel = {
-        let label = UILabel()
-        label.configureTextLabel(title: "Log out", fontSize: 14, textColor: .link)
-        return label
-    }()
-    
         private lazy var stackk: UIStackView = {
             let stack = UIStackView(arrangedSubviews: [textViewUsername, textViewEmail])
             stack.axis = .vertical
@@ -75,20 +69,24 @@ class EditProfileViewController: UIViewController {
     
     private lazy var button: UIButton = {
        let buttonSave = UIButton()
-        buttonSave.configureButton(title: "Save", titleColor: .white, backgroundColor: .darkGray, isContrastToBackGroundColor: true, cornerRadius: 10)
-        
+        buttonSave.configureButton(title: "Save", titleColor: .black, backgroundColor: UIColor(hexString: "9CE4E5"), isContrastToBackGroundColor: true, cornerRadius: 10)
+        buttonSave.setSize(width: 170, height: 50)
+        buttonSave.addTarget(self, action: #selector(saveButtonTapped(_:)), for: .touchUpInside)
         return buttonSave
     }()
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        setTransparentNavbar()
+        self.navigationController?.navigationBar.isHidden = false
+        self.navigationController?.navigationBar.tintColor = .black
         
         view.addSubview(profileImage){
-            self.profileImage.setAnchor(top: self.view.topAnchor, right: self.view.rightAnchor, left: self.view.leftAnchor, paddingTop: 8, paddingRight: 8, paddingBottom: 8, paddingLeft: 8)
+            self.profileImage.setCenterXAnchor(in: self.view)
+            self.profileImage.setAnchor(top: self.view.topAnchor, paddingTop: 150, paddingRight: 8, paddingBottom: 8, paddingLeft: 8)
         }
         
         view.addSubview(labelPhoto){
-//            self.labelPhoto.setCenterXAnchor(in: self.view)
             self.labelPhoto.setAnchor(top: self.profileImage.bottomAnchor, right: self.view.rightAnchor,  left: self.view.leftAnchor, paddingTop: 8, paddingRight: 8, paddingBottom: 8, paddingLeft: 8)
         }
         
@@ -101,15 +99,16 @@ class EditProfileViewController: UIViewController {
             self.labelChange.setAnchor(top: self.stackk.bottomAnchor, left: self.view.leftAnchor, paddingTop: 50, paddingRight: 20, paddingBottom: 20, paddingLeft: 20)
         }
         
-        view.addSubview(LogOut){
-            self.LogOut.setAnchor(top: self.labelChange.bottomAnchor, left: self.view.leftAnchor, paddingTop: 50, paddingRight: 20, paddingBottom: 20, paddingLeft: 20)
-        }
-        
         view.addSubview(button){
-            self.button.setAnchor(top: self.LogOut.bottomAnchor, left: self.view.leftAnchor, paddingTop: 50, paddingRight: 20, paddingBottom: 20, paddingLeft: 20)
+            self.button.setAnchor(top: self.labelChange.bottomAnchor, paddingTop: 50, paddingRight: 20, paddingBottom: 20, paddingLeft: 20)
             self.button.setCenterXAnchor(in: self.view)
         }
         // Do any additional setup after loading the view.
     }
-
+    
+    @objc func saveButtonTapped(_ button: UIButton){
+        let ProfileVC = ProfileViewController()
+        self.navigationController?.pushViewController(ProfileVC, animated: true)
+    }
+    
 }
