@@ -11,7 +11,6 @@ pod 'Firebase/Firestore'
 pod 'Firebase/Storage'
 pod 'IQKeyboardManagerSwift'
 pod 'Geofirestore'
-pod 'ChameleonFramework'
 pod 'Hero'
 pod 'SkeletonView'
 
