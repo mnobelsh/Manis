@@ -11,8 +11,7 @@ pod 'Firebase/Firestore'
 pod 'Firebase/Storage'
 pod 'IQKeyboardManagerSwift'
 pod 'Geofirestore'
-pod 'Hero'
-pod 'SkeletonView'
+pod 'ChameleonFramework'
 
   target 'MC3Tests' do
     inherit! :search_paths
