@@ -192,6 +192,25 @@ extension UIView {
         }
     }
     
+    func hideErrorTextField(){
+        for view in self.subviews {
+            if view.tag == 500 {
+                view.isHidden = true
+            }
+        }
+    }
+    
+    func isEmptyTextField() -> Bool{
+        for view in self.subviews {
+            if let textField = view as? UITextField {
+                if textField.text == "" {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+    
     func configureRatingView(withRating rating: String, textColor: UIColor) {
         
         let starView = UIImageView(image: UIImage(systemName: "star.fill")?.withTintColor(.systemYellow, renderingMode: .alwaysOriginal))

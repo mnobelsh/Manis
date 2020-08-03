@@ -131,10 +131,14 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     }
     
     @objc func saveButtonTapped(_ button: UIButton){
-        let ProfileVC = ProfileViewController()
+        if textViewUsername.isEmptyTextField() {
+            textViewUsername.showErrorTextField()
+        } else {
+            textViewUsername.hideErrorTextField()
+        }
+//        let ProfileVC = ProfileViewController()
 //        self.navigationController?.pushViewController(ProfileVC, animated: true)
 //        self.navigationController?.popViewController(animated: true)
-        textViewUsername.showErrorTextField()
     }
     
     @objc func labelPicker(_ sender: UILabel){

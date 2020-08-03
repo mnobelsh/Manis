@@ -70,7 +70,7 @@ class ChangePasswordViewController: UIViewController {
     
     private lazy var button: UIButton = {
        let buttonSave = UIButton()
-        buttonSave.configureButton(title: "Save", titleColor: .black, backgroundColor: .white, isContrastToBackGroundColor: true, cornerRadius: 10)
+        buttonSave.configureButton(title: "Save", titleColor: .black, backgroundColor: UIColor(hexString: "FFAC60"), cornerRadius: 10)
         buttonSave.setSize(width: 175, height: 50)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(saveDidTap(_:)))
         buttonSave.addGestureRecognizer(tapGesture)
@@ -79,7 +79,21 @@ class ChangePasswordViewController: UIViewController {
     }()
     
     @objc func saveDidTap(_ button:UIButton) {
-//        textViewUsername.showErrorTextField()
+        if textViewCurrentPassword.isEmptyTextField() {
+            textViewCurrentPassword.showErrorTextField()
+        } else {
+            textViewCurrentPassword.hideErrorTextField()
+        }
+        if textViewNewPassword.isEmptyTextField() {
+            textViewNewPassword.showErrorTextField()
+        } else {
+            textViewNewPassword.hideErrorTextField()
+        }
+        if textViewRepeatNewPassword.isEmptyTextField() {
+            textViewRepeatNewPassword.showErrorTextField()
+        } else {
+            textViewRepeatNewPassword.hideErrorTextField()
+        }
     }
     
     override func viewDidLoad() {
