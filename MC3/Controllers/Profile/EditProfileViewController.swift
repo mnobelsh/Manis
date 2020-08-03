@@ -15,7 +15,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     private lazy var profileImage: UIImageView = {
         let img = UIImageView()
         img.image = UIImage(named: "profilePictureBig")
-        img.setSize(width: 120, height: 120)
+        img.setSize(width: 150, height: 150)
         
         return img
     }()
@@ -23,7 +23,8 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     private lazy var labelChangePhoto:UILabel = {
         let label = UILabel()
         label.isUserInteractionEnabled = true
-        label.configureTextLabel(title: "Change Photo", fontSize: 14, textColor: .link)
+        label.configureTextLabel(title: "Change Photo", fontSize: 18, textColor: .link)
+        label.setSize(height: 20)
         label.textAlignment = .center
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(labelPicker(_:)))
@@ -33,30 +34,34 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     }()
     
     private lazy var userNameField: UITextField = {
-            let userName = UITextField()
-            userName.configureInputTextField(placeholder: "Username", isSecureTextEntry: false)
+        let userName = UITextField()
+        userName.configureInputTextField(placeholder: "Username", isSecureTextEntry: false)
         userName.clearButtonMode = .whileEditing
-            return userName
-        }()
+        return userName
+    }()
         
-        private lazy var textViewUsername: UIView = {
-            let view = UIView()
-            view.configureTextFieldView(icon: UIImage(systemName: "person.fill"), textField: userNameField, errorLabel: "Username must be fill!", contrastColorTo: .white)
-            return view
-        }()
+    private lazy var textViewUsername: UIView = {
+        let view = UIView()
+        view.configureTextFieldView(icon: UIImage(systemName: "person.fill"), textField: userNameField, errorLabel: "Username must be fill!", contrastColorTo: .white)
+        view.setSize(height: 40)
+        
+        return view
+    }()
+
+    private lazy var emailField: UITextField = {
+        let email = UITextField()
+        email.configureInputTextField(placeholder: "E-mail address", isSecureTextEntry: false)
+        email.clearButtonMode = .whileEditing
+        return email
+    }()
     
-        private lazy var emailField: UITextField = {
-            let email = UITextField()
-            email.configureInputTextField(placeholder: "E-mail address", isSecureTextEntry: false)
-            return email
-        }()
+    private lazy var textViewEmail: UIView = {
+        let view = UIView()
+        view.configureTextFieldView(icon: UIImage(systemName: "envelope.fill"), textField: emailField, errorLabel: "", contrastColorTo: .white)
+        view.setSize(height: 100)
         
-        private lazy var textViewEmail: UIView = {
-            let view = UIView()
-            view.configureTextFieldView(icon: UIImage(systemName: "envelope.fill"), textField: emailField, errorLabel: "", contrastColorTo: .white)
-            
-            return view
-        }()
+        return view
+    }()
         
     private lazy var labelChangePass:UILabel = {
         let ChangePass = UILabel()
@@ -64,23 +69,31 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         return ChangePass
     }()
     
-        private lazy var stackk: UIStackView = {
-            let stack = UIStackView(arrangedSubviews: [textViewUsername, textViewEmail])
-            stack.axis = .vertical
-            stack.alignment = .fill
-            stack.distribution = .fillEqually
-            stack.spacing = 40
-            
-            return stack
-        }()
+ 
+    private lazy var stackk: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [textViewUsername, textViewEmail])
+        stack.axis = .vertical
+        stack.alignment = .fill
+        stack.distribution = .fill
+        stack.spacing = 40
+        
+        return stack
+    }()
     
     private lazy var button: UIButton = {
        let buttonSave = UIButton()
-        buttonSave.configureButton(title: "Save", titleColor: .black, backgroundColor: UIColor(hexString: "9CE4E5"), isContrastToBackGroundColor: true, cornerRadius: 10)
-        buttonSave.setSize(width: 170, height: 50)
-        buttonSave.addTarget(self, action: #selector(saveButtonTapped(_:)), for: .touchUpInside)
+        buttonSave.configureButton(title: "Save", titleColor: .black, backgroundColor: UIColor(hexString: "FFAC60"), isContrastToBackGroundColor: true, cornerRadius: 10)
+        buttonSave.setSize(width: 175, height: 50)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(saveButtonTapped(_:)))
+        buttonSave.addGestureRecognizer(tapGesture)
+        
         return buttonSave
     }()
+    
+    @objc func saveDidTap(_ button:UIButton) {
+        textViewUsername.showErrorTextField()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -90,16 +103,17 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         
         view.addSubview(profileImage){
             self.profileImage.setCenterXAnchor(in: self.view)
-            self.profileImage.setAnchor(top: self.view.topAnchor, paddingTop: 150, paddingRight: 8, paddingBottom: 8, paddingLeft: 8)
+            self.profileImage.setAnchor(top: self.view.topAnchor, paddingTop: 120, paddingRight: 8, paddingBottom: 8, paddingLeft: 8)
         }
         
         view.addSubview(labelChangePhoto){
+            self.labelChangePhoto.setCenterXAnchor(in: self.view)
             self.labelChangePhoto.setAnchor(top: self.profileImage.bottomAnchor, right: self.view.rightAnchor,  left: self.view.leftAnchor, paddingTop: 8, paddingRight: 8, paddingBottom: 8, paddingLeft: 8)
         }
         
         view.addSubview(stackk){
             self.stackk.setCenterYAnchor(in: self.view)
-            self.stackk.setAnchor(top: self.labelChangePhoto.bottomAnchor ,right: self.view.rightAnchor, left: self.view.leftAnchor, paddingRight: 20, paddingLeft: 20)
+            self.stackk.setAnchor(top: self.labelChangePhoto.bottomAnchor, right: self.view.rightAnchor, left: self.view.leftAnchor, paddingTop: 100, paddingRight: 20, paddingLeft: 20)
         }
         
         view.addSubview(labelChangePass){
