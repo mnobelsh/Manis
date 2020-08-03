@@ -99,13 +99,11 @@ class ChangePasswordViewController: UIViewController {
         
         if canSave {
             // check if currentPassword is true
-//            if currentPassword is true {
+//            if currentPassword is false {
+    //                textViewCurrentPassword.changeErrorLabelTextField(label: "Wrong password!")
+    //                textViewCurrentPassword.showErrorTextField()
 //
 //            } else {
-//                textViewCurrentPassword.changeErrorLabelTextField(label: "Wrong password!")
-//                textViewCurrentPassword.showErrorTextField()
-//            }
-            
             let newPass = textViewNewPassword.getTextFromTextField()
             let repeatNewPass = textViewRepeatNewPassword.getTextFromTextField()
             if newPass == repeatNewPass {
@@ -115,6 +113,9 @@ class ChangePasswordViewController: UIViewController {
                 textViewRepeatNewPassword.changeErrorLabelTextField(label: "Password doesn't match!")
                 textViewRepeatNewPassword.showErrorTextField()
             }
+//            }
+            
+            
         }
     }
     
