@@ -119,7 +119,6 @@ PODS:
     - nanopb (~> 0.3)
   - gRPC-Core/Interface (1.14.0)
   - GTMSessionFetcher/Core (1.4.0)
-  - Hero (1.5.0)
   - IQKeyboardManagerSwift (6.5.5)
   - leveldb-library (1.22)
   - nanopb (0.3.9011):
@@ -128,7 +127,6 @@ PODS:
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
   - Protobuf (3.12.0)
-  - SkeletonView (1.8.7)
 
 DEPENDENCIES:
   - ChameleonFramework
@@ -136,9 +134,7 @@ DEPENDENCIES:
   - Firebase/Firestore
   - Firebase/Storage
   - Geofirestore
-  - Hero
   - IQKeyboardManagerSwift
-  - SkeletonView
 
 SPEC REPOS:
   trunk:
@@ -160,12 +156,10 @@ SPEC REPOS:
     - "gRPC-C++"
     - gRPC-Core
     - GTMSessionFetcher
-    - Hero
     - IQKeyboardManagerSwift
     - leveldb-library
     - nanopb
     - Protobuf
-    - SkeletonView
 
 SPEC CHECKSUMS:
   BoringSSL: e10f92a27043805c01071fe815a5cd98ae8212e7
@@ -186,13 +180,11 @@ SPEC CHECKSUMS:
   "gRPC-C++": 19eec1ffd34de29453f5fab5b4697ad0f240ad51
   gRPC-Core: f4836515817c0eb479aeeb9cc27c91c4ba62a9f6
   GTMSessionFetcher: 6f5c8abbab8a9bce4bb3f057e317728ec6182b10
-  Hero: b7385b75e7259da62f4f85462f59a5082d66b058
   IQKeyboardManagerSwift: 0fb93310284665245591f50f7a5e38de615960b7
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   Protobuf: 2793fcd0622a00b546c60e7cbbcc493e043e9bb9
-  SkeletonView: ba5370f41280b2f0a76918bb143c1294232bb4f4
 
-PODFILE CHECKSUM: 96c57606ff9d07df62c4a5b935705083076e7e7f
+PODFILE CHECKSUM: 172794b8d0b1317bd6cebda756124cb8a8195566
 
 COCOAPODS: 1.9.1

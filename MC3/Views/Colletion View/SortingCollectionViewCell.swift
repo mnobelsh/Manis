@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import ChameleonFramework
+
 
 class SortingCollectionViewCell: UICollectionViewCell {
     

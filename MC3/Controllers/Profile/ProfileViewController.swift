@@ -35,7 +35,7 @@ class ProfileViewController: UIViewController {
         self.view.addSubview(nameLabel)
         nameLabel.font = UIFont.systemFont(ofSize: 24)
         nameLabel.textColor = .white
-        nameLabel.setCenterXYAcnhor(in: self.view)
+        nameLabel.setCenterXYAnchor(in: self.view)
         
         self.view.addSubview(emailLabel)
         emailLabel.font = UIFont.systemFont(ofSize: 24)

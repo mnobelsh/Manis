@@ -29,7 +29,7 @@ class SignInViewController: UIViewController {
         horizontalStack.setSize(width: 150, height: 95)
         
         self.view.addSubview(horizontalStack) {
-            self.horizontalStack.setCenterXYAcnhor(in: self.view)
+            self.horizontalStack.setCenterXYAnchor(in: self.view)
         }
         
     }

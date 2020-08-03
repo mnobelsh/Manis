@@ -130,7 +130,7 @@ extension UIView {
         }
     }
     
-    func setCenterXYAcnhor(in view: UIView) {
+    func setCenterXYAnchor(in view: UIView) {
         setCenterXAnchor(in: view)
         setCenterYAnchor(in: view)
     }
