@@ -96,8 +96,8 @@ class EditProfileViewController: UIViewController {
         }
         
         view.addSubview(labelPhoto){
-//            self.labelPhoto.setCenterXAnchor(in: self.view)
-            self.labelPhoto.setAnchor(top: self.profileImage.bottomAnchor)
+            self.labelPhoto.setCenterXAnchor(in: self.view)
+            self.labelPhoto.setAnchor(top: self.profileImage.bottomAnchor, paddingTop: 8)
         }
         
         view.addSubview(stackk){
@@ -113,7 +113,6 @@ class EditProfileViewController: UIViewController {
             self.button.setAnchor(top: self.labelChange.bottomAnchor, paddingTop: 50, paddingRight: 20, paddingBottom: 20, paddingLeft: 20)
             self.button.setCenterXAnchor(in: self.view)
         }
-        // Do any additional setup after loading the view.
     }
 
 }
