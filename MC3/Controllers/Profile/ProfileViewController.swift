@@ -136,6 +136,15 @@ class ProfileViewController: UIViewController {
     
     func configureUI() {
         self.view.addSubview(nameLabel)
+        nameLabel.font = UIFont.systemFont(ofSize: 24)
+        nameLabel.textColor = .white
+        nameLabel.setCenterXYAnchor(in: self.view)
+        
+        self.view.addSubview(emailLabel)
+        emailLabel.font = UIFont.systemFont(ofSize: 24)
+        emailLabel.textColor = .white
+        emailLabel.setAnchor(top: nameLabel.bottomAnchor, paddingTop: 30)
+        emailLabel.setCenterXAnchor(in: self.view)
     }
 
     

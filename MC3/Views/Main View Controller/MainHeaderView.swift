@@ -20,6 +20,14 @@ class MainHeaderView: UIView {
     // MARK: - Properties
     var delegate: MainHeaderViewDelegate?
     static let height: CGFloat = 200
+    
+    var user: User? {
+        didSet {
+            self.avatarImageView.configureAvatarView(avatarImage: UIImage(named: user!.profilePicture), dimension: 65)
+            self.locationLabel.text = "Location"
+        }
+    }
+    
     private lazy var avatarImageView: AvatarImageView = {
         let avatarImage = AvatarImageView(frame: .zero)
         avatarImage.configureAvatarView(avatarImage: #imageLiteral(resourceName: "profile"), dimension: 65)
@@ -38,7 +46,6 @@ class MainHeaderView: UIView {
         
         return searchbar
     }()
-    
     private var mappinImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "UserLocation"))
         imageView.contentMode = .scaleAspectFit

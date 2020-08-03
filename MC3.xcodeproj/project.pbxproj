@@ -15,6 +15,7 @@
 		747397D724D80C2200E9F9F0 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 747397D624D80C2200E9F9F0 /* ChangePasswordViewController.swift */; };
 		74CCD63524D19396005AFB7D /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CCD63424D19396005AFB7D /* WelcomeViewController.swift */; };
 		9FB684FBEEFDCCE5853D12C0 /* Pods_MC3Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AC842672A229DC392ADDA2E /* Pods_MC3Tests.framework */; };
+		FF05B2A724D28A7000CE0AEB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF05B2A624D28A7000CE0AEB /* User.swift */; };
 		FF3E490024C8508500719D14 /* UIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3E48FF24C8508500719D14 /* UIHelper.swift */; };
 		FF3E490224C86B6000719D14 /* Merchant.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3E490124C86B6000719D14 /* Merchant.swift */; };
 		FF3E490424C86D8600719D14 /* MerchantCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3E490324C86D8600719D14 /* MerchantCollectionCell.swift */; };
@@ -39,11 +40,16 @@
 		FF4C7E3724C6EF38000DCC7B /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4C7E3624C6EF38000DCC7B /* MapViewController.swift */; };
 		FF53917F24B8667400FFA33B /* NavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF53917E24B8667400FFA33B /* NavigationViewController.swift */; };
 		FF5D4FC424B4A70D00951879 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5D4FC324B4A70D00951879 /* Extensions.swift */; };
+		FFBC31E624D8011C0007062A /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFBC31E524D8011C0007062A /* Review.swift */; };
+		FFBC31EA24D815660007062A /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFBC31E924D815660007062A /* Menu.swift */; };
 		FFD493D724CB628300078E34 /* MainHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD493D624CB628300078E34 /* MainHeaderView.swift */; };
 		FFD493D924CD69B300078E34 /* SearchResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD493D824CD69B300078E34 /* SearchResultView.swift */; };
 		FFD493DC24CD969E00078E34 /* SortingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD493DB24CD969E00078E34 /* SortingCollectionViewCell.swift */; };
-		FFD493DF24CEC5A300078E34 /* SearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD493DE24CEC5A300078E34 /* SearchResultCell.swift */; };
+		FFD493DF24CEC5A300078E34 /* MerchantTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD493DE24CEC5A300078E34 /* MerchantTableCell.swift */; };
 		FFD493E124CECAB700078E34 /* Sorting.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD493E024CECAB700078E34 /* Sorting.swift */; };
+		FFD493E324CF618800078E34 /* MerchantListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD493E224CF618800078E34 /* MerchantListViewController.swift */; };
+		FFD493E524D13F4700078E34 /* LocationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD493E424D13F4700078E34 /* LocationHandler.swift */; };
+		FFD493E824D16DEE00078E34 /* NearbyMerchantListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD493E724D16DEE00078E34 /* NearbyMerchantListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +84,7 @@
 		AB023E81723C5B3A0FE3D5F4 /* Pods_MC3.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MC3.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D13998FCF07A3D61EB040CD1 /* Pods-MC3.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MC3.debug.xcconfig"; path = "Target Support Files/Pods-MC3/Pods-MC3.debug.xcconfig"; sourceTree = "<group>"; };
 		FABECA4AC6DAED7CC3311D8C /* Pods-MC3Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MC3Tests.release.xcconfig"; path = "Target Support Files/Pods-MC3Tests/Pods-MC3Tests.release.xcconfig"; sourceTree = "<group>"; };
+		FF05B2A624D28A7000CE0AEB /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		FF3E48FF24C8508500719D14 /* UIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHelper.swift; sourceTree = "<group>"; };
 		FF3E490124C86B6000719D14 /* Merchant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Merchant.swift; sourceTree = "<group>"; };
 		FF3E490324C86D8600719D14 /* MerchantCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantCollectionCell.swift; sourceTree = "<group>"; };
@@ -108,11 +115,16 @@
 		FF4C7E3624C6EF38000DCC7B /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		FF53917E24B8667400FFA33B /* NavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewController.swift; sourceTree = "<group>"; };
 		FF5D4FC324B4A70D00951879 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		FFBC31E524D8011C0007062A /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
+		FFBC31E924D815660007062A /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		FFD493D624CB628300078E34 /* MainHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHeaderView.swift; sourceTree = "<group>"; };
 		FFD493D824CD69B300078E34 /* SearchResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultView.swift; sourceTree = "<group>"; };
 		FFD493DB24CD969E00078E34 /* SortingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingCollectionViewCell.swift; sourceTree = "<group>"; };
-		FFD493DE24CEC5A300078E34 /* SearchResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCell.swift; sourceTree = "<group>"; };
+		FFD493DE24CEC5A300078E34 /* MerchantTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantTableCell.swift; sourceTree = "<group>"; };
 		FFD493E024CECAB700078E34 /* Sorting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sorting.swift; sourceTree = "<group>"; };
+		FFD493E224CF618800078E34 /* MerchantListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantListViewController.swift; sourceTree = "<group>"; };
+		FFD493E424D13F4700078E34 /* LocationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationHandler.swift; sourceTree = "<group>"; };
+		FFD493E724D16DEE00078E34 /* NearbyMerchantListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyMerchantListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -241,6 +253,8 @@
 				FF4C7E2824C6EE29000DCC7B /* MerchantViewController.swift */,
 				FF4C7E2A24C6EE63000DCC7B /* AddReviewViewController.swift */,
 				0108556B24CAE2A3002C777B /* AllReviewVC.swift */,
+				FF4C7E2C24C6EE7F000DCC7B /* AllReviewViewController.swift */,
+				FFD493E224CF618800078E34 /* MerchantListViewController.swift */,
 			);
 			path = Merchant;
 			sourceTree = "<group>";
@@ -277,6 +291,7 @@
 			isa = PBXGroup;
 			children = (
 				FF4C7E2624C6E943000DCC7B /* FirebaseService.swift */,
+				FFD493E424D13F4700078E34 /* LocationHandler.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -301,6 +316,9 @@
 				FF3E490124C86B6000719D14 /* Merchant.swift */,
 				0108556924CA93C6002C777B /* Review.swift */,
 				FFD493E024CECAB700078E34 /* Sorting.swift */,
+				FF05B2A624D28A7000CE0AEB /* User.swift */,
+				FFBC31E524D8011C0007062A /* Review.swift */,
+				FFBC31E924D815660007062A /* Menu.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -308,6 +326,7 @@
 		FF5D4FC224B4A6F400951879 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FFD493E624D16DB800078E34 /* Map View Controller */,
 				FFD493DD24CEC57F00078E34 /* Table View */,
 				FF3E48FC24C84FDC00719D14 /* Colletion View */,
 				FFD493DA24CD69BF00078E34 /* Main View Controller */,
@@ -329,9 +348,17 @@
 		FFD493DD24CEC57F00078E34 /* Table View */ = {
 			isa = PBXGroup;
 			children = (
-				FFD493DE24CEC5A300078E34 /* SearchResultCell.swift */,
+				FFD493DE24CEC5A300078E34 /* MerchantTableCell.swift */,
 			);
 			path = "Table View";
+			sourceTree = "<group>";
+		};
+		FFD493E624D16DB800078E34 /* Map View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				FFD493E724D16DEE00078E34 /* NearbyMerchantListView.swift */,
+			);
+			path = "Map View Controller";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -620,6 +647,8 @@
 				74CCD63524D19396005AFB7D /* WelcomeViewController.swift in Sources */,
 				FF457EFB24B4A29B0052438A /* AppDelegate.swift in Sources */,
 				FFD493E124CECAB700078E34 /* Sorting.swift in Sources */,
+				FFD493E824D16DEE00078E34 /* NearbyMerchantListView.swift in Sources */,
+				FFD493E524D13F4700078E34 /* LocationHandler.swift in Sources */,
 				FF5D4FC424B4A70D00951879 /* Extensions.swift in Sources */,
 				FF3F72F224C981DA00D201FA /* SectionTitleView.swift in Sources */,
 				FF4C7E2124C6E8D0000DCC7B /* SignInViewController.swift in Sources */,
@@ -627,17 +656,22 @@
 				FF4C7E2524C6E8E3000DCC7B /* MainViewController.swift in Sources */,
 				FF3F72F424C994D100D201FA /* AvatarImageView.swift in Sources */,
 				FF4C7E2724C6E943000DCC7B /* FirebaseService.swift in Sources */,
-				FFD493DF24CEC5A300078E34 /* SearchResultCell.swift in Sources */,
+				FFD493DF24CEC5A300078E34 /* MerchantTableCell.swift in Sources */,
 				FF3E490024C8508500719D14 /* UIHelper.swift in Sources */,
 				FF4C7E3224C6EEF7000DCC7B /* ProfileViewController.swift in Sources */,
 				FF4C7E2324C6E8D9000DCC7B /* SignUpViewController.swift in Sources */,
+				FF4C7E2D24C6EE7F000DCC7B /* AllReviewViewController.swift in Sources */,
+				FF05B2A724D28A7000CE0AEB /* User.swift in Sources */,
 				FF3E490224C86B6000719D14 /* Merchant.swift in Sources */,
 				0108556E24CAE3E7002C777B /* ReviewCollectionViewCells.swift in Sources */,
 				FF457EFD24B4A29B0052438A /* SceneDelegate.swift in Sources */,
+				FFBC31E624D8011C0007062A /* Review.swift in Sources */,
+				FFBC31EA24D815660007062A /* Menu.swift in Sources */,
 				FF4C7E2B24C6EE63000DCC7B /* AddReviewViewController.swift in Sources */,
 				FF4C7E2924C6EE29000DCC7B /* MerchantViewController.swift in Sources */,
 				FF4C7E3724C6EF38000DCC7B /* MapViewController.swift in Sources */,
 				FFD493DC24CD969E00078E34 /* SortingCollectionViewCell.swift in Sources */,
+				FFD493E324CF618800078E34 /* MerchantListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

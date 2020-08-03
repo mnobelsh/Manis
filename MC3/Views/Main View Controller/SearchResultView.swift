@@ -8,8 +8,8 @@
 
 import UIKit
 
-enum SearchResultTableViewSection {
-    case result
+enum MerchantTableViewSection {
+    case main
 }
 
 class SearchResultView: UIView {
@@ -20,7 +20,7 @@ class SearchResultView: UIView {
         let tv = UITableView()
         tv.backgroundColor = .clear
         tv.allowsSelection = true
-        tv.register(SearchResultCell.self, forCellReuseIdentifier: SearchResultCell.identifier)
+        tv.register(MerchantTableCell.self, forCellReuseIdentifier: MerchantTableCell.identifier)
         return tv
     }()
     

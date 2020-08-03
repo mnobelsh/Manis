@@ -8,10 +8,10 @@
 
 import UIKit
 
-class SearchResultCell: UITableViewCell {
+class MerchantTableCell: UITableViewCell {
     
     // MARK: - Properties
-    static let identifier = "SearchResultTVCell"
+    static let identifier = "MerchantTVCell"
     
     var merchant: Merchant? {
         didSet {
@@ -40,7 +40,7 @@ class SearchResultCell: UITableViewCell {
     }()
     private lazy var ratingView: UIView = {
         let view = UIView()
-        view.configureRatingView(withRating: "5", textColor: .darkGray)
+        view.configureRatingView(withRating: "4.7", textColor: .darkGray)
         return view
     }()
     
@@ -50,13 +50,13 @@ class SearchResultCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.addSubview(merchantImageView) {
-            self.merchantImageView.setSize(width: 100, height: 100)
+            self.merchantImageView.setSize(width: 85, height: 85)
             self.merchantImageView.setAnchor(left: self.leftAnchor,paddingLeft: 16)
             self.merchantImageView.setCenterYAnchor(in: self)
         }
         
         self.addSubview(merchantNameLabel) {
-            self.merchantNameLabel.setSize(height: 30)
+            self.merchantNameLabel.setSize(height: 25)
             self.merchantNameLabel.setAnchor(top: self.merchantImageView.topAnchor, right: self.rightAnchor, left: self.merchantImageView.rightAnchor, paddingLeft: 16)
         }
         
