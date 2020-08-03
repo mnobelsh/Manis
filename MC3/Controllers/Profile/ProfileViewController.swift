@@ -149,8 +149,6 @@ class ProfileViewController: UIViewController {
         
         view.backgroundColor = .white
         
-        
-        
         view.addSubview(nameLabel){
             self.nameLabel.setCenterXAnchor(in: self.view)
             self.nameLabel.setAnchor(top: self.view.topAnchor, paddingTop: 120, paddingRight: 15, paddingBottom: 15, paddingLeft: 15)
