@@ -11,11 +11,11 @@ import ChameleonFramework
 
 class NavigationViewController: UINavigationController {
     
-    static let shared = NavigationViewController(rootViewController: ProfileViewController())
+    static let shared = NavigationViewController(rootViewController: MainViewController ())
     
     override init(rootViewController: UIViewController) {
         super.init(rootViewController: rootViewController)
-        setTransparentNavbar()
+        navigationBar.isHidden = true
     }
     
     required init?(coder aDecoder: NSCoder) {

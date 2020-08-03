@@ -79,15 +79,36 @@ class SignInViewController: UIViewController {
         // Do any additional setup after loading the view.
 }
     
+    func configureStar(rating: Int) -> [UIButton] {
+        var buttonSet: [UIButton] = []
+        
+        for _ in 0..<rating {
+            starButton = UIButton()
+            starButton.setImage(UIImage(systemName: "star.fill")?.withTintColor(.white, renderingMode: .alwaysOriginal), for: .normal)
+            starButton.contentMode = .scaleAspectFit
+            starButton.backgroundColor = .clear
+            starButton.isUserInteractionEnabled = true
+            starButton.addTarget(self, action: #selector(starDidTapped(_:)), for: .touchUpInside)
+            buttonSet.append(starButton)
+        }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        return buttonSet
     }
-    */
-
-
+    
+    @objc func starDidTapped(_ button: UIButton) {
+        
+        horizontalStack.arrangedSubviews.forEach { (buttonView) in
+            let btn = buttonView as! UIButton
+            btn.setImage(UIImage(systemName: "star.fill")?.withTintColor(.white, renderingMode: .alwaysOriginal), for: .normal)
+        }
+        
+        let maxIndex = horizontalStack.arrangedSubviews.firstIndex(of: button)!
+        userRating = maxIndex+1
+        
+        for idx in 0...maxIndex {
+            stars[idx].setImage(UIImage(systemName: "star.fill")?.withTintColor(.systemYellow, renderingMode: .alwaysOriginal), for: .normal)
+        }
+        
+        print("USER RATING : \(userRating)")
+    }
+}
