@@ -12,6 +12,7 @@
 		0108556E24CAE3E7002C777B /* ReviewCollectionViewCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0108556D24CAE3E7002C777B /* ReviewCollectionViewCells.swift */; };
 		3F282107865D1F6109C07657 /* Pods_MC3_MC3UITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A29C1A9AB60002507D10A2BC /* Pods_MC3_MC3UITests.framework */; };
 		4603FF3FB994E639F1CD3F69 /* Pods_MC3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB023E81723C5B3A0FE3D5F4 /* Pods_MC3.framework */; };
+		747397D724D80C2200E9F9F0 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 747397D624D80C2200E9F9F0 /* ChangePasswordViewController.swift */; };
 		74CCD63524D19396005AFB7D /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CCD63424D19396005AFB7D /* WelcomeViewController.swift */; };
 		9FB684FBEEFDCCE5853D12C0 /* Pods_MC3Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AC842672A229DC392ADDA2E /* Pods_MC3Tests.framework */; };
 		FF3E490024C8508500719D14 /* UIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3E48FF24C8508500719D14 /* UIHelper.swift */; };
@@ -70,6 +71,7 @@
 		6AA73C471E0FB93B45737454 /* Pods-MC3.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MC3.release.xcconfig"; path = "Target Support Files/Pods-MC3/Pods-MC3.release.xcconfig"; sourceTree = "<group>"; };
 		6AC842672A229DC392ADDA2E /* Pods_MC3Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MC3Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		739CF2D5E57896FE5FD6E8B2 /* Pods-MC3Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MC3Tests.debug.xcconfig"; path = "Target Support Files/Pods-MC3Tests/Pods-MC3Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		747397D624D80C2200E9F9F0 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
 		74CCD63424D19396005AFB7D /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		A29C1A9AB60002507D10A2BC /* Pods_MC3_MC3UITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MC3_MC3UITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA7AE9F20E8A5D35F8787011 /* Pods-MC3-MC3UITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MC3-MC3UITests.debug.xcconfig"; path = "Target Support Files/Pods-MC3-MC3UITests/Pods-MC3-MC3UITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -257,6 +259,7 @@
 			children = (
 				FF4C7E3124C6EEF7000DCC7B /* ProfileViewController.swift */,
 				FF4C7E3324C6EEFE000DCC7B /* EditProfileViewController.swift */,
+				747397D624D80C2200E9F9F0 /* ChangePasswordViewController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -620,6 +623,7 @@
 				FF5D4FC424B4A70D00951879 /* Extensions.swift in Sources */,
 				FF3F72F224C981DA00D201FA /* SectionTitleView.swift in Sources */,
 				FF4C7E2124C6E8D0000DCC7B /* SignInViewController.swift in Sources */,
+				747397D724D80C2200E9F9F0 /* ChangePasswordViewController.swift in Sources */,
 				FF4C7E2524C6E8E3000DCC7B /* MainViewController.swift in Sources */,
 				FF3F72F424C994D100D201FA /* AvatarImageView.swift in Sources */,
 				FF4C7E2724C6E943000DCC7B /* FirebaseService.swift in Sources */,

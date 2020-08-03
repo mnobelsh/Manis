@@ -5,9 +5,6 @@ PODS:
   - BoringSSL/Implementation (10.0.6):
     - BoringSSL/Interface (= 10.0.6)
   - BoringSSL/Interface (10.0.6)
-  - ChameleonFramework (2.1.0):
-    - ChameleonFramework/Default (= 2.1.0)
-  - ChameleonFramework/Default (2.1.0)
   - Firebase (5.15.0):
     - Firebase/Core (= 5.15.0)
   - Firebase/Auth (5.15.0):
@@ -131,7 +128,6 @@ PODS:
   - SkeletonView (1.8.7)
 
 DEPENDENCIES:
-  - ChameleonFramework
   - Firebase/Auth
   - Firebase/Firestore
   - Firebase/Storage
@@ -143,7 +139,6 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - BoringSSL
-    - ChameleonFramework
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
@@ -169,7 +164,6 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   BoringSSL: e10f92a27043805c01071fe815a5cd98ae8212e7
-  ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   Firebase: 8bb9268bff82374f2cbaaabb143e725743c316ae
   FirebaseAnalytics: c06f9d70577d79074214700a71fd5d39de5550fb
   FirebaseAuth: 02e969ff430e156d99d4cb842d77b806b71ad7bb
@@ -193,6 +187,6 @@ SPEC CHECKSUMS:
   Protobuf: 2793fcd0622a00b546c60e7cbbcc493e043e9bb9
   SkeletonView: ba5370f41280b2f0a76918bb143c1294232bb4f4
 
-PODFILE CHECKSUM: 96c57606ff9d07df62c4a5b935705083076e7e7f
+PODFILE CHECKSUM: fc9e18741ca0cfbc9a6e67f530d19a972c684833
 
 COCOAPODS: 1.9.3
