@@ -10,6 +10,16 @@ import Foundation
 import UIKit
 
 struct Review: Hashable{
+    
+    static var reviewDetails: [Review] =
+    [Review(id: UUID().uuidString, userName: "Bambang"),
+     Review(id: UUID().uuidString, userName: "Nobal"),
+     Review(id: UUID().uuidString, userName: "Sukma"),
+     Review(id: UUID().uuidString, userName: "kamu"),
+     Review(id: UUID().uuidString, userName: "I"),
+     Review(id: UUID().uuidString, userName: "Hate"),
+     Review(id: UUID().uuidString, userName: "U")]
+    
     var id:String
     var userName:String
 //    var rate: Double

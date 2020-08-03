@@ -10,7 +10,7 @@ import UIKit
 
 protocol MerchantHeaderViewDelegate {
     func favDidTapped()
-    func backButtView()
+//    func backButtView()
 }
 
 class MerchantHeaderView: UIView {
@@ -23,24 +23,9 @@ class MerchantHeaderView: UIView {
     private var merchant: Merchant?{
         didSet{
             nameMerchant.configureHeadingLabel(title: merchant!.name, fontSize: 24, textColor: .white)
-            labelBaru.text = merchant?.name
             print("VIEW",merchant)
         }
     }
-    
-    private var labelBaru: UILabel = {
-        let label = UILabel()
-        label.configureHeadingLabel(title: "Bebas",textColor: .white)
-        return label
-    }()
-    
-    private lazy var backButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(systemName: "arrow.left")?.withTintColor(.darkGray, renderingMode: .alwaysOriginal), for: .normal)
-        button.setSize(width: 24, height: 24)
-        button.addTarget(self, action: #selector(backButt), for: .touchUpInside)
-        return button
-    }()
     
     private lazy var favButton: UIButton = {
        let button = UIButton()
@@ -86,19 +71,12 @@ class MerchantHeaderView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.addSubview(backButton) {
-            self.backButton.setAnchor(top: self.safeAreaLayoutGuide.topAnchor, left: self.leftAnchor, paddingTop: 8, paddingLeft: 16)
-//            self.backButton.alpha = 0
-        }
-        self.addSubview(labelBaru) {
-            self.labelBaru.setCenterXYAcnhor(in: self)
-        }
         self.addSubview(favButton) {
-            self.favButton.setAnchor(top: self.safeAreaLayoutGuide.topAnchor, right: self.rightAnchor, paddingTop: 8, paddingRight: 16)
+            self.favButton.setAnchor(top: self.safeAreaLayoutGuide.topAnchor, right: self.rightAnchor, paddingTop: 8, paddingRight: 8)
         }
         
         self.addSubview(nameMerchant) {
-            self.nameMerchant.setAnchor(top: self.backButton.bottomAnchor, left: self.leftAnchor, paddingTop: 80, paddingLeft: 10)
+            self.nameMerchant.setAnchor(top: self.favButton.bottomAnchor,left: self.safeAreaLayoutGuide.leftAnchor, paddingTop: 18, paddingLeft: 8)
         }
         
         self.addSubview(callButton) {
@@ -117,10 +95,9 @@ class MerchantHeaderView: UIView {
             self.reviewerLabel.setAnchor( top: self.ratingView.bottomAnchor, left: self.directionButton.rightAnchor, paddingTop: 0, paddingLeft: 8)
         }
         
-        self.backgroundColor = .black
+        self.backgroundColor = .gray
         self.configureRoundedCorners(corners: [.bottomLeft,.bottomRight], radius: 25)
         self.configureShadow(shadowColor: .lightGray, radius: 6)
-        
     }
     
     required init?(coder: NSCoder) {
@@ -146,11 +123,6 @@ class MerchantHeaderView: UIView {
     
     func configureComponents(merchant: Merchant){
         self.merchant = merchant
-        
-    }
-    
-    @objc private func backButt() {
-        delegate?.backButtView()
 
     }
     

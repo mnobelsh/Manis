@@ -12,6 +12,7 @@
 		01495D0C24D285BE009C0069 /* ReviewCollectionViewCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01495D0B24D285BE009C0069 /* ReviewCollectionViewCells.swift */; };
 		01495D0E24D2861D009C0069 /* AllReviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01495D0D24D2861D009C0069 /* AllReviewVC.swift */; };
 		01495D1024D286BD009C0069 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01495D0F24D286BC009C0069 /* WelcomeViewController.swift */; };
+		01495D1224D7926E009C0069 /* SectTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01495D1124D7926E009C0069 /* SectTitleView.swift */; };
 		3F282107865D1F6109C07657 /* Pods_MC3_MC3UITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A29C1A9AB60002507D10A2BC /* Pods_MC3_MC3UITests.framework */; };
 		4603FF3FB994E639F1CD3F69 /* Pods_MC3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB023E81723C5B3A0FE3D5F4 /* Pods_MC3.framework */; };
 		9FB684FBEEFDCCE5853D12C0 /* Pods_MC3Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AC842672A229DC392ADDA2E /* Pods_MC3Tests.framework */; };
@@ -69,6 +70,7 @@
 		01495D0B24D285BE009C0069 /* ReviewCollectionViewCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewCollectionViewCells.swift; sourceTree = "<group>"; };
 		01495D0D24D2861D009C0069 /* AllReviewVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllReviewVC.swift; sourceTree = "<group>"; };
 		01495D0F24D286BC009C0069 /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
+		01495D1124D7926E009C0069 /* SectTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectTitleView.swift; sourceTree = "<group>"; };
 		1F58DBF8F61A4F2C6D7C214E /* Pods-MC3-MC3UITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MC3-MC3UITests.release.xcconfig"; path = "Target Support Files/Pods-MC3-MC3UITests/Pods-MC3-MC3UITests.release.xcconfig"; sourceTree = "<group>"; };
 		6AA73C471E0FB93B45737454 /* Pods-MC3.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MC3.release.xcconfig"; path = "Target Support Files/Pods-MC3/Pods-MC3.release.xcconfig"; sourceTree = "<group>"; };
 		6AC842672A229DC392ADDA2E /* Pods_MC3Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MC3Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -173,6 +175,7 @@
 				FF3F72F124C981DA00D201FA /* SectionTitleView.swift */,
 				FFD493DB24CD969E00078E34 /* SortingCollectionViewCell.swift */,
 				01495D0B24D285BE009C0069 /* ReviewCollectionViewCells.swift */,
+				01495D1124D7926E009C0069 /* SectTitleView.swift */,
 			);
 			path = "Colletion View";
 			sourceTree = "<group>";
@@ -625,6 +628,7 @@
 				FF4C7E2524C6E8E3000DCC7B /* MainViewController.swift in Sources */,
 				01495D1024D286BD009C0069 /* WelcomeViewController.swift in Sources */,
 				FF3F72F424C994D100D201FA /* AvatarImageView.swift in Sources */,
+				01495D1224D7926E009C0069 /* SectTitleView.swift in Sources */,
 				FF4C7E2724C6E943000DCC7B /* FirebaseService.swift in Sources */,
 				FFD493DF24CEC5A300078E34 /* SearchResultCell.swift in Sources */,
 				FF3E490024C8508500719D14 /* UIHelper.swift in Sources */,
