@@ -46,6 +46,7 @@ class AllReviewVC: UIViewController {
         }
         self.navigationController?.navigationBar.isHidden = false
         self.navigationController?.navigationBar.tintColor = .black
+        self.title = "Reviews"
     }
     
     private var collectionView: UICollectionView!

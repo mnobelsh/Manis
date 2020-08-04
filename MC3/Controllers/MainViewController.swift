@@ -218,6 +218,7 @@ extension MainViewController: MainHeaderViewDelegate {
     }
     
     func avatarDidTapped() {
+        self.navigationController?.pushViewController(ProfileViewController(), animated: true)
         print("DEBUGS : AVATAR TAPPED")
     }
     
