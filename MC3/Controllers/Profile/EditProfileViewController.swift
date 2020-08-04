@@ -65,6 +65,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         
     private lazy var labelChangePass:UILabel = {
         let ChangePass = UILabel()
+        ChangePass.isUserInteractionEnabled = true
         ChangePass.configureTextLabel(title: "Change Password", fontSize: 18, textColor: .link)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapChangePassword(_:)))
         ChangePass.addGestureRecognizer(tapGesture)

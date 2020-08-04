@@ -125,6 +125,7 @@ class ChangePasswordViewController: UIViewController {
         setTransparentNavbar()
         self.navigationController?.navigationBar.isHidden = false
         self.navigationController?.navigationBar.tintColor = .black
+        self.title = "Change Password"
         
         view.addSubview(stackk){
             self.stackk.setCenterYAnchor(in: self.view)

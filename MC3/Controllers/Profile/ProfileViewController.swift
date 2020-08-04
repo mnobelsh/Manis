@@ -137,6 +137,12 @@ class ProfileViewController: UIViewController {
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        let vc = self.navigationController?.viewControllers.first as! MainViewController
+        vc.hideNavbar()
+    }
+    
     func configureUI() {
         self.view.addSubview(nameLabel)
         nameLabel.font = UIFont.systemFont(ofSize: 24)
