@@ -31,10 +31,11 @@ struct FirebaseService {
             guard let data = snapshot?.data() else {return}
             guard let address = data[Merchant.addressField] as? String else {return}
             guard let name = data[Merchant.nameField] as? String else {return}
-            guard let lovedBy = data[Merchant.lovedByField] as? [String] else {return}
+            guard let lovedBy = data[Merchant.lovedByField] as? Int else {return}
             guard let menu = data[Merchant.menuField] as? [[String:Any]] else {return}
             guard let badge = data[Merchant.badgeField] as? [[String:Any]] else {return}
             guard let phoneNumber = data[Merchant.phoneNumberField] as? String else {return}
+            guard let rating = data[Merchant.ratingField] as? Double else {return}
             
             var merchantMenu = [Menu]()
             var badges = [Badge]()
@@ -51,7 +52,7 @@ struct FirebaseService {
                 merchantMenu.append(Menu(title: title, price: price))
             }
             
-            let merchant = Merchant(id: merchantID, name: name, address: address, lovedBy: lovedBy, menu: merchantMenu, badges: badges, phoneNumber: phoneNumber)
+            let merchant = Merchant(id: merchantID, name: name, address: address, lovedBy: lovedBy, menu: merchantMenu, badges: badges, phoneNumber: phoneNumber, rating: rating)
 
             completion(merchant)
         }
@@ -60,7 +61,44 @@ struct FirebaseService {
     func fetchNearbyMerchants(location: CLLocation, withRadius radius: Double, completion: @escaping(Merchant,CLLocation)->Void) {
         let _ = geofireStore.query(withCenter: location, radius: radius).observe(.documentEntered) { (merchantID, location) in
             self.fetchMerchant(merchantID: merchantID!) { (merchant) in
-                completion(merchant, location!)
+                var m = merchant
+                m.section = .nearby
+                completion(m, location!)
+            }
+        }
+    }
+    
+    func fetchHighRatingMerchants(limitMerchants limit: Int, completion: @escaping(Merchant) -> Void) {
+        MERCHANT_REF.order(by: Merchant.ratingField, descending: false).limit(to: limit).addSnapshotListener { (querySnapshot, error) in
+            if let err = error {
+                print("ERROR : ",err.localizedDescription)
+                return
+            }
+            guard let documents = querySnapshot?.documents else {return}
+            documents.forEach { (document) in
+                self.fetchMerchant(merchantID: document.documentID) { (merchant) in
+                    var m = merchant
+                    m.section = .rating
+                    completion(m)
+                }
+            }
+
+        }
+    }
+    
+    func fetchTrendingMerchants(limitMerchants limit: Int, completion: @escaping(Merchant) -> Void) {
+        MERCHANT_REF.order (by: Merchant.lovedByField, descending: true).limit(to: limit).addSnapshotListener { (querySnapshot, error) in
+            if let err = error {
+                print("ERROR : ",err.localizedDescription)
+                return
+            }
+            guard let documents = querySnapshot?.documents else {return}
+            documents.forEach { (document) in
+                self.fetchMerchant(merchantID: document.documentID) { (merchant) in
+                    var m = merchant
+                    m.section = .trendings
+                    completion(m)
+                }
             }
         }
     }

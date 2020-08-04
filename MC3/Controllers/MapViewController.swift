@@ -29,7 +29,8 @@ class MapViewController: UIViewController {
     private var nearbyTableViewDataSource: NearbyTableViewDataSource?
     private var nearbyTableViewSnapshot: NearbyTableViewSnapshot?
     
-    var prevTranslation: CGFloat = 0
+    
+    var nearbyMearchants = [Merchant]()
     
     private let service = FirebaseService.shared
     
@@ -107,7 +108,7 @@ class MapViewController: UIViewController {
     private func configureTableViewSnapshot() {
         nearbyTableViewSnapshot = NearbyTableViewSnapshot()
         nearbyTableViewSnapshot?.appendSections([.main])
-        nearbyTableViewSnapshot?.appendItems(Merchant.nearbyMerchants, toSection: .main)
+        nearbyTableViewSnapshot?.appendItems(self.nearbyMearchants, toSection: .main)
         nearbyTableViewDataSource?.apply(nearbyTableViewSnapshot!, animatingDifferences: true, completion: nil)
     }
     

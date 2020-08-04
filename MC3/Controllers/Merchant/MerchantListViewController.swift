@@ -24,6 +24,8 @@ class MerchantListViewController: UIViewController {
     private var merchantListDataSource: MerchantListDataSource!
     private var merchantListSnapshot: MerchantListSnapshot!
     
+    var merchants = [Merchant]()
+    
     // MARK: - Lifecycles
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,7 +62,7 @@ class MerchantListViewController: UIViewController {
     private func configureSnapshot() {
         merchantListSnapshot = MerchantListSnapshot()
         merchantListSnapshot.appendSections([.main])
-        merchantListSnapshot.appendItems(Merchant.highestRatingAllMerchants, toSection: .main)
+        merchantListSnapshot.appendItems(self.merchants, toSection: .main)
         merchantListDataSource.apply(merchantListSnapshot, animatingDifferences: true, completion: nil)
     }
 

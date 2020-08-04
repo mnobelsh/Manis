@@ -11,7 +11,7 @@ import UIKit
 
 class MerchantCollectionCell: UICollectionViewCell {
     
-    static let identifier = "MerchantCell"
+    static let identifier = UUID().uuidString
 
     var data: Merchant? = nil {
         didSet {
@@ -55,8 +55,6 @@ class MerchantCollectionCell: UICollectionViewCell {
     
     private var nameLabel: UILabel = {
         let label = UILabel()
-        label.configureHeadingLabel(title: "Merchant Name", fontSize: 12, textColor: .black)
-        label.setSize(height: 15)
         label.numberOfLines = 1
         return label
     }()
@@ -85,17 +83,16 @@ class MerchantCollectionCell: UICollectionViewCell {
         self.configureShadow(shadowColor: .lightGray, radius: 5)
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        resetComponent()
+    }
+    
     func configureTrendingCell() {
         self.addSubview(rankNumberView) {
             self.rankNumberView.configureRoundedCorners(corners: [.allCorners], radius: 8)
             self.rankNumberView.setCenterYAnchor(in: self)
             self.rankNumberView.setAnchor(left: self.leftAnchor, paddingLeft: 14)
-        }
-        
-        self.addSubview(nameLabel) {
-            self.nameLabel.configureHeadingLabel(title: self.nameLabel.text!, fontSize: 16, textColor: .black)
-            self.nameLabel.setAnchor(top: self.rankNumberView.topAnchor, right: self.rightAnchor, left: self.rankNumberView.rightAnchor, paddingTop: 8, paddingLeft: 16)
-            self.nameLabel.setSize(height: 35)
         }
         
         self.addSubview(loveImageView) {
@@ -107,6 +104,11 @@ class MerchantCollectionCell: UICollectionViewCell {
             self.lovedLabel.setCenterYAnchor(in: self.loveImageView)
         }
         
+        self.addSubview(nameLabel) {
+            self.nameLabel.configureHeadingLabel(title: self.nameLabel.text!, fontSize: 16, textColor: .black)
+            self.nameLabel.setAnchor(top: self.rankNumberView.topAnchor, right: self.rightAnchor, left: self.rankNumberView.rightAnchor, paddingTop: 8, paddingLeft: 16)
+        }
+        
     }
     
     func configureMerchantCell() {
@@ -116,6 +118,7 @@ class MerchantCollectionCell: UICollectionViewCell {
             self.descriptionContainerView.setSize(height: 65)
             
             self.descriptionContainerView.addSubview(self.nameLabel) {
+                self.nameLabel.configureHeadingLabel(title: self.nameLabel.text!, fontSize: 12, textColor: .black)
                 self.nameLabel.setAnchor(top: self.descriptionContainerView.topAnchor, right: self.descriptionContainerView.rightAnchor, left: self.descriptionContainerView.leftAnchor, paddingTop: 6, paddingLeft: 4)
             }
             
@@ -134,6 +137,12 @@ class MerchantCollectionCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func resetComponent() {
+        self.subviews.forEach { (subview) in
+            subview.removeFromSuperview()
+        }
     }
     
 }

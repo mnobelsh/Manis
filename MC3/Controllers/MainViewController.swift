@@ -24,6 +24,24 @@ class MainViewController: UIViewController {
     private var tableViewDataSource: SearchResultTableViewDataSource?
     private var tableViewSnapShot: SearchResultSnapshot?
     
+    private var nearbyMerchants: [Merchant] = [Merchant]()  {
+        didSet {
+            updateSnapshot(merchantData: self.nearbyMerchants, forSection: .nearby)
+        }
+    }
+    private var highRatingMerchants: [Merchant] = [Merchant]() {
+        didSet {
+            updateSnapshot(merchantData: self.highRatingMerchants, forSection: .rating)
+        }
+    }
+    private var trendingMerchants: [Merchant] = [Merchant]() {
+        didSet{
+            updateSnapshot(merchantData: self.trendingMerchants, forSection: .trendings)
+        }
+    }
+    private var searchResultMerchants = [Merchant]()
+    
+    
     private lazy var scrollView: UIScrollView = {
         let scrollV = UIScrollView()
         scrollV.frame = self.view.bounds
@@ -62,35 +80,42 @@ class MainViewController: UIViewController {
         return searchView
     }()
     
+    private let service = FirebaseService.shared
+    
     // MARK: - Lifecycles
     override func viewDidLoad() {
         super.viewDidLoad()
         locationHandler.requestLocation()
         configureComponents()
         configureUI()
+        fetchNearbyMerchants()
+        fetchHighRatingMerchants(limitMerchants: 5)
+        fetchTrendingMerchants(limitMerchants: 3)
     }
     
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
 //        let menus: [[String: Any]] = [
 //            [Menu.titleField : "Es Cincau Hitam", Menu.priceField : 17000],
 //            [Menu.titleField : "Es Cincau Hijau", Menu.priceField : 16500],
 //        ]
 //        let merchantdata: [String:Any] = [
-//            Merchant.nameField : "Es Cincai Hijau Hulk",
+//            Merchant.nameField : "Es Slendang Mayang Puri",
 //            Merchant.addressField: "Jalan Hayam Wuruk 5",
 //            Merchant.menuField: menus,
 //            Merchant.badgeField: [Badge](),
 //            Merchant.lovedByField: [String](),
 //            Merchant.phoneNumberField: "89172101",
+//            Merchant.ratingField: 3.8,
 //            Merchant.locationField: locationHandler.manager.location!
 //        ]
 //        FirebaseService.shared.registerMerchant(merchantData: merchantdata) {
 //            print("Success add new merchant!")
 //        }
+
       
+        
         UIView.animate(withDuration: 0.35) {
             self.headerContainerView.frame.origin.y = 0
         }
@@ -143,7 +168,7 @@ class MainViewController: UIViewController {
                     titleView.title = "Nearby"
                     titleView.linkType = .seeOnMap
                 case MainCollectionViewSection.rating.rawValue:
-                    titleView.title = "Highest Rating"
+                    titleView.title = "High Rating"
                     titleView.linkType = .seeAll
                 default:
                     titleView.title = "Merchants"
@@ -157,6 +182,7 @@ class MainViewController: UIViewController {
         collectionViewDataSource = UICollectionViewDiffableDataSource(collectionView: self.collectionView) { (collectionview, indexPath, merchant) -> UICollectionViewCell? in
 
             guard let cell = collectionview.dequeueReusableCell(withReuseIdentifier: MerchantCollectionCell.identifier, for: indexPath) as? MerchantCollectionCell else {return UICollectionViewCell()}
+            
             cell.data = merchant
 
             if indexPath.section == MainCollectionViewSection.trendings.rawValue {
@@ -172,14 +198,17 @@ class MainViewController: UIViewController {
     }
     
     private func configureCollectionViewSnapshot() {
-        collectionViewSnapshot = MainCollectionSnapshot()
+        self.collectionViewSnapshot = MainCollectionSnapshot()
         collectionViewSnapshot!.appendSections([.nearby,.rating,.trendings])
-        collectionViewSnapshot!.appendItems(Merchant.trendingsDessert, toSection: .trendings)
-        collectionViewSnapshot!.appendItems(Merchant.nearbyMerchants, toSection: .nearby)
-        collectionViewSnapshot!.appendItems(Merchant.highestRatingMerchants, toSection: .rating)
-        collectionViewDataSource?.apply(collectionViewSnapshot!, animatingDifferences: true, completion: nil)
+        collectionViewDataSource!.apply(collectionViewSnapshot!, animatingDifferences: true, completion: nil)
     }
     
+    private func updateSnapshot(merchantData merchants: [Merchant], forSection section: MainCollectionViewSection) {
+        self.collectionViewSnapshot!.appendItems(merchants, toSection: section)
+        collectionViewDataSource!.apply(collectionViewSnapshot!, animatingDifferences: true, completion: nil)
+    }
+    
+
     private func configureTableViewDataSource() {
         tableViewDataSource = UITableViewDiffableDataSource(tableView: searchResultView.resultTableView, cellProvider: { (tableview, indexPath, merchant) -> UITableViewCell? in
             
@@ -192,8 +221,32 @@ class MainViewController: UIViewController {
     private func configureTableViewSnapshot() {
         tableViewSnapShot = SearchResultSnapshot()
         tableViewSnapShot?.appendSections([.main])
-        tableViewSnapShot?.appendItems(Merchant.searchResult, toSection: .main)
+        tableViewSnapShot?.appendItems(self.searchResultMerchants, toSection: .main)
         tableViewDataSource?.apply(tableViewSnapShot!, animatingDifferences: true, completion: nil)
+    }
+    
+    private func fetchNearbyMerchants() {
+        service.fetchNearbyMerchants(location: locationHandler.manager.location!, withRadius: 0.2) { (merchant, merchantLocation) in
+            DispatchQueue.main.async {
+                self.nearbyMerchants.append(merchant)
+            }
+        }
+    }
+    
+    private func fetchHighRatingMerchants(limitMerchants limit: Int) {
+        service.fetchHighRatingMerchants(limitMerchants: limit) { (merchant) in
+            DispatchQueue.main.async {
+                self.highRatingMerchants.append(merchant)
+            }
+        }
+    }
+    
+    private func fetchTrendingMerchants(limitMerchants limit: Int) {
+        service.fetchTrendingMerchants(limitMerchants: limit) { (merchant) in
+            DispatchQueue.main.async {
+                self.trendingMerchants.append(merchant)
+            }
+        }
     }
     
     // MARK: - Targets

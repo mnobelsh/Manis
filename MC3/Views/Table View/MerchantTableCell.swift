@@ -11,7 +11,7 @@ import UIKit
 class MerchantTableCell: UITableViewCell {
     
     // MARK: - Properties
-    static let identifier = "MerchantTVCell"
+    static let identifier = UUID().uuidString
     
     var merchant: Merchant? {
         didSet {
@@ -20,6 +20,7 @@ class MerchantTableCell: UITableViewCell {
             addressLabel.text = merchant?.address
         }
     }
+    
     private var merchantImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -76,6 +77,7 @@ class MerchantTableCell: UITableViewCell {
     }
     
     // MARK: - Lifecycle
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -86,5 +88,6 @@ class MerchantTableCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
 
 }

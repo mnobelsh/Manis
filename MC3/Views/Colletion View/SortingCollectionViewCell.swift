@@ -11,7 +11,7 @@ import UIKit
 
 class SortingCollectionViewCell: UICollectionViewCell {
     
-    static let identifier = "CustomCell"
+    static let identifier = UUID().uuidString
     
     var cellData: Sorting? {
         didSet {
