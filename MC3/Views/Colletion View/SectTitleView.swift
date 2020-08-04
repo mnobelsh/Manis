@@ -18,8 +18,8 @@ enum SectLinkType{
 
 class SectTitleView: UICollectionReusableView {
     
-    static let kind = "SectionTitleSupplementary"
-    static let identifier = "SectionTitleIdentifier"
+    static let kind = "SectTitleSupplementary"
+    static let identifier = "SectTitleIdentifier"
 
     var delegateTitle: SectTitleViewDelegate?
 
@@ -36,8 +36,6 @@ class SectTitleView: UICollectionReusableView {
                 topRightButtons.setTitle("See all", for: .normal)
             case .empty :
                 topRightButtons.isHidden = true
-//            case .seeMap :
-//                topRightButtons.setTitle("See on map", for: .normal)
             }
         }
     }

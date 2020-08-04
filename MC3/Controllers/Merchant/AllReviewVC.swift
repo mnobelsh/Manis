@@ -122,4 +122,3 @@ extension AllReviewVC: UICollectionViewDelegate{
             print("SELECTED Review : \(review!.userName)")
         }
     }
-

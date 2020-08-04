@@ -15,7 +15,6 @@ class ReviewCollectionViewCells: UICollectionViewCell, UITextViewDelegate {
         didSet {
             if let details = details {
                 nameLabel.text = details.userName
-
             }
         }
     }

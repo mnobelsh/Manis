@@ -81,7 +81,7 @@ class MerchantCollectionCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .systemBackground
+        self.backgroundColor = .red
         self.configureRoundedCorners(corners: [.allCorners], radius: 10)
         self.configureShadow(shadowColor: .lightGray, radius: 5)
     }
