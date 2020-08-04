@@ -108,12 +108,16 @@ class WelcomeViewController: UIViewController, UIScrollViewDelegate {
                 self.skipButton.isHidden = true
             }
         } else {
-            self.navigationController?.pushViewController(MainViewController(), animated: true)
+            let vc = NavigationViewController.shared
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
         }
     }
     
     @objc func didTapSkipButton(_ button:UIButton) {
-        self.navigationController?.pushViewController(MainViewController(), animated: true)
+            let vc = NavigationViewController.shared
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
     }
 
     private lazy var pageControl: UIPageControl = {
