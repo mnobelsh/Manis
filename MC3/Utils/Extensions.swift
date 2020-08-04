@@ -34,13 +34,19 @@ extension UIViewController {
 
 extension UILabel {
     func configureHeadingLabel(title: String, fontSize size: CGFloat? = nil, textColor color: UIColor? = nil) {
-        self.font = UIFont(name: "Avenir-Heavy", size: size ?? 22)
+        self.font = UIFont(name: "Avenir-Black", size: size ?? 22)
         self.text = title
         self.textColor = color ?? UIColor.label
     }
     
     func configureTextLabel(title: String, fontSize size: CGFloat? = nil, textColor color: UIColor? = nil) {
         self.font = UIFont(name: "Avenir", size: size ?? 14)
+        self.text = title
+        self.textColor = color ?? UIColor.label
+    }
+    
+    func configureCustomLabel(title: String, fontType: String, fontSize size: CGFloat? = nil, textColor color: UIColor? = nil) {
+        self.font = UIFont(name: "Avenir-\(fontType)", size: size ?? 14)
         self.text = title
         self.textColor = color ?? UIColor.label
     }
@@ -135,8 +141,8 @@ extension UIView {
         setCenterYAnchor(in: view)
     }
     
-    func configureTextFieldView(icon: UIImage? = nil, textField tf: UITextField, contrastColorTo: UIColor? = nil) {
-        self.setSize(height: 55)
+    func configureTextFieldView(icon: UIImage? = nil, textField tf: UITextField, errorLabel: String, contrastColorTo: UIColor? = nil) {
+        self.setSize(height: 44)
         
         let border = UIView()
         border.setSize(height: 1)
@@ -144,13 +150,14 @@ extension UIView {
         border.configureRoundedCorners(corners: [.allCorners], radius: 0.5)
         self.addSubview(border)
         
-        if let icon = icon {
+        if let icon = icon{
             let iconView = UIImageView(image: icon)
             iconView.contentMode = .scaleAspectFit
             iconView.setSize(width: 24, height: 24)
+            
             if let contrastColor = contrastColorTo {
                 iconView.tintColor = UIColor(contrastingBlackOrWhiteColorOn: contrastColor, isFlat: true)
-            } 
+            }
             self.addSubview(iconView)
             iconView.setCenterYAnchor(in: self)
             iconView.setAnchor(left: self.leftAnchor)
@@ -158,6 +165,14 @@ extension UIView {
             self.addSubview(tf)
             tf.setCenterYAnchor(in: iconView)
             tf.setAnchor(right: self.rightAnchor, left: iconView.rightAnchor, paddingLeft: 16)
+            
+            let error = UILabel()
+            error.configureTextLabel(title: "", fontSize: 10, textColor: .red)
+            self.addSubview(error)
+            error.setAnchor(top: tf.bottomAnchor,right: tf.rightAnchor,left: tf.leftAnchor , paddingTop: 15, paddingRight: 5, paddingBottom: 5, paddingLeft: 0)
+            error.text = errorLabel
+            error.isHidden = true
+            error.tag = 500
             
             border.setAnchor(right: self.rightAnchor, bottom: self.bottomAnchor, left: iconView.rightAnchor, paddingLeft: 16)
         } else {
@@ -169,6 +184,67 @@ extension UIView {
 
     }
     
+    func showErrorTextField(){
+        for view in self.subviews {
+            if view.tag == 500 {
+                view.isHidden = false
+            }
+        }
+    }
+    
+    func hideErrorTextField(){
+        for view in self.subviews {
+            if view.tag == 500 {
+                view.isHidden = true
+            }
+        }
+    }
+    
+    func isEmptyTextField() -> Bool{
+        for view in self.subviews {
+            if let textField = view as? UITextField {
+                if textField.text == "" {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+    
+    func checkEmptyTextField() {
+        var isEmpty = false
+        for view in self.subviews {
+            if let textField = view as? UITextField {
+                if textField.text == "" {
+                    isEmpty = true
+                }
+            }
+            if let errorLabel = view as? UILabel {
+                if isEmpty {
+                    errorLabel.isHidden = false
+                } else {
+                    errorLabel.isHidden = true
+                }
+            }
+        }
+    }
+    
+    func getTextFromTextField() -> String? {
+        for view in self.subviews {
+            if let textField = view as? UITextField {
+                return textField.text
+            }
+        }
+        return nil
+    }
+    
+    func changeErrorLabelTextField(label: String){
+        for view in self.subviews {
+            if let errorLabel = view as? UILabel {
+                errorLabel.text = label
+            }
+        }
+    }
     
     func configureRatingView(withRating rating: String, textColor: UIColor) {
         
@@ -190,6 +266,41 @@ extension UIView {
             ratingLabel.setAnchor(top: self.topAnchor, right: self.rightAnchor, bottom: self.bottomAnchor, left: starView.rightAnchor, paddingTop: 4, paddingBottom: 4, paddingLeft: 8)
         }
         
+    }
+    
+    func configureBadge(badge: UIImage,title: String,total: String){
+        self.setSize(height: 120)
+        let img = UIImageView(image: badge)
+        img.contentMode = .scaleAspectFit
+        img.backgroundColor = .clear
+        
+        self.addSubview(img){
+            img.setAnchor(top: self.topAnchor,right: self.rightAnchor,left: self.leftAnchor, paddingTop: 0, paddingRight: 8, paddingBottom: 8, paddingLeft: 0)
+            
+        }
+        
+        let titlelabel = UILabel()
+        titlelabel.backgroundColor = .clear
+//        titlelabel.configureHeadingLabel(title: title, fontSize: 12, textColor: .black)
+        titlelabel.font = UIFont(name: "Avenir-Medium", size: 12)
+        titlelabel.text = title
+        titlelabel.textColor = .black
+        
+        self.addSubview(titlelabel){
+            titlelabel.setAnchor(top: img.bottomAnchor, paddingTop: 0)
+            titlelabel.setCenterXAnchor(in: img)
+        }
+        
+        let totalLabel = UILabel()
+        totalLabel.backgroundColor = .clear
+        totalLabel.font = UIFont(name: "Avenir-Medium", size: 12)
+        totalLabel.text = total
+        totalLabel.textColor = .black
+        
+        self.addSubview(totalLabel){
+            totalLabel.setAnchor(top: titlelabel.bottomAnchor, paddingTop: 0)
+            totalLabel.setCenterXAnchor(in: img)
+        }
     }
 }
 
