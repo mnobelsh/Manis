@@ -9,7 +9,8 @@ import UIKit
 
 class AddReviewViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate {
 
-    //MARK: - CCOMPONENTS
+    //MARK: - COMPONENTS
+    private let scrollView = UIScrollView()
 
     //Rating
     private lazy var ratingLabel: UILabel = {
@@ -284,53 +285,66 @@ class AddReviewViewController: UIViewController, UIImagePickerControllerDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        scrollView.frame = self.view.bounds
+        scrollView.contentInset = .zero
+        scrollView.automaticallyAdjustsScrollIndicatorInsets = false
+        scrollView.contentSize = CGSize(width: self.view.frame.width, height: 720)
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.contentInsetAdjustmentBehavior = .never
+        scrollView.alwaysBounceVertical = false
+        scrollView.delegate = self
+        
+        view.addSubview(scrollView){
+            self.scrollView.setAnchor(top: self.view.safeAreaLayoutGuide.topAnchor, right: self.view.rightAnchor, bottom: self.view.bottomAnchor, left: self.view.leftAnchor)
+        }
         
         setTransparentNavbar()
         self.navigationController?.navigationBar.isHidden = false
         self.navigationController?.navigationBar.tintColor = .black
         self.title = "Add Review"
         
-        view.addSubview(ratingLabel){
-            self.ratingLabel.setAnchor(top: self.view.topAnchor, left: self.view.leftAnchor, paddingTop: 120, paddingRight: 15, paddingBottom: 15, paddingLeft: 15)
+        
+        scrollView.addSubview(ratingLabel){
+            self.ratingLabel.setAnchor(top: self.scrollView.topAnchor, left: self.view.leftAnchor, paddingRight: 15, paddingBottom: 15, paddingLeft: 15)
         }
         
-        view.addSubview(ratingStack){
+        scrollView.addSubview(ratingStack){
             self.ratingStack.setAnchor(top: self.ratingLabel.bottomAnchor, left: self.view.leftAnchor, paddingTop: 8, paddingRight: 15, paddingBottom: 15, paddingLeft: 15)
         }
         
-        view.addSubview(badgesLabel){
+        scrollView.addSubview(badgesLabel){
             self.badgesLabel.setAnchor(top: self.ratingStack.bottomAnchor, left: self.view.leftAnchor, paddingTop: 15, paddingRight: 15, paddingBottom: 15, paddingLeft: 15)
         }
         
-        view.addSubview(badgesStacks){
+        scrollView.addSubview(badgesStacks){
             self.badgesStacks.setAnchor(top: self.badgesLabel.bottomAnchor,right: self.view.rightAnchor, left: self.view.leftAnchor, paddingTop: 8, paddingRight: 15, paddingBottom: 15, paddingLeft: 15)
         }
         
-        view.addSubview(badgesLabelStacks){
+        scrollView.addSubview(badgesLabelStacks){
             self.badgesLabelStacks.setAnchor(top: self.badgesStacks.bottomAnchor,right: self.view.rightAnchor, left: self.view.leftAnchor, paddingTop: 4, paddingRight: 15, paddingBottom: 15, paddingLeft: 45)
         }
         
-        view.addSubview(commentLabel){
+        scrollView.addSubview(commentLabel){
             self.commentLabel.setAnchor(top: self.badgesLabelStacks.bottomAnchor, left: self.view.leftAnchor, paddingTop: 30, paddingRight: 15, paddingBottom: 10, paddingLeft: 15)
         }
         
-        view.addSubview(commentView){
+        scrollView.addSubview(commentView){
             self.commentView.setAnchor(top: self.commentLabel.bottomAnchor, right: self.view.rightAnchor,left: self.view.leftAnchor, paddingTop: 8, paddingRight: 15, paddingBottom: 15, paddingLeft: 15)
         }
 
-        view.addSubview(photoLabel){
+        scrollView.addSubview(photoLabel){
             self.photoLabel.setAnchor(top: self.commentView.bottomAnchor,left: self.view.leftAnchor, paddingTop: 15, paddingRight: 15, paddingBottom: 15, paddingLeft: 15)
         }
         
-        view.addSubview(optionalLabel){
+        scrollView.addSubview(optionalLabel){
             self.optionalLabel.setAnchor(top: self.commentView.bottomAnchor, left: self.photoLabel.rightAnchor, paddingTop: 15, paddingRight: 15, paddingBottom: 15, paddingLeft: 5)
         }
         
-        view.addSubview(pickerButton){
+        scrollView.addSubview(pickerButton){
             self.pickerButton.setAnchor(top: self.photoLabel.bottomAnchor, left: self.view.leftAnchor, paddingTop: 8, paddingRight: 15, paddingBottom: 8, paddingLeft: 15)
         }
         
-        view.addSubview(saveButton){
+        scrollView.addSubview(saveButton){
             self.saveButton.setAnchor(bottom: self.view.bottomAnchor, paddingRight: 20, paddingBottom: 30, paddingLeft: 20)
             self.saveButton.setCenterXAnchor(in: self.view)
         }
@@ -339,8 +353,6 @@ class AddReviewViewController: UIViewController, UIImagePickerControllerDelegate
         imagePicker.allowsEditing = true
         commentView.delegate = self
         
-        
-        // Do any additional setup after loading the view.
     }
     
     @objc func saveButtonTapped(_ button: UIButton){

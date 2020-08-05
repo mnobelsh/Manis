@@ -113,12 +113,12 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         
         view.addSubview(labelChangePhoto){
             self.labelChangePhoto.setCenterXAnchor(in: self.view)
-            self.labelChangePhoto.setAnchor(top: self.profileImage.bottomAnchor, right: self.view.rightAnchor,  left: self.view.leftAnchor, paddingTop: 8, paddingRight: 8, paddingBottom: 8, paddingLeft: 8)
+            self.labelChangePhoto.setAnchor(top: self.profileImage.bottomAnchor, paddingTop: 8, paddingRight: 8, paddingBottom: 8, paddingLeft: 8)
         }
         
         view.addSubview(stackk){
-            self.stackk.setCenterYAnchor(in: self.view)
-            self.stackk.setAnchor(top: self.labelChangePhoto.bottomAnchor, right: self.view.rightAnchor, left: self.view.leftAnchor, paddingTop: 100, paddingRight: 20, paddingLeft: 20)
+            self.stackk.setAnchor(top: self.labelChangePhoto.bottomAnchor, right: self.view.rightAnchor, left: self.view.leftAnchor, paddingTop: 50, paddingRight: 20, paddingLeft: 20)
+            self.stackk.setSize(height: 100)
         }
         
         view.addSubview(labelChangePass){

@@ -55,9 +55,9 @@ class WelcomeViewController: UIViewController, UIScrollViewDelegate {
             let pageView = UIView(frame: CGRect(x: CGFloat(i) * view.frame.size.width, y: 0, width: view.frame.size.width, height: view.frame.size.height))
             scrollView.addSubview(pageView)
 
-            let imageView = UIImageView(frame: CGRect(x: 0, y: pageView.frame.size.height/4, width: pageView.frame.size.width, height: pageView.frame.size.height/3))
+            let imageView = UIImageView(frame: CGRect(x: 0, y: pageView.frame.size.height/4 + 50, width: pageView.frame.size.width, height: pageView.frame.size.height/3))
             
-            let titleLabel = UILabel(frame: CGRect(x: 50, y: 50, width: pageView.frame.size.width - 100, height: 120))
+            let titleLabel = UILabel(frame: CGRect(x: 50, y: pageView.frame.size.height/8, width: pageView.frame.size.width - 100, height: 120))
             
             titleLabel.textAlignment = .center
             titleLabel.font = UIFont(name: "Avenir-Heavy", size: 18)
@@ -131,7 +131,7 @@ class WelcomeViewController: UIViewController, UIScrollViewDelegate {
     }()
     
     fileprivate func setUpBottomControls() {
-        NSLayoutConstraint.activate([pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor), pageControl.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -250)])
+        NSLayoutConstraint.activate([pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor), pageControl.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -self.view.frame.height/5)])
     }
         
 }
