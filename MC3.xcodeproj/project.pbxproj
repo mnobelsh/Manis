@@ -47,6 +47,8 @@
 		FF53917F24B8667400FFA33B /* NavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF53917E24B8667400FFA33B /* NavigationViewController.swift */; };
 		FF5D4FC424B4A70D00951879 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5D4FC324B4A70D00951879 /* Extensions.swift */; };
 		FFBC31EA24D815660007062A /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFBC31E924D815660007062A /* Menu.swift */; };
+		FFBC31EC24D842240007062A /* Badge.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFBC31EB24D842240007062A /* Badge.swift */; };
+		FFBC31EE24D85A170007062A /* MerchantAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFBC31ED24D85A170007062A /* MerchantAnnotation.swift */; };
 		FFD493D724CB628300078E34 /* MainHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD493D624CB628300078E34 /* MainHeaderView.swift */; };
 		FFD493D924CD69B300078E34 /* SearchResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD493D824CD69B300078E34 /* SearchResultView.swift */; };
 		FFD493DC24CD969E00078E34 /* SortingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD493DB24CD969E00078E34 /* SortingCollectionViewCell.swift */; };
@@ -127,6 +129,8 @@
 		FF53917E24B8667400FFA33B /* NavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewController.swift; sourceTree = "<group>"; };
 		FF5D4FC324B4A70D00951879 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		FFBC31E924D815660007062A /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
+		FFBC31EB24D842240007062A /* Badge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Badge.swift; sourceTree = "<group>"; };
+		FFBC31ED24D85A170007062A /* MerchantAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantAnnotation.swift; sourceTree = "<group>"; };
 		FFD493D624CB628300078E34 /* MainHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHeaderView.swift; sourceTree = "<group>"; };
 		FFD493D824CD69B300078E34 /* SearchResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultView.swift; sourceTree = "<group>"; };
 		FFD493DB24CD969E00078E34 /* SortingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -332,6 +336,8 @@
 				01495D0924D2858E009C0069 /* Review.swift */,
 				FF05B2A624D28A7000CE0AEB /* User.swift */,
 				FFBC31E924D815660007062A /* Menu.swift */,
+				FFBC31EB24D842240007062A /* Badge.swift */,
+				FFBC31ED24D85A170007062A /* MerchantAnnotation.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -651,6 +657,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFBC31EE24D85A170007062A /* MerchantAnnotation.swift in Sources */,
 				FFD493D724CB628300078E34 /* MainHeaderView.swift in Sources */,
 				FFD493D924CD69B300078E34 /* SearchResultView.swift in Sources */,
 				FF3E490424C86D8600719D14 /* MerchantCollectionCell.swift in Sources */,
@@ -683,6 +690,7 @@
 				FF3E490224C86B6000719D14 /* Merchant.swift in Sources */,
 				FF457EFD24B4A29B0052438A /* SceneDelegate.swift in Sources */,
 				01495D0A24D2858E009C0069 /* Review.swift in Sources */,
+				FFBC31EC24D842240007062A /* Badge.swift in Sources */,
 				FFBC31EA24D815660007062A /* Menu.swift in Sources */,
 				FF4C7E2B24C6EE63000DCC7B /* AddReviewViewController.swift in Sources */,
 				FF4C7E2924C6EE29000DCC7B /* MerchantViewController.swift in Sources */,

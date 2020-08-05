@@ -7,40 +7,63 @@
 //
 
 import Foundation
-import UIKit
+import CoreLocation
 
 struct Merchant: Hashable {
     
-    static var trendingsDessert: [Merchant] = [Merchant(id: UUID().uuidString, name: "Es Doger", address: "Jl. Serpong Raya 1", lovedCount: 120,priceRange: "Rp 12.000 - Rp 20.000",menu: ["Es cendol","Es doger"],harga: ["Rp 12.000","13.000"],Badge: #imageLiteral(resourceName: "bigBadge2"),photo: #imageLiteral(resourceName: "doger")),
-                                              Merchant(id: UUID().uuidString, name: "Es Campur", address: "Jl. Serpong Raya 12", lovedCount: 75,priceRange: "Rp 12.000 - Rp 20.000",menu: ["Es cendol","Es doger"],harga: ["Rp 12.000","13.000"],Badge: #imageLiteral(resourceName: "bigBadge2"),photo: #imageLiteral(resourceName: "doger")),
-                                              Merchant(id: UUID().uuidString, name: "Es Goyobod", address: "Jl. Serpong Raya 3", lovedCount: 90,priceRange: "Rp 12.000 - Rp 20.000",menu: ["Es cendol","Es doger"],harga: ["Rp 12.000","13.000"],Badge: #imageLiteral(resourceName: "bigBadge2"),photo: #imageLiteral(resourceName: "doger"))]
-    static var nearbyMerchants: [Merchant] =  [Merchant(id: UUID().uuidString, name: "Es Cincau Mang Ucup", address: "Jl. Serpong Raya 10", lovedCount: 111,priceRange: "Rp 12.000 - Rp 20.000",menu: ["Es cendol","Es doger"],harga: ["Rp 12.000","13.000"],Badge: #imageLiteral(resourceName: "bigBadge2"),photo: #imageLiteral(resourceName: "doger")),
-                                                Merchant(id: UUID().uuidString, name: "Es Teler Uhuy", address: "Jl. Serpong Raya 13", lovedCount: 111,priceRange: "Rp 12.000 - Rp 20.000",menu: ["Es cendol","Es doger"],harga: ["Rp 12.000","13.000"],Badge: #imageLiteral(resourceName: "bigBadge2"),photo: #imageLiteral(resourceName: "doger")),
-                                                Merchant(id: UUID().uuidString, name: "Es Pisang Ijo Prikitiew", address: "Jl. Serpong Raya 56", lovedCount: 111,priceRange: "Rp 12.000 - Rp 20.000",menu: ["Es cendol","Es doger"],harga: ["Rp 12.000","13.000"],Badge: #imageLiteral(resourceName: "bigBadge2"),photo: #imageLiteral(resourceName: "doger")),]
-    static var highestRatingMerchants: [Merchant] = [Merchant(id: UUID().uuidString, name: "Es Puter Linlin", address: "Jl. Serpong Raya 99", lovedCount: 111,priceRange: "Rp 12.000 - Rp 20.000",menu: ["Es cendol","Es doger"],harga: ["Rp 12.000","13.000"],Badge: #imageLiteral(resourceName: "bigBadge2"),photo: #imageLiteral(resourceName: "doger")),
-                                                      Merchant(id: UUID().uuidString, name: "Es Slendang Mayang Sari", address: "Jl. Serpong Raya 11", lovedCount: 111,priceRange: "Rp 12.000 - Rp 20.000",menu: ["Es cendol","Es doger"],harga: ["Rp 12.000","13.000"],Badge: #imageLiteral(resourceName: "bigBadge2"),photo: #imageLiteral(resourceName: "doger")),
-                                                      Merchant(id: UUID().uuidString, name: "Es Bahenol", address: "Jl. Serpong Raya 17", lovedCount: 111,priceRange: "Rp 12.000 - Rp 20.000",menu: ["Es cendol","Es doger"],harga: ["Rp 12.000","13.000"],Badge: #imageLiteral(resourceName: "bigBadge2"),photo: #imageLiteral(resourceName: "doger")),]
+    static var trendingsDessert: [Merchant] = [Merchant(id: UUID().uuidString, name: "Es Doger", address: "Jl. Serpong Raya 1", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+                                               Merchant(id: UUID().uuidString, name: "Es Campur", address: "Jl. Serpong Raya 12", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+                                               Merchant(id: UUID().uuidString, name: "Es Goyobod", address: "Jl. Serpong Raya 3", lovedBy: [], menu: [], badges: [], phoneNumber: "000")]
+    static var nearbyMerchants: [Merchant] =  [Merchant(id: UUID().uuidString, name: "Es Cincau Mang Ucup", address: "Jl. Serpong Raya 10", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+                                               Merchant(id: UUID().uuidString, name: "Es Teler Uhuy", address: "Jl. Serpong Raya 13", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+                                               Merchant(id: UUID().uuidString, name: "Es Pisang Ijo Prikitiew", address: "Jl. Serpong Raya 56", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),]
+    static var highestRatingMerchants: [Merchant] = [Merchant(id: UUID().uuidString, name: "Es Puter Linlin", address: "Jl. Serpong Raya 99", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+                                                     Merchant(id: UUID().uuidString, name: "Es Slendang Mayang Sari", address: "Jl. Serpong Raya 11", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+                                                     Merchant(id: UUID().uuidString, name: "Es Bahenol", address: "Jl. Serpong Raya 17", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),]
     
     static var searchResult: [Merchant] = [
-        Merchant(id: UUID().uuidString, name: "Es goyang lidah", address: "Jl. Hayam Wuruk", lovedCount: 100,priceRange: "Rp 12.000 - Rp 20.000",menu: ["Es cendol","Es doger"],harga: ["Rp 12.000","13.000"],Badge: #imageLiteral(resourceName: "bigBadge2"),photo: #imageLiteral(resourceName: "doger")),
-        Merchant(id: UUID().uuidString, name: "Es goyang gayung", address: "Jl. Hayam Wuruk", lovedCount: 100,priceRange: "Rp 12.000 - Rp 20.000",menu: ["Es cendol","Es doger"],harga: ["Rp 12.000","13.000"],Badge: #imageLiteral(resourceName: "bigBadge2"),photo: #imageLiteral(resourceName: "doger")),
-        Merchant(id: UUID().uuidString, name: "Es goyang lihay", address: "Jl. Hayam Wuruk", lovedCount: 100,priceRange: "Rp 12.000 - Rp 20.000",menu: ["Es cendol","Es doger"],harga: ["Rp 12.000","13.000"],Badge: #imageLiteral(resourceName: "bigBadge2"),photo: #imageLiteral(resourceName: "doger")),
-        Merchant(id: UUID().uuidString, name: "Es goyang ngebor", address: "Jl. Hayam Wuruk", lovedCount: 100,priceRange: "Rp 12.000 - Rp 20.000",menu: ["Es cendol","Es doger"],harga: ["Rp 12.000","13.000"],Badge: #imageLiteral(resourceName: "bigBadge2"),photo: #imageLiteral(resourceName: "doger")),
-        Merchant(id: UUID().uuidString, name: "Es goyang asik", address: "Jl. Hayam Wuruk", lovedCount: 100,priceRange: "Rp 12.000 - Rp 20.000",menu: ["Es cendol","Es doger"],harga: ["Rp 12.000","13.000"],Badge: #imageLiteral(resourceName: "bigBadge2"),photo: #imageLiteral(resourceName: "doger")),
-        Merchant(id: UUID().uuidString, name: "Es goyang yang", address: "Jl. Hayam Wuruk", lovedCount: 100,priceRange: "Rp 12.000 - Rp 20.000",menu: ["Es cendol","Es doger"],harga: ["Rp 12.000","13.000"],Badge: #imageLiteral(resourceName: "bigBadge2"),photo: #imageLiteral(resourceName: "doger")),
+        Merchant(id: UUID().uuidString, name: "Es goyang lidah", address: "Jl. Hayam Wuruk", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+        Merchant(id: UUID().uuidString, name: "Es goyang gayung", address: "Jl. Hayam Wuruk", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+        Merchant(id: UUID().uuidString, name: "Es goyang lihay", address: "Jl. Hayam Wuruk", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+        Merchant(id: UUID().uuidString, name: "Es goyang ngebor", address: "Jl. Hayam Wuruk", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+        Merchant(id: UUID().uuidString, name: "Es goyang asik", address: "Jl. Hayam Wuruk", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+        Merchant(id: UUID().uuidString, name: "Es goyang yang", address: "Jl. Hayam Wuruk", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+    ]
+    
+    static var highestRatingAllMerchants: [Merchant] = [
+        Merchant(id: UUID().uuidString, name: "Es Puter Linlin", address: "Jl. Serpong Raya 99", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+        Merchant(id: UUID().uuidString, name: "Es Slendang Mayang Sari", address: "Jl. Serpong Raya 11", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+        Merchant(id: UUID().uuidString, name: "Es Bahenol", address: "Jl. Serpong Raya 17", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+        Merchant(id: UUID().uuidString, name: "Es Puter Linlin", address: "Jl. Serpong Raya 99", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+        Merchant(id: UUID().uuidString, name: "Es Slendang Mayang Sari", address: "Jl. Serpong Raya 11", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+        Merchant(id: UUID().uuidString, name: "Es Bahenol", address: "Jl. Serpong Raya 17", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+        Merchant(id: UUID().uuidString, name: "Es Puter Linlin", address: "Jl. Serpong Raya 99", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+        Merchant(id: UUID().uuidString, name: "Es Slendang Mayang Sari", address: "Jl. Serpong Raya 11", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+        Merchant(id: UUID().uuidString, name: "Es Bahenol", address: "Jl. Serpong Raya 17", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+        Merchant(id: UUID().uuidString, name: "Es Puter Linlin", address: "Jl. Serpong Raya 99", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+        Merchant(id: UUID().uuidString, name: "Es Slendang Mayang Sari", address: "Jl. Serpong Raya 11", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
+        Merchant(id: UUID().uuidString, name: "Es Bahenol", address: "Jl. Serpong Raya 17", lovedBy: [], menu: [], badges: [], phoneNumber: "000"),
     ]
     
     
+    static let openingHoursField = "opening_hours"
+    static let photosField = "photos"
+    static let menuField = "menu"
+    static let locationField = "location"
+    static let lovedByField = "lovedBy"
+    static let addressField = "address"
+    static let nameField = "name"
+    static let badgeField = "badges"
+    static let phoneNumberField = "phone_number"
     
     var id: String
     var name: String
     var address: String
-    var lovedCount: Int
-    var priceRange: String
-    var menu: [String] = []
-    var harga: [String] = []
-    var Badge: UIImage?
-    var photo: UIImage?
+    var lovedBy: [String]
+    var menu: [Menu]
+    var badges: [Badge]
+    var phoneNumber: String
+    
 }
 
 

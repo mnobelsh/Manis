@@ -288,6 +288,7 @@ class AddReviewViewController: UIViewController, UIImagePickerControllerDelegate
         setTransparentNavbar()
         self.navigationController?.navigationBar.isHidden = false
         self.navigationController?.navigationBar.tintColor = .black
+        self.title = "Add Review"
         
         view.addSubview(ratingLabel){
             self.ratingLabel.setAnchor(top: self.view.topAnchor, left: self.view.leftAnchor, paddingTop: 120, paddingRight: 15, paddingBottom: 15, paddingLeft: 15)

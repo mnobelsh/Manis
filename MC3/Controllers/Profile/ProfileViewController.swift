@@ -115,6 +115,9 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .white
+        self.navigationController?.navigationBar.isHidden = false
+        self.navigationController?.navigationBar.tintColor = .black
+        self.title = "Profile"
         
         view.addSubview(profileImage){
             self.profileImage.setCenterXAnchor(in: self.view)
@@ -133,6 +136,12 @@ class ProfileViewController: UIViewController {
         view.addSubview(rightButtonStacks){
             self.rightButtonStacks.setAnchor(top: self.nameLabel.bottomAnchor, right: self.view.rightAnchor, paddingTop: 90, paddingRight: 55)
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        let vc = self.navigationController?.viewControllers.first as! MainViewController
+        vc.hideNavbar()
     }
     
     func configureUI() {

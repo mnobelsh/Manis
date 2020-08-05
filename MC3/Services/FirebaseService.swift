@@ -29,32 +29,42 @@ struct FirebaseService {
             }
             
             guard let data = snapshot?.data() else {return}
-            guard let address = data[Merchant.address] as? String else {return}
-            guard let name = data[Merchant.name] as? String else {return}
-            guard let lovedCount = data[Merchant.lovedCount] as? Int else {return}
+            guard let address = data[Merchant.addressField] as? String else {return}
+            guard let name = data[Merchant.nameField] as? String else {return}
+            guard let lovedBy = data[Merchant.lovedByField] as? [String] else {return}
+            guard let menu = data[Merchant.menuField] as? [[String:Any]] else {return}
+            guard let badge = data[Merchant.badgeField] as? [[String:Any]] else {return}
+            guard let phoneNumber = data[Merchant.phoneNumberField] as? String else {return}
             
             var merchantMenu = [Menu]()
-            if let menus = data[Merchant.menu] as? [[String:Any]] {
-                menus.forEach { (menu) in
-                    guard let title = menu[Menu.titleField] as? String else {return}
-                    guard let price = menu[Menu.priceField] as? Double else {return}
-                    let m = Menu(title: title, price: price)
-                    merchantMenu.append(m)
-                }
-            } else {
-                merchantMenu = []
+            var badges = [Badge]()
+            
+            badge.forEach { (b) in
+                guard let type = b[Badge.typeField] as? Int else {return}
+                guard let count = b[Badge.countField] as? Int else {return}
+                badges.append(Badge(type: BadgeType(rawValue: type)!, count: count))
             }
+            
+            menu.forEach { (m) in
+                guard let title = m[Menu.titleField] as? String else {return}
+                guard let price = m[Menu.priceField] as? Double else {return}
+                merchantMenu.append(Menu(title: title, price: price))
+            }
+            
+            let merchant = Merchant(id: merchantID, name: name, address: address, lovedBy: lovedBy, menu: merchantMenu, badges: badges, phoneNumber: phoneNumber)
 
-            let merchant = Merchant(id: merchantID, name: name, address: address, lovedCount: lovedCount, menu: merchantMenu)
-            
             completion(merchant)
-            
         }
     }
     
-    func fetchMerchantLocation(merchantID: String, completion: @escaping(CLLocation) -> Void ) {
-        
+    func fetchNearbyMerchants(location: CLLocation, withRadius radius: Double, completion: @escaping(Merchant,CLLocation)->Void) {
+        let _ = geofireStore.query(withCenter: location, radius: radius).observe(.documentEntered) { (merchantID, location) in
+            self.fetchMerchant(merchantID: merchantID!) { (merchant) in
+                completion(merchant, location!)
+            }
+        }
     }
+    
     
     func fetchUser(userID: String, completion: @escaping(User) -> Void ) {
         USER_REF.document(userID).addSnapshotListener { (snapshot, error) in
@@ -88,12 +98,13 @@ struct FirebaseService {
     }
     
     func registerMerchant(merchantData: [String: Any], completion: @escaping() -> Void) {
-        guard let merchantName = merchantData[Merchant.name] as? String else {return}
-        let uuid = UUID().uuidString.split(separator: Character("-")).last!
-        let merchantID = merchantName.trimmingCharacters(in: .whitespacesAndNewlines) + uuid
-        guard let location = merchantData[Merchant.location] as? CLLocation else {return}
+
+        let merchantID = "\(UUID().uuidString.split(separator: Character("-")).last!)"
+        guard let location = merchantData[Merchant.locationField] as? CLLocation else {return}
         
-        MERCHANT_REF.document(merchantID).setData(merchantData) { (error) in
+        var data = merchantData
+        data.removeValue(forKey: Merchant.locationField)
+        MERCHANT_REF.document(merchantID).setData(data) { (error) in
             if let err = error {
                 print("ERROR : ",err.localizedDescription)
                 return
@@ -153,15 +164,6 @@ struct FirebaseService {
         }
     }
     
-    func fetchNearbyMerchants(location: CLLocation, withRadius radius: Double, completion: @escaping(Merchant)->Void) {
-        let _ = geofireStore.query(withCenter: location, radius: radius).observe(.documentEntered) { (merchantID, location) in
-            
-            self.fetchMerchant(merchantID: merchantID!) { (merchant) in
-                completion(merchant)
-            }
-            
-        }
-    }
-    
+
     
 }

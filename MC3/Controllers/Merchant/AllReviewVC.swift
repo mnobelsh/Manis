@@ -65,6 +65,9 @@ class AllReviewVC: UIViewController {
             self.addButton.setCenterXAnchor(in: self.view)
             self.addButton.setAnchor( bottom: self.view.bottomAnchor, paddingTop: 8, paddingRight: 8, paddingBottom: 25, paddingLeft: 8)
         }
+        self.navigationController?.navigationBar.isHidden = false
+        self.navigationController?.navigationBar.tintColor = .black
+        self.title = "Reviews"
     }
     
     private func configAllneededforCV(){

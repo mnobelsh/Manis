@@ -16,7 +16,13 @@ typealias NearbyTableViewSnapshot = NSDiffableDataSourceSnapshot<MerchantTableVi
 class MapViewController: UIViewController {
 
     // MARK: - Properties
-    private var mapView: MKMapView!
+    private lazy var mapView: MKMapView = {
+        let mapview = MKMapView()
+        mapview.showsUserLocation = true
+        mapview.frame = self.view.bounds
+        mapview.delegate = self
+        return mapview
+    }()
     private var locationHandler = LocationHandler.shared
     private var nearbyMerchantListView = NearbyMerchantListView()
     
@@ -25,11 +31,14 @@ class MapViewController: UIViewController {
     
     var prevTranslation: CGFloat = 0
     
+    private let service = FirebaseService.shared
+    
     // MARK: - Lifecycles
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
         configureNearbyMerchantListView()
+        configureMerchantAnnotation()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -37,7 +46,9 @@ class MapViewController: UIViewController {
         UIView.animate(withDuration: 0.3, animations: {
             self.nearbyMerchantListView.frame.origin.y = self.view.frame.height - NearbyMerchantListView.height
         }, completion: nil)
-        setLocationMapRect(forCoordinate: locationHandler.manager.location!.coordinate, width: 0.1, height: 0.1)
+        
+        print("annos : \(self.mapView.annotations.count)")
+        zoomRect(annotations: self.mapView.annotations, width: 0.1, height: 0.1)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -59,17 +70,12 @@ class MapViewController: UIViewController {
     private func configureUI() {
         configureNavbar()
         
-        mapView = MKMapView()
-        mapView.showsUserLocation = true
-        mapView.frame = self.view.bounds
-        mapView.delegate = self
-        
         self.view.addSubview(mapView) {
             self.mapView.setAnchor(top: self.view.topAnchor, right: self.view.rightAnchor, bottom: self.view.bottomAnchor, left: self.view.leftAnchor)
         }
         
         self.nearbyMerchantListView.frame = CGRect(x: 0, y: self.view.frame.height, width: self.view.frame.width, height: NearbyMerchantListView.height)
-        
+
     }
     
     private func configureNearbyMerchantListView() {
@@ -92,7 +98,6 @@ class MapViewController: UIViewController {
     private func configureTableViewDataSource() {
         let tableView = nearbyMerchantListView.nearbyMerchantsTableView
         nearbyTableViewDataSource = NearbyTableViewDataSource(tableView: tableView, cellProvider: { (tableview, indexPath, merchant) -> UITableViewCell? in
-            print("DEBUGS : \(merchant)")
             guard let cell = tableview.dequeueReusableCell(withIdentifier: MerchantTableCell.identifier, for: indexPath) as? MerchantTableCell else {return UITableViewCell()}
             cell.merchant = merchant
             return cell
@@ -106,21 +111,28 @@ class MapViewController: UIViewController {
         nearbyTableViewDataSource?.apply(nearbyTableViewSnapshot!, animatingDifferences: true, completion: nil)
     }
     
-    private func setLocationMapRect(forCoordinate coordinate: CLLocationCoordinate2D, width: Double, height: Double) {
-        
+    private func zoomRect(annotations: [MKAnnotation], width: Double, height: Double) {
         var mapRect = MKMapRect.null
-        let edgePadding = UIEdgeInsets(top: 150, left: 150, bottom: 350, right: 150)
+        let edgePadding = UIEdgeInsets(top: 100, left: 100, bottom: 350, right: 100)
         
-        if self.mapView.annotations.count > 1 {
-            self.mapView.annotations.forEach { (annotation) in
+        if annotations.count > 1 {
+            annotations.forEach { (annotation) in
                 let annoRect = MKMapRect(origin: .init(annotation.coordinate), size: .init(width: width, height: height))
                 mapRect = mapRect.union(annoRect)
             }
+        } else {
+            mapRect = MKMapRect(origin: .init(locationHandler.manager.location!.coordinate), size: .init(width: width, height: height))
         }
         
-        mapRect = MKMapRect(origin: .init(coordinate), size: .init(width: width, height: height))
         mapView.setVisibleMapRect(mapRect, edgePadding: edgePadding, animated: true)
-       
+    }
+    
+    private func configureMerchantAnnotation() {
+        service.fetchNearbyMerchants(location: locationHandler.manager.location!, withRadius: 0.25) { (merchant, merchantLocation) in
+            let merchantAnnotation = MerchantAnnotation(merchantID: merchant.id, coordinate: merchantLocation.coordinate)
+            self.mapView.addAnnotation(merchantAnnotation)
+        }
+        print("debugs : done set anno")
     }
     
     // MARK: - Targets
@@ -150,9 +162,16 @@ class MapViewController: UIViewController {
 
 // MARK: - Map View Delegate
 extension MapViewController: MKMapViewDelegate {
-//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-//
-//    }
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if let merchantAnno = annotation as? MerchantAnnotation {
+            let annotation = MKAnnotationView(annotation: merchantAnno, reuseIdentifier: MerchantAnnotation.identifier)
+            annotation.image = #imageLiteral(resourceName: "UserLocation")
+            annotation.setSize(width: 20, height: 26)
+            return annotation
+        }
+        
+        return nil
+    }
 }
 
 // MARK: - Nearby Table View Delegate
