@@ -31,12 +31,6 @@ class MerchantViewController: UIViewController {
 
     private var checkDataSource: CollectionDataSource?
     private var checkSnapshot:CollectionSnapshot?
-    
-    var merchant: Merchant? {
-        didSet{
-            
-        }
-    }
 
     private lazy var headerView: MerchantHeaderView = {
         let header = MerchantHeaderView(frame: .init(x: 0, y: -MerchantHeaderView.height, width: self.view.frame.width, height: MerchantHeaderView.height))

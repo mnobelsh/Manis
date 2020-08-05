@@ -60,7 +60,7 @@ class MerchantListViewController: UIViewController {
     private func configureSnapshot() {
         merchantListSnapshot = MerchantListSnapshot()
         merchantListSnapshot.appendSections([.main])
-        merchantListSnapshot.appendItems(Merchant.highestRatingAllMerchants, toSection: .main)
+        merchantListSnapshot.appendItems(Merchant.highestRatingMerchants, toSection: .main)
         merchantListDataSource.apply(merchantListSnapshot, animatingDifferences: true, completion: nil)
     }
 
