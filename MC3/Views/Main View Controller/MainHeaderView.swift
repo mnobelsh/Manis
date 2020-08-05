@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 protocol MainHeaderViewDelegate {
     func avatarDidTapped()
@@ -25,6 +26,11 @@ class MainHeaderView: UIView {
         didSet {
             self.avatarImageView.configureAvatarView(avatarImage: UIImage(named: user!.profilePicture), dimension: 65)
             self.locationLabel.text = "Location"
+        }
+    }
+    var placeMark: CLPlacemark? {
+        didSet {
+            self.locationLabel.text = placeMark?.locality
         }
     }
     
@@ -52,7 +58,7 @@ class MainHeaderView: UIView {
         imageView.setSize(width: 24, height: 30)
         return imageView
     }()
-    private lazy var locationLabel: UILabel = {
+    lazy var locationLabel: UILabel = {
         let label = UILabel()
         label.configureHeadingLabel(title: "Kemanggisan", textColor: .black)
         label.isUserInteractionEnabled = true

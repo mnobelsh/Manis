@@ -19,8 +19,8 @@ enum SectionTitleLinkType {
 
 class SectionTitleView: UICollectionReusableView {
     
-    static let kind = "SectionTitleSupplementary"
-    static let identifier = "SectionTitleIdentifier"
+    static let kind = UUID().uuidString
+    static let identifier = UUID().uuidString
     
     var delegate: SectionTitleViewDelegate?
     

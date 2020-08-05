@@ -17,6 +17,7 @@ class NearbyMerchantListView: UIView {
         let tableView = UITableView()
         tableView.backgroundColor = .clear
         tableView.register(MerchantTableCell.self, forCellReuseIdentifier: MerchantTableCell.identifier)
+        tableView.separatorStyle = .none
         return tableView
     }()
     private let indicatorBar: UIView = {
@@ -41,7 +42,7 @@ class NearbyMerchantListView: UIView {
     private func configureUI() {
         self.backgroundColor = .systemBackground
         self.configureRoundedCorners(corners: [.topLeft,.topRight], radius: 12)
-        self.configureShadow(shadowColor: .lightGray, radius: 4)
+        self.configureShadow(shadowColor: .lightGray, radius: 6)
         
         self.addSubview(indicatorBar) {
             self.indicatorBar.setAnchor(top: self.topAnchor, paddingTop: 12)

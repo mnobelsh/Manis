@@ -48,6 +48,8 @@
 		FFBC31EA24D815660007062A /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFBC31E924D815660007062A /* Menu.swift */; };
 		FFBC31EC24D842240007062A /* Badge.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFBC31EB24D842240007062A /* Badge.swift */; };
 		FFBC31EE24D85A170007062A /* MerchantAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFBC31ED24D85A170007062A /* MerchantAnnotation.swift */; };
+		FFBC31F024D9A37A0007062A /* MerchantDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFBC31EF24D9A37A0007062A /* MerchantDetailView.swift */; };
+		FFBC31F224DABCAC0007062A /* MerchantRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFBC31F124DABCAC0007062A /* MerchantRoute.swift */; };
 		FFD493D724CB628300078E34 /* MainHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD493D624CB628300078E34 /* MainHeaderView.swift */; };
 		FFD493D924CD69B300078E34 /* SearchResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD493D824CD69B300078E34 /* SearchResultView.swift */; };
 		FFD493DC24CD969E00078E34 /* SortingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD493DB24CD969E00078E34 /* SortingCollectionViewCell.swift */; };
@@ -129,6 +131,8 @@
 		FFBC31E924D815660007062A /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		FFBC31EB24D842240007062A /* Badge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Badge.swift; sourceTree = "<group>"; };
 		FFBC31ED24D85A170007062A /* MerchantAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantAnnotation.swift; sourceTree = "<group>"; };
+		FFBC31EF24D9A37A0007062A /* MerchantDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantDetailView.swift; sourceTree = "<group>"; };
+		FFBC31F124DABCAC0007062A /* MerchantRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantRoute.swift; sourceTree = "<group>"; };
 		FFD493D624CB628300078E34 /* MainHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHeaderView.swift; sourceTree = "<group>"; };
 		FFD493D824CD69B300078E34 /* SearchResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultView.swift; sourceTree = "<group>"; };
 		FFD493DB24CD969E00078E34 /* SortingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -335,6 +339,7 @@
 				FFBC31E924D815660007062A /* Menu.swift */,
 				FFBC31EB24D842240007062A /* Badge.swift */,
 				FFBC31ED24D85A170007062A /* MerchantAnnotation.swift */,
+				FFBC31F124DABCAC0007062A /* MerchantRoute.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -374,6 +379,7 @@
 			isa = PBXGroup;
 			children = (
 				FFD493E724D16DEE00078E34 /* NearbyMerchantListView.swift */,
+				FFBC31EF24D9A37A0007062A /* MerchantDetailView.swift */,
 			);
 			path = "Map View Controller";
 			sourceTree = "<group>";
@@ -675,7 +681,7 @@
 				01495D1824D90CFA009C0069 /* BadgeCollectionViewCell.swift in Sources */,
 				01495D1624D88E41009C0069 /* BadgeCell.swift in Sources */,
 				FF3F72F424C994D100D201FA /* AvatarImageView.swift in Sources */,
-				01495D1224D7926E009C0069 /* SectTitleView.swift in Sources */,
+				FFBC31F224DABCAC0007062A /* MerchantRoute.swift in Sources */,
 				FF4C7E2724C6E943000DCC7B /* FirebaseService.swift in Sources */,
 				FFD493DF24CEC5A300078E34 /* MerchantTableCell.swift in Sources */,
 				FF3E490024C8508500719D14 /* UIHelper.swift in Sources */,
@@ -689,6 +695,7 @@
 				01495D0A24D2858E009C0069 /* Review.swift in Sources */,
 				FFBC31EC24D842240007062A /* Badge.swift in Sources */,
 				FFBC31EA24D815660007062A /* Menu.swift in Sources */,
+				FFBC31F024D9A37A0007062A /* MerchantDetailView.swift in Sources */,
 				FF4C7E2B24C6EE63000DCC7B /* AddReviewViewController.swift in Sources */,
 				FF4C7E2924C6EE29000DCC7B /* MerchantViewController.swift in Sources */,
 				FF4C7E3724C6EF38000DCC7B /* MapViewController.swift in Sources */,

@@ -11,15 +11,24 @@ import UIKit
 class MerchantTableCell: UITableViewCell {
     
     // MARK: - Properties
-    static let identifier = "MerchantTVCell"
+    static let identifier = UUID().uuidString
     
     var merchant: Merchant? {
         didSet {
-            merchantImageView.image = #imageLiteral(resourceName: "profile")
-            merchantNameLabel.text = merchant?.name
-            addressLabel.text = merchant?.address
+            guard let merchant = merchant else {return}
+            merchantImageView.image = #imageLiteral(resourceName: "doger")
+            merchantNameLabel.text = merchant.name
+            ratingLabel.text = String(merchant.rating)
+            
+            if merchant.section == MainCollectionViewSection.nearby {
+                let distance = Int(merchant.location.distance(from: LocationHandler.shared.manager.location!).rounded())
+                locationLabel.text = "\(distance) m"
+            } else {
+                locationLabel.text = merchant.address
+            }
         }
     }
+    
     private var merchantImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -28,19 +37,33 @@ class MerchantTableCell: UITableViewCell {
         imageView.layer.masksToBounds = true
         return imageView
     }()
-    private lazy var merchantNameLabel: UILabel = {
+    private var merchantNameLabel: UILabel = {
         let label = UILabel()
         label.configureHeadingLabel(title: "Merchant Name", fontSize: 18, textColor: .black)
         return label
     }()
-    private lazy var addressLabel: UILabel = {
+    private var locationLabel: UILabel = {
         let label = UILabel()
-        label.configureTextLabel(title: "Merchant Address", fontSize: 14, textColor: .darkGray)
+        label.configureTextLabel(title: "Merchant Location", fontSize: 14, textColor: .darkGray)
         return label
+    }()
+    private var ratingLabel: UILabel = {
+        let ratingLabel = UILabel()
+        ratingLabel.backgroundColor = .clear
+        ratingLabel.configureHeadingLabel(title: "0.0", fontSize: 14, textColor: .darkGray)
+        ratingLabel.textAlignment = .left
+        return ratingLabel
     }()
     private lazy var ratingView: UIView = {
         let view = UIView()
-        view.configureRatingView(withRating: "4.7", textColor: .darkGray)
+        view.configureRatingView(ratingLabel: ratingLabel)
+        return view
+    }()
+    private let separator: UIView = {
+        let view = UIView()
+        view.setSize(height: 1.2)
+        view.backgroundColor = #colorLiteral(red: 0.8790971637, green: 0.8792449236, blue: 0.8790777326, alpha: 1)
+        view.configureRoundedCorners(corners: [.allCorners], radius: 0.6)
         return view
     }()
     
@@ -48,27 +71,7 @@ class MerchantTableCell: UITableViewCell {
     // MARK: - Initializer
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        self.addSubview(merchantImageView) {
-            self.merchantImageView.setSize(width: 85, height: 85)
-            self.merchantImageView.setAnchor(left: self.leftAnchor,paddingLeft: 16)
-            self.merchantImageView.setCenterYAnchor(in: self)
-        }
-        
-        self.addSubview(merchantNameLabel) {
-            self.merchantNameLabel.setSize(height: 25)
-            self.merchantNameLabel.setAnchor(top: self.merchantImageView.topAnchor, right: self.rightAnchor, left: self.merchantImageView.rightAnchor, paddingLeft: 16)
-        }
-        
-        self.addSubview(addressLabel) {
-            self.addressLabel.setSize(height: 30)
-            self.addressLabel.setAnchor(top: self.merchantNameLabel.bottomAnchor, right: self.rightAnchor, left: self.merchantImageView.rightAnchor, paddingTop: 4, paddingLeft: 16)
-        }
-        
-        self.addSubview(ratingView) {
-            self.ratingView.setSize(width: 50)
-            self.ratingView.setAnchor(top: self.addressLabel.bottomAnchor, bottom: self.merchantImageView.bottomAnchor,left: self.merchantImageView.rightAnchor, paddingTop: 4,  paddingLeft: 16)
-        }
+        self.selectionStyle = .none
     }
     
     required init?(coder: NSCoder) {
@@ -76,6 +79,7 @@ class MerchantTableCell: UITableViewCell {
     }
     
     // MARK: - Lifecycle
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -86,5 +90,47 @@ class MerchantTableCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        resetComponents()
+    }
+    
+    // MARK: - Helpers
+    private func resetComponents() {
+        self.subviews.forEach { (subview) in
+            subview.removeFromSuperview()
+        }
+    }
+    
+    func configureComponents() {
+        self.addSubview(merchantImageView) {
+            self.merchantImageView.setSize(width: 85, height: 85)
+            self.merchantImageView.setAnchor(left: self.leftAnchor,paddingLeft: 16)
+            self.merchantImageView.setCenterYAnchor(in: self)
+        }
+        
+        self.addSubview(separator) {
+            self.separator.setAnchor(right: self.rightAnchor, bottom: self.bottomAnchor, left: self.merchantImageView.leftAnchor, paddingRight: 8)
+        }
+        
+        self.addSubview(merchantNameLabel) {
+            self.merchantNameLabel.setSize(height: 25)
+            self.merchantNameLabel.setAnchor(top: self.merchantImageView.topAnchor, right: self.rightAnchor, left: self.merchantImageView.rightAnchor, paddingLeft: 16)
+        }
+        
+        self.addSubview(locationLabel) {
+            self.locationLabel.setSize(height: 30)
+            self.locationLabel.setAnchor(top: self.merchantNameLabel.bottomAnchor, right: self.rightAnchor, left: self.merchantImageView.rightAnchor, paddingTop: 4, paddingLeft: 16)
+        }
+        
+        self.addSubview(ratingView) {
+            self.ratingView.setSize(width: 70)
+            self.ratingView.setAnchor(top: self.locationLabel.bottomAnchor, bottom: self.merchantImageView.bottomAnchor,left: self.merchantImageView.rightAnchor, paddingTop: 4,  paddingLeft: 16)
+        }
+        
+
+    }
+    
 
 }

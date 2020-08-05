@@ -13,10 +13,10 @@ import MapKit
 class MerchantAnnotation: NSObject, MKAnnotation {
     dynamic var coordinate: CLLocationCoordinate2D
     static let identifier = "MerchantAnnotationIdentifier"
-    var merchantID: String
+    var merchant: Merchant
     
-    init(merchantID: String, coordinate: CLLocationCoordinate2D) {
-        self.merchantID = merchantID
+    init(merchant: Merchant, coordinate: CLLocationCoordinate2D) {
+        self.merchant =  merchant
         self.coordinate = coordinate
     }
     

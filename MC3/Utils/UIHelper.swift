@@ -27,7 +27,7 @@ func configureMainCollectionViewLayout() -> UICollectionViewCompositionalLayout 
             
             item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
             
-            group = NSCollectionLayoutGroup.vertical(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(110)), subitems: [item])
+            group = NSCollectionLayoutGroup.vertical(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(120)), subitems: [item])
             group.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
             
             section = NSCollectionLayoutSection(group: group)
@@ -174,3 +174,29 @@ func configureMerchantListCollectionViewLayout() -> UICollectionViewCompositiona
 //}
 
 
+
+
+//        let menus: [[String: Any]] = [
+//            [Menu.titleField : "Es Cincau Hitam", Menu.priceField : 17000],
+//            [Menu.titleField : "Es Cincau Hijau", Menu.priceField : 16500],
+//        ]
+//
+//        let badges : [[String:Any]] = [
+//            [Badge.typeField : BadgeType.cleanIngredients.rawValue, Badge.countField : 0],
+//            [Badge.typeField : BadgeType.cleanTools.rawValue, Badge.countField : 0],
+//            [Badge.typeField : BadgeType.greatTaste.rawValue, Badge.countField : 0],
+//        ]
+//
+//        let merchantdata: [String:Any] = [
+//            Merchant.nameField : "Es Uhuy bang muthi",
+//            Merchant.addressField: "Jalan Hayam Wuruk 5",
+//            Merchant.menuField: menus,
+//            Merchant.badgeField: badges,
+//            Merchant.lovedByField: 0,
+//            Merchant.phoneNumberField: "89172101",
+//            Merchant.ratingField: 3.8,
+//            Merchant.locationField: locationHandler.manager.location!
+//        ]
+//        FirebaseService.shared.registerMerchant(merchantData: merchantdata) {
+//            print("Success add new merchant!")
+//        }
