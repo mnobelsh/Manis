@@ -21,6 +21,7 @@ struct Merchant: Hashable {
     static let badgeField = "badges"
     static let phoneNumberField = "phone_number"
     static let ratingField = "rating"
+    static let merchantIDField = "merchantID"
     
     var id: String
     var name: String
@@ -31,5 +32,6 @@ struct Merchant: Hashable {
     var phoneNumber: String
     var rating: Double
     var section: MainCollectionViewSection? = nil
+    var location: CLLocation
     
 }

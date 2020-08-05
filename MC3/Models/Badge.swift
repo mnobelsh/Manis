@@ -9,7 +9,7 @@
 import Foundation
 
 enum BadgeType: Int {
-    case greatTaste, cleanTools, cleanIngredients
+    case greatTaste = 1, cleanTools = 2, cleanIngredients = 3
 }
 
 struct Badge: Hashable {

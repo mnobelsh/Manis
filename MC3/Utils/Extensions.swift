@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 extension UINavigationController {
    open override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -29,6 +30,19 @@ extension UIViewController {
     }
     func setWhiteStatusBarStyle() {
         self.navigationController?.navigationBar.barStyle = .black
+    }
+    func setPlacemark(withLocation location: CLLocation,completion: @escaping(CLPlacemark) -> Void) {
+        CLGeocoder().reverseGeocodeLocation(location) { (placemarks, error) in
+            if let err = error {
+                print(err.localizedDescription)
+                return
+            }
+            if let placemark = placemarks?.first {
+                DispatchQueue.main.async {
+                    completion(placemark)
+                }
+            }
+        }
     }
 }
 
@@ -170,7 +184,7 @@ extension UIView {
     }
     
     
-    func configureRatingView(withRating rating: String, textColor: UIColor) {
+    func configureRatingView(ratingLabel: UILabel) {
         
         let starView = UIImageView(image: UIImage(systemName: "star.fill")?.withTintColor(.systemYellow, renderingMode: .alwaysOriginal))
         starView.contentMode = .scaleAspectFit
@@ -181,10 +195,6 @@ extension UIView {
             starView.setAnchor(left: self.leftAnchor)
             starView.setCenterYAnchor(in: self)
         }
-        
-        let ratingLabel = UILabel()
-        ratingLabel.backgroundColor = .clear
-        ratingLabel.configureHeadingLabel(title: rating, fontSize: 14, textColor: textColor)
         
         self.addSubview(ratingLabel) {
             ratingLabel.setAnchor(top: self.topAnchor, right: self.rightAnchor, bottom: self.bottomAnchor, left: starView.rightAnchor, paddingTop: 4, paddingBottom: 4, paddingLeft: 8)

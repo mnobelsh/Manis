@@ -26,20 +26,32 @@ class MainViewController: UIViewController {
     
     private var nearbyMerchants: [Merchant] = [Merchant]()  {
         didSet {
-            updateSnapshot(merchantData: self.nearbyMerchants, forSection: .nearby)
+            let userLocation = locationHandler.manager.location!
+            self.nearbyMerchants = self.nearbyMerchants.sorted{  (merchant1, merchant2) -> Bool in
+                merchant1.location.distance(from: userLocation) < merchant2.location.distance(from: userLocation)
+            }
+            updateCollectionViewSnapshot(merchantData: self.nearbyMerchants, forSection: .nearby)
         }
     }
     private var highRatingMerchants: [Merchant] = [Merchant]() {
         didSet {
-            updateSnapshot(merchantData: self.highRatingMerchants, forSection: .rating)
+            updateCollectionViewSnapshot(merchantData: self.highRatingMerchants, forSection: .rating)
         }
     }
     private var trendingMerchants: [Merchant] = [Merchant]() {
         didSet{
-            updateSnapshot(merchantData: self.trendingMerchants, forSection: .trendings)
+            self.trendingMerchants = self.trendingMerchants.sorted { (merchant1, merchant2) -> Bool in
+                merchant1.lovedBy > merchant2.lovedBy
+            }
+            updateCollectionViewSnapshot(merchantData: self.trendingMerchants, forSection: .trendings)
         }
     }
-    private var searchResultMerchants = [Merchant]()
+    private var searchResultMerchants: [Merchant] = [Merchant]() {
+        didSet {
+            print(self.searchResultMerchants)
+            self.configureTableViewSnapshot()
+        }
+    }
     
     
     private lazy var scrollView: UIScrollView = {
@@ -79,7 +91,11 @@ class MainViewController: UIViewController {
         searchView.configureTableView(delegate: self)
         return searchView
     }()
-    
+    private var userPlacemark: CLPlacemark? {
+        didSet {
+            self.headerContainerView.placeMark = userPlacemark
+        }
+    }
     private let service = FirebaseService.shared
     
     // MARK: - Lifecycles
@@ -88,34 +104,16 @@ class MainViewController: UIViewController {
         locationHandler.requestLocation()
         configureComponents()
         configureUI()
-        fetchNearbyMerchants()
-        fetchHighRatingMerchants(limitMerchants: 5)
-        fetchTrendingMerchants(limitMerchants: 3)
+        fetchMerchantsData()
     }
     
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-//        let menus: [[String: Any]] = [
-//            [Menu.titleField : "Es Cincau Hitam", Menu.priceField : 17000],
-//            [Menu.titleField : "Es Cincau Hijau", Menu.priceField : 16500],
-//        ]
-//        let merchantdata: [String:Any] = [
-//            Merchant.nameField : "Es Slendang Mayang Puri",
-//            Merchant.addressField: "Jalan Hayam Wuruk 5",
-//            Merchant.menuField: menus,
-//            Merchant.badgeField: [Badge](),
-//            Merchant.lovedByField: [String](),
-//            Merchant.phoneNumberField: "89172101",
-//            Merchant.ratingField: 3.8,
-//            Merchant.locationField: locationHandler.manager.location!
-//        ]
-//        FirebaseService.shared.registerMerchant(merchantData: merchantdata) {
-//            print("Success add new merchant!")
-//        }
+        setPlacemark(withLocation: locationHandler.manager.location!) { (placeMark) in
+            self.userPlacemark = placeMark
+        }
 
-      
-        
         UIView.animate(withDuration: 0.35) {
             self.headerContainerView.frame.origin.y = 0
         }
@@ -131,6 +129,7 @@ class MainViewController: UIViewController {
     }
     
     func configureUI() {
+        title = "Home"
         view.backgroundColor = .systemBackground
         self.view.addSubview(scrollView)
         self.searchResultView.isHidden = true
@@ -144,7 +143,6 @@ class MainViewController: UIViewController {
         
         self.scrollView.addSubview(searchResultView)
     }
-    
 
     // MARK: - Collection View Configuration
     private func configureDiffableDataSource() {
@@ -193,7 +191,6 @@ class MainViewController: UIViewController {
             }
             
             return cell
-
         }
     }
     
@@ -203,28 +200,32 @@ class MainViewController: UIViewController {
         collectionViewDataSource!.apply(collectionViewSnapshot!, animatingDifferences: true, completion: nil)
     }
     
-    private func updateSnapshot(merchantData merchants: [Merchant], forSection section: MainCollectionViewSection) {
+    private func updateCollectionViewSnapshot(merchantData merchants: [Merchant], forSection section: MainCollectionViewSection) {
         self.collectionViewSnapshot!.appendItems(merchants, toSection: section)
         collectionViewDataSource!.apply(collectionViewSnapshot!, animatingDifferences: true, completion: nil)
     }
     
 
+    // MARK: - Table View Configuration
     private func configureTableViewDataSource() {
         tableViewDataSource = UITableViewDiffableDataSource(tableView: searchResultView.resultTableView, cellProvider: { (tableview, indexPath, merchant) -> UITableViewCell? in
             
             guard let cell = tableview.dequeueReusableCell(withIdentifier: MerchantTableCell.identifier, for: indexPath) as? MerchantTableCell else {return UITableViewCell()}
             cell.merchant = merchant
+            cell.configureComponents()
             return cell
         })
     }
     
     private func configureTableViewSnapshot() {
-        tableViewSnapShot = SearchResultSnapshot()
-        tableViewSnapShot?.appendSections([.main])
-        tableViewSnapShot?.appendItems(self.searchResultMerchants, toSection: .main)
-        tableViewDataSource?.apply(tableViewSnapShot!, animatingDifferences: true, completion: nil)
+        self.tableViewSnapShot = SearchResultSnapshot()
+        tableViewSnapShot!.appendSections([.main])
+        self.tableViewSnapShot!.appendItems(self.searchResultMerchants, toSection: .main)
+        tableViewDataSource!.apply(tableViewSnapShot!, animatingDifferences: true, completion: nil)
     }
+
     
+    // MARK: - Fetch Data
     private func fetchNearbyMerchants() {
         service.fetchNearbyMerchants(location: locationHandler.manager.location!, withRadius: 0.2) { (merchant, merchantLocation) in
             DispatchQueue.main.async {
@@ -233,7 +234,7 @@ class MainViewController: UIViewController {
         }
     }
     
-    private func fetchHighRatingMerchants(limitMerchants limit: Int) {
+    private func fetchHighRatingMerchants(limitMerchants limit: Int? = nil) {
         service.fetchHighRatingMerchants(limitMerchants: limit) { (merchant) in
             DispatchQueue.main.async {
                 self.highRatingMerchants.append(merchant)
@@ -241,13 +242,33 @@ class MainViewController: UIViewController {
         }
     }
     
-    private func fetchTrendingMerchants(limitMerchants limit: Int) {
+    private func fetchTrendingMerchants(limitMerchants limit: Int? = nil) {
         service.fetchTrendingMerchants(limitMerchants: limit) { (merchant) in
             DispatchQueue.main.async {
                 self.trendingMerchants.append(merchant)
             }
         }
     }
+    
+    private func fetchMerchantsData() {
+        fetchNearbyMerchants()
+        fetchHighRatingMerchants(limitMerchants: 5)
+        fetchTrendingMerchants(limitMerchants: 3)
+    }
+    
+    private func searchMerchantsByName(merchantName: String) {
+        var merchants = [Merchant]()
+        service.fetchMerchants { (merchant) in
+            DispatchQueue.main.async {
+                    if merchant.name.lowercased().contains(merchantName) {
+                    merchants.append(merchant)
+                    self.searchResultMerchants = merchants
+                }
+            }
+        }
+    }
+    
+
     
     // MARK: - Targets
     @objc private func hideSearchBarKeyboard() {
@@ -275,7 +296,7 @@ extension MainViewController: MainHeaderViewDelegate {
     }
     
     func locationDidChanged(locationLabel: UILabel) {
-        print("DEBUGS : LOCATION LABEL TAPPED \(locationLabel.text!)")
+        print("DEBUGS : LOCATION LABEL TAPPED \(userPlacemark)")
     }
     
 }
@@ -332,6 +353,8 @@ extension MainViewController: UITableViewDelegate {
 // MARK: - Search Bar Delegate
 extension MainViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let titleSearched = searchBar.text else {return}
+        self.searchMerchantsByName(merchantName: titleSearched)
         searchBar.resignFirstResponder()
         self.headerContainerView.resetSortingCellAppereance()
     }
@@ -345,6 +368,10 @@ extension MainViewController: UISearchBarDelegate {
             self.searchResultView.isHidden = false
         }
         self.scrollView.bringSubviewToFront(self.headerContainerView)
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        print("CANCEL")
     }
     
 }
@@ -364,8 +391,9 @@ extension MainViewController: SectionTitleViewDelegate {
     }
     
     func seeAllButtonDidTap() {
-        let destinationVC = MerchantListViewController()
-        self.navigationController?.pushViewController(destinationVC, animated: true)
+        let merchantListVC = MerchantListViewController()
+        merchantListVC.merchantListType = .highRating
+        self.navigationController?.pushViewController(merchantListVC, animated: true)
     }
 }
 

@@ -30,9 +30,9 @@ class MerchantViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.isHidden = false
+     
         self.view.backgroundColor = .systemBackground
-        setTransparentNavbar()
+        configureNavbar()
         
         self.view.addSubview(merchantNameLabel) {
             self.merchantNameLabel.setSize(width: 200, height: 35)
@@ -46,10 +46,19 @@ class MerchantViewController: UIViewController {
         }
     }
     
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        let vc = self.navigationController?.viewControllers.first as! MainViewController
+        guard let vc = self.navigationController?.viewControllers.first as? MainViewController else {return}
         vc.hideNavbar()
+        guard let listVC = navigationController?.viewControllers.last as? MerchantListViewController else {return}
+        listVC.navigationController?.navigationBar.isHidden = false
+    }
+    
+    // MARK: - Helpers
+    func configureNavbar() {
+        self.navigationController?.navigationBar.isHidden = false
+        setTransparentNavbar()
     }
     
 }
