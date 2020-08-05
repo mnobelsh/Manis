@@ -31,7 +31,7 @@ class MerchantViewController: UIViewController {
         scrollV.frame = self.view.bounds
         scrollV.contentInset = .zero
         scrollV.automaticallyAdjustsScrollIndicatorInsets = false
-        scrollV.contentSize = CGSize(width: self.view.frame.width, height: 2000)
+        scrollV.contentSize = CGSize(width: self.view.frame.width, height: 1870)
         scrollV.showsHorizontalScrollIndicator = false
         scrollV.contentInsetAdjustmentBehavior = .never
         scrollV.alwaysBounceVertical = false
@@ -262,8 +262,8 @@ class MerchantViewController: UIViewController {
         }
         
         self.scrollView.addSubview(collectionViewReview){
-            self.collectionViewReview.setAnchor(top: self.reviewLabel.bottomAnchor, right: self.view.rightAnchor, left: self.view.leftAnchor)
-            self.collectionViewReview.setSize( height: 990)
+            self.collectionViewReview.setAnchor(top: self.reviewLabel.bottomAnchor ,right: self.view.rightAnchor, bottom: self.scrollView.bottomAnchor,left: self.view.leftAnchor)
+            self.collectionViewReview.setSize( height: 1005)
         }
     }
     
