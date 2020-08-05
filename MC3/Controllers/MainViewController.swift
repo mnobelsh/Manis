@@ -96,6 +96,11 @@ class MainViewController: UIViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        hideNavbar()
+    }
+    
     // MARK: - Helpers
     private func configureComponents() {        
         configureDiffableDataSource()

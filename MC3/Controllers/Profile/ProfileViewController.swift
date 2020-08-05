@@ -114,13 +114,14 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .white
+        setTransparentNavbar()
         self.navigationController?.navigationBar.isHidden = false
         self.navigationController?.navigationBar.tintColor = .black
         self.title = "Profile"
         
         view.addSubview(profileImage){
             self.profileImage.setCenterXAnchor(in: self.view)
-            self.profileImage.setAnchor(top: self.view.topAnchor, paddingTop: 150, paddingRight: 8, paddingBottom: 8, paddingLeft: 8)
+            self.profileImage.setAnchor(top: self.view.topAnchor, paddingTop: self.view.frame.height/7, paddingRight: 8, paddingBottom: 8, paddingLeft: 8)
         }
         
         view.addSubview(nameLabel){
@@ -129,19 +130,14 @@ class ProfileViewController: UIViewController {
         }
         
         view.addSubview(leftButtonStacks){
-            self.leftButtonStacks.setAnchor(top: self.nameLabel.bottomAnchor, left: self.view.leftAnchor, paddingTop: 90, paddingLeft: 55)
+            self.leftButtonStacks.setAnchor(top: self.nameLabel.bottomAnchor, left: self.view.leftAnchor, paddingTop: self.view.frame.height/10, paddingLeft: 55)
         }
         
         view.addSubview(rightButtonStacks){
-            self.rightButtonStacks.setAnchor(top: self.nameLabel.bottomAnchor, right: self.view.rightAnchor, paddingTop: 90, paddingRight: 55)
+            self.rightButtonStacks.setAnchor(top: self.nameLabel.bottomAnchor, right: self.view.rightAnchor, paddingTop: self.view.frame.height/10, paddingRight: 55)
         }
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        let vc = self.navigationController?.viewControllers.first as! MainViewController
-        vc.hideNavbar()
-    }
     
     func configureUI() {
         self.view.addSubview(nameLabel)
