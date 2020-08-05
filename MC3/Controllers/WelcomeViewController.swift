@@ -5,7 +5,6 @@
 //  Created by Melina Dewi on 28/07/20.
 //  Copyright © 2020 Muhammad Nobel Shidqi. All rights reserved.
 //
-
 import UIKit
 
 class WelcomeViewController: UIViewController, UIScrollViewDelegate {

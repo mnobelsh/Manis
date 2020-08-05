@@ -12,7 +12,6 @@ class ProfileViewController: UIViewController {
 
     var data: [String:Any]? = nil {
         didSet {
-            
             if let data = data {
                 guard let name = data["name"] as? String else {return}
                 nameLabel.text = name

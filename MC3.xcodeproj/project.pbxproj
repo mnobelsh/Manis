@@ -12,7 +12,6 @@
 		01495D0C24D285BE009C0069 /* ReviewCollectionViewCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01495D0B24D285BE009C0069 /* ReviewCollectionViewCells.swift */; };
 		01495D0E24D2861D009C0069 /* AllReviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01495D0D24D2861D009C0069 /* AllReviewVC.swift */; };
 		01495D1224D7926E009C0069 /* SectTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01495D1124D7926E009C0069 /* SectTitleView.swift */; };
-		01495D1424D844C6009C0069 /* MerchantVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01495D1324D844C6009C0069 /* MerchantVC.swift */; };
 		01495D1624D88E41009C0069 /* BadgeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01495D1524D88E41009C0069 /* BadgeCell.swift */; };
 		01495D1824D90CFA009C0069 /* BadgeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01495D1724D90CFA009C0069 /* BadgeCollectionViewCell.swift */; };
 		01495D1A24DA61CB009C0069 /* Badges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01495D1924DA61CB009C0069 /* Badges.swift */; };
@@ -82,7 +81,6 @@
 		01495D0B24D285BE009C0069 /* ReviewCollectionViewCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewCollectionViewCells.swift; sourceTree = "<group>"; };
 		01495D0D24D2861D009C0069 /* AllReviewVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllReviewVC.swift; sourceTree = "<group>"; };
 		01495D1124D7926E009C0069 /* SectTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectTitleView.swift; sourceTree = "<group>"; };
-		01495D1324D844C6009C0069 /* MerchantVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantVC.swift; sourceTree = "<group>"; };
 		01495D1524D88E41009C0069 /* BadgeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeCell.swift; sourceTree = "<group>"; };
 		01495D1724D90CFA009C0069 /* BadgeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeCollectionViewCell.swift; sourceTree = "<group>"; };
 		01495D1924DA61CB009C0069 /* Badges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Badges.swift; sourceTree = "<group>"; };
@@ -268,7 +266,6 @@
 			isa = PBXGroup;
 			children = (
 				FF4C7E2824C6EE29000DCC7B /* MerchantViewController.swift */,
-				01495D1324D844C6009C0069 /* MerchantVC.swift */,
 				FF4C7E2A24C6EE63000DCC7B /* AddReviewViewController.swift */,
 				01495D0D24D2861D009C0069 /* AllReviewVC.swift */,
 				FFD493E224CF618800078E34 /* MerchantListViewController.swift */,
@@ -695,7 +692,6 @@
 				FF4C7E2B24C6EE63000DCC7B /* AddReviewViewController.swift in Sources */,
 				FF4C7E2924C6EE29000DCC7B /* MerchantViewController.swift in Sources */,
 				FF4C7E3724C6EF38000DCC7B /* MapViewController.swift in Sources */,
-				01495D1424D844C6009C0069 /* MerchantVC.swift in Sources */,
 				FFD493DC24CD969E00078E34 /* SortingCollectionViewCell.swift in Sources */,
 				FFD493E324CF618800078E34 /* MerchantListViewController.swift in Sources */,
 			);

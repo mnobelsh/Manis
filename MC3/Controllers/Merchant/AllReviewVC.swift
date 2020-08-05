@@ -8,10 +8,6 @@
 
 import UIKit
 
-//protocol AllReviewDelegate{
-//
-//}
-
 typealias CollectionDataSource = UICollectionViewDiffableDataSource<Sections,Review>
 typealias CollectionSnapshot = NSDiffableDataSourceSnapshot<Sections,Review>
 
@@ -25,6 +21,7 @@ class AllReviewVC: UIViewController {
         let button = UIButton()
         button.configureButton(title: "Add Review", titleColor: .black, backgroundColor: UIColor(hexString: "9CE4E5"), cornerRadius: 8)
         button.setSize(width: 170, height: 50)
+        button.addTarget(self, action: #selector(addButtonDidTapped(_:)), for: .touchUpInside)
         return button
     }()
     
@@ -89,6 +86,11 @@ class AllReviewVC: UIViewController {
         ViewSnapshot!.appendSections([.main])
         ViewSnapshot!.appendItems(Review.reviewDetails, toSection: .main)
         ViewDataSource?.apply(ViewSnapshot!, animatingDifferences: true, completion: nil)
+    }
+    
+    @objc func addButtonDidTapped(_ Button: UIButton){
+        let addReviewVC = AddReviewViewController()
+        self.navigationController?.pushViewController(addReviewVC, animated: true)
     }
     
 }

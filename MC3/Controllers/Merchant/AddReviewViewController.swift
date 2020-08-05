@@ -362,4 +362,3 @@ class AddReviewViewController: UIViewController, UIImagePickerControllerDelegate
     }
     
 }
-
