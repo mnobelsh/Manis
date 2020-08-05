@@ -55,9 +55,16 @@ class MerchantHeaderView: UIView {
         return button
     }()
     
+    private var ratingLabel: UILabel = {
+        let ratingLabel = UILabel()
+        ratingLabel.backgroundColor = .clear
+        ratingLabel.configureHeadingLabel(title: "0.0", fontSize: 14, textColor: .darkGray)
+        ratingLabel.textAlignment = .left
+        return ratingLabel
+    }()
     private lazy var ratingView: UIView = {
         let view = UIView()
-        view.configureRatingView(withRating: "5", textColor: .white)
+        view.configureRatingView(ratingLabel: ratingLabel)
         return view
     }()
     

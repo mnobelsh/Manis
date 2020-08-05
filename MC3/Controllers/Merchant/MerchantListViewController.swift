@@ -54,8 +54,8 @@ class MerchantListViewController: UIViewController {
         super.viewWillDisappear(animated)
         guard let mainVC = navigationController?.viewControllers.first as? MainViewController else {return}
         mainVC.hideNavbar()
-        guard let merchantVC = merchantVC else {return}
-        merchantVC.configureNavbar()
+//        guard let merchantVC = merchantVC else {return}
+//        merchantVC.configureNavbar()
     }
 
     // MARK: - Helpers
