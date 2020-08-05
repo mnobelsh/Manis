@@ -10,6 +10,24 @@ import UIKit
 import ChameleonFramework
 
 class MerchantViewController: UIViewController {
+    
+    var merchant: Merchant? {
+        didSet {
+            merchantNameLabel.text = merchant?.name
+            addressLabel.text = merchant?.address
+        }
+    }
+    
+     private var merchantNameLabel: UILabel = {
+        let label = UILabel()
+        label.configureHeadingLabel(title: "Merchant Name", fontSize: 20, textColor: .black)
+        return label
+    }()
+     private var addressLabel: UILabel = {
+        let label = UILabel()
+        label.configureTextLabel(title: "Merchant Address", fontSize: 16, textColor: .darkGray)
+        return label
+    }()
 
     private var checkDataSource: CollectionDataSource?
     private var checkSnapshot:CollectionSnapshot?

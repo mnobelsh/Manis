@@ -11,6 +11,9 @@ import UIKit
 //protocol AllReviewDelegate{
 //
 //}
+enum Sections: Int {
+    case main = 0
+}
 
 typealias CollectionDataSource = UICollectionViewDiffableDataSource<Sections,Review>
 typealias CollectionSnapshot = NSDiffableDataSourceSnapshot<Sections,Review>

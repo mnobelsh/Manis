@@ -34,7 +34,7 @@ extension UIViewController {
 
 extension UILabel {
     func configureHeadingLabel(title: String, fontSize size: CGFloat? = nil, textColor color: UIColor? = nil) {
-        self.font = UIFont(name: "Avenir-Heavy", size: size ?? 22)
+        self.font = UIFont(name: "Avenir-Black", size: size ?? 22)
         self.text = title
         self.textColor = color ?? UIColor.label
     }
@@ -136,7 +136,7 @@ extension UIView {
         }
     }
     
-    func setCenterXYAcnhor(in view: UIView) {
+    func setCenterXYAnchor(in view: UIView) {
         setCenterXAnchor(in: view)
         setCenterYAnchor(in: view)
     }
@@ -171,6 +171,8 @@ extension UIView {
             self.addSubview(error)
             error.setAnchor(top: tf.bottomAnchor,right: tf.rightAnchor,left: tf.leftAnchor , paddingTop: 15, paddingRight: 5, paddingBottom: 5, paddingLeft: 0)
             error.text = errorLabel
+            error.isHidden = true
+            error.tag = 500
             
             border.setAnchor(right: self.rightAnchor, bottom: self.bottomAnchor, left: iconView.rightAnchor, paddingLeft: 16)
         } else {
@@ -180,6 +182,68 @@ extension UIView {
             border.setAnchor(right: self.rightAnchor, bottom: self.bottomAnchor, left: self.leftAnchor)
         }
 
+    }
+    
+    func showErrorTextField(){
+        for view in self.subviews {
+            if view.tag == 500 {
+                view.isHidden = false
+            }
+        }
+    }
+    
+    func hideErrorTextField(){
+        for view in self.subviews {
+            if view.tag == 500 {
+                view.isHidden = true
+            }
+        }
+    }
+    
+    func isEmptyTextField() -> Bool{
+        for view in self.subviews {
+            if let textField = view as? UITextField {
+                if textField.text == "" {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+    
+    func checkEmptyTextField() {
+        var isEmpty = false
+        for view in self.subviews {
+            if let textField = view as? UITextField {
+                if textField.text == "" {
+                    isEmpty = true
+                }
+            }
+            if let errorLabel = view as? UILabel {
+                if isEmpty {
+                    errorLabel.isHidden = false
+                } else {
+                    errorLabel.isHidden = true
+                }
+            }
+        }
+    }
+    
+    func getTextFromTextField() -> String? {
+        for view in self.subviews {
+            if let textField = view as? UITextField {
+                return textField.text
+            }
+        }
+        return nil
+    }
+    
+    func changeErrorLabelTextField(label: String){
+        for view in self.subviews {
+            if let errorLabel = view as? UILabel {
+                errorLabel.text = label
+            }
+        }
     }
     
     func configureRatingView(withRating rating: String, textColor: UIColor) {

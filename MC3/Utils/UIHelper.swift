@@ -11,6 +11,11 @@ import UIKit
 enum MainCollectionViewSection: Int {
     case trendings = 2, nearby = 0, rating = 1
 }
+
+enum MerchantListCollectionViewSection: Int {
+    case main = 0
+}
+
 func configureMainCollectionViewLayout() -> UICollectionViewCompositionalLayout {
     return UICollectionViewCompositionalLayout { (sectionIndex, env) -> NSCollectionLayoutSection? in
         var item: NSCollectionLayoutItem!
@@ -74,6 +79,27 @@ func configureReviewCollectionViewLayout() ->UICollectionViewCompositionalLayout
         //SECTION
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets.top = 8
+
+        return section
+    }
+}
+
+func configureMerchantListCollectionViewLayout() -> UICollectionViewCompositionalLayout {
+    return UICollectionViewCompositionalLayout { (sectionIndex, env) -> NSCollectionLayoutSection? in
+        var item: NSCollectionLayoutItem!
+        var group: NSCollectionLayoutGroup!
+        var section: NSCollectionLayoutSection!
+        
+        item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1)))
+        item.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16)
+        
+        let smallGroup = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(260)), subitem: item, count: 2)
+        
+        group = NSCollectionLayoutGroup.vertical(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)), subitems: [smallGroup])
+        
+        section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 30, leading: 16, bottom: 0, trailing: 16)
+        
         return section
     }
 }

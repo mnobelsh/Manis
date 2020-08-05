@@ -7,17 +7,18 @@
 //
 
 import UIKit
-import ChameleonFramework
+import CoreLocation
+import MapKit
 
 typealias MainCollectionDataSource = UICollectionViewDiffableDataSource<MainCollectionViewSection,Merchant>
 typealias MainCollectionSnapshot = NSDiffableDataSourceSnapshot<MainCollectionViewSection,Merchant>
-typealias SearchResultTableViewDataSource = UITableViewDiffableDataSource<SearchResultTableViewSection, Merchant>
-typealias SearchResultSnapshot = NSDiffableDataSourceSnapshot<SearchResultTableViewSection, Merchant>
-
+typealias SearchResultTableViewDataSource = UITableViewDiffableDataSource<MerchantTableViewSection, Merchant>
+typealias SearchResultSnapshot = NSDiffableDataSourceSnapshot<MerchantTableViewSection, Merchant>
 
 class MainViewController: UIViewController {
     
     // MARK: - Properties
+    private var locationHandler = LocationHandler.shared
     private var collectionViewDataSource: MainCollectionDataSource?
     private var collectionViewSnapshot: MainCollectionSnapshot?
     private var tableViewDataSource: SearchResultTableViewDataSource?
@@ -32,7 +33,8 @@ class MainViewController: UIViewController {
         scrollV.showsHorizontalScrollIndicator = false
         scrollV.contentInsetAdjustmentBehavior = .never
         scrollV.alwaysBounceVertical = false
-
+        scrollV.delegate = self
+        
         return scrollV
     }()
     private lazy var collectionView: UICollectionView = {
@@ -63,10 +65,15 @@ class MainViewController: UIViewController {
     // MARK: - Lifecycles
     override func viewDidLoad() {
         super.viewDidLoad()
+        locationHandler.requestLocation()
+//        print("DEBUGS : ",locationHandler.manager.location)
+//        let placeMark = MKPlacemark(coordinate: locationHandler.manager.location!.coordinate)
+//        print("DEBUGS : \(placeMark.title)")
         configureComponents()
         configureUI()
     }
     
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         UIView.animate(withDuration: 0.35) {
@@ -75,7 +82,7 @@ class MainViewController: UIViewController {
     }
     
     // MARK: - Helpers
-    private func configureComponents() {
+    private func configureComponents() {        
         configureDiffableDataSource()
         
         let hideKeyboardTapGesture = UITapGestureRecognizer(target: self, action: #selector(hideSearchBarKeyboard))
@@ -86,8 +93,10 @@ class MainViewController: UIViewController {
     func configureUI() {
         view.backgroundColor = .systemBackground
         self.view.addSubview(scrollView)
+        self.searchResultView.isHidden = true
         
         self.scrollView.addSubview(self.headerContainerView)
+        headerContainerView.user = User(id: "123", email: "abc", name: "User", profilePicture: "profile", reviews: [], favorites: [])
         
         self.scrollView.addSubview(collectionView) {
             self.collectionView.setAnchor(top: self.headerContainerView.bottomAnchor, right: self.view.rightAnchor, bottom: self.view.bottomAnchor, left: self.view.leftAnchor, paddingTop: 20)
@@ -96,6 +105,7 @@ class MainViewController: UIViewController {
         self.scrollView.addSubview(searchResultView)
     }
     
+
     // MARK: - Collection View Configuration
     private func configureDiffableDataSource() {
         configureCollectionViewDataSource()
@@ -109,7 +119,7 @@ class MainViewController: UIViewController {
     private func configureCollectionViewSectionTitleView() {
         collectionViewDataSource?.supplementaryViewProvider = .some({ (collectionview, kind, indexPath) -> UICollectionReusableView? in
             guard let titleView = collectionview.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionTitleView.identifier, for: indexPath) as? SectionTitleView else {return UICollectionReusableView()}
-            
+            titleView.delegate = self
             switch indexPath.section {
                 case MainCollectionViewSection.trendings.rawValue:
                     titleView.title = "Trendings"
@@ -158,7 +168,7 @@ class MainViewController: UIViewController {
     private func configureTableViewDataSource() {
         tableViewDataSource = UITableViewDiffableDataSource(tableView: searchResultView.resultTableView, cellProvider: { (tableview, indexPath, merchant) -> UITableViewCell? in
             
-            guard let cell = tableview.dequeueReusableCell(withIdentifier: SearchResultCell.identifier, for: indexPath) as? SearchResultCell else {return UITableViewCell()}
+            guard let cell = tableview.dequeueReusableCell(withIdentifier: MerchantTableCell.identifier, for: indexPath) as? MerchantTableCell else {return UITableViewCell()}
             cell.merchant = merchant
             return cell
         })
@@ -166,8 +176,8 @@ class MainViewController: UIViewController {
     
     private func configureTableViewSnapshot() {
         tableViewSnapShot = SearchResultSnapshot()
-        tableViewSnapShot?.appendSections([.result])
-        tableViewSnapShot?.appendItems(Merchant.searchResult, toSection: .result)
+        tableViewSnapShot?.appendSections([.main])
+        tableViewSnapShot?.appendItems(Merchant.searchResult, toSection: .main)
         tableViewDataSource?.apply(tableViewSnapShot!, animatingDifferences: true, completion: nil)
     }
     
@@ -184,6 +194,7 @@ extension MainViewController: MainHeaderViewDelegate {
     func hideSearchHeaderView() {
         self.scrollView.isScrollEnabled = true
         self.headerContainerView.isSearchViewHidden = true
+        self.searchResultView.isHidden = true
         UIView.animate(withDuration: 0.3) {
             self.collectionView.alpha = 1
             self.searchResultView.frame.origin.y = self.scrollView.frame.height + ( self.scrollView.frame.height - MainHeaderView.height)
@@ -243,13 +254,11 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
 extension MainViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        print("DEBUGS : search result selected \(tableViewDataSource?.itemIdentifier(for: indexPath))")
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        var height: CGFloat = (self.view.frame.height - MainHeaderView.height) / 5
-        height = height < 130 ? 130 : height
-        return height
+        return CGFloat(120)
     }
 }
 
@@ -266,10 +275,31 @@ extension MainViewController: UISearchBarDelegate {
         UIView.animate(withDuration: 0.3) {
             self.collectionView.alpha = 0
             self.searchResultView.frame.origin.y = MainHeaderView.height - 10
+            self.searchResultView.isHidden = false
         }
         self.scrollView.bringSubviewToFront(self.headerContainerView)
     }
     
+}
+
+// MARK: - Scroll View Delegate
+extension MainViewController: UIScrollViewDelegate {
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        
+    }
+}
+
+// MARK: - Section Title Delegate
+extension MainViewController: SectionTitleViewDelegate {
+    func seeOnMapButtonDidTap() {
+        let mapViewVC = MapViewController()
+        self.navigationController?.pushViewController(mapViewVC, animated: true)
+    }
+    
+    func seeAllButtonDidTap() {
+        let destinationVC = MerchantListViewController()
+        self.navigationController?.pushViewController(destinationVC, animated: true)
+    }
 }
 
 

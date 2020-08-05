@@ -26,4 +26,3 @@ struct Review: Hashable{
 //    var badge: UIImage?
 //    var details:String?
 }
-

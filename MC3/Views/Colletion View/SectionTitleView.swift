@@ -9,8 +9,10 @@
 import UIKit
 
 protocol SectionTitleViewDelegate {
-    func linkButtonDidTapped()
+    func seeOnMapButtonDidTap()
+    func seeAllButtonDidTap()
 }
+
 enum SectionTitleLinkType {
     case seeAll, seeOnMap, empty
 }
@@ -27,15 +29,18 @@ class SectionTitleView: UICollectionReusableView {
             titleLabel.text = title
         }
     }
+    
     var linkType: SectionTitleLinkType? {
         didSet {
             switch linkType! {
             case .seeAll:
-                topRightButton.setTitle("See all", for: .normal)
+                self.topRightButton.setTitle("See all", for: .normal)
+                self.topRightButton.addTarget(self, action: #selector(seeAllButtonTapped), for: .touchUpInside)
             case .seeOnMap:
-                topRightButton.setTitle("See on map", for: .normal)
+                self.topRightButton.setTitle("See on map", for: .normal)
+                self.topRightButton.addTarget(self, action: #selector(seeOnMapButtonTapped), for: .touchUpInside)
             case .empty :
-                topRightButton.isHidden = true
+                self.topRightButton.isHidden = true
             }
         }
     }
@@ -49,8 +54,7 @@ class SectionTitleView: UICollectionReusableView {
         let button = UIButton(type: .system)
         button.tintColor = .systemBlue
         button.setSize(width: 100, height: 30)
-        button.setTitle("See All", for: .normal)
-        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        button.setTitle("See all", for: .normal)
         button.contentHorizontalAlignment = .right
         return button
     }()
@@ -62,14 +66,19 @@ class SectionTitleView: UICollectionReusableView {
             self.topRightButton.setCenterYAnchor(in: self)
             self.topRightButton.setAnchor(right: self.rightAnchor, paddingRight: 24)
         }
+        
         self.addSubview(titleLabel) {
             self.titleLabel.setAnchor(left: self.leftAnchor, paddingLeft: 16)
             self.titleLabel.setCenterYAnchor(in: self)
         }
     }
     
-    @objc private func buttonTapped() {
-        delegate?.linkButtonDidTapped()
+    @objc private func seeAllButtonTapped() {
+        delegate?.seeAllButtonDidTap()
+    }
+    
+    @objc private func seeOnMapButtonTapped() {
+        delegate?.seeOnMapButtonDidTap()
     }
     
     required init?(coder: NSCoder) {

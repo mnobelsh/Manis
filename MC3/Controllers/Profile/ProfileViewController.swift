@@ -21,6 +21,14 @@ class ProfileViewController: UIViewController {
         }
     }
     
+    private lazy var profileImage: UIImageView = {
+        let img = UIImageView()
+        img.image = UIImage(named: "profilePictureBig")
+        img.setSize(width: 120, height: 120)
+        
+        return img
+    }()
+    
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.configureCustomLabel(title: "JohnDoe", fontType: "Heavy", fontSize: 18, textColor: .black)
@@ -31,31 +39,25 @@ class ProfileViewController: UIViewController {
         let button = UIButton()
         button.setImage(UIImage(named: "yourFavoritesButton"), for: .normal)
         button.addTarget(self, action: #selector(favButtonTapped(_:)), for: .touchUpInside)
+        button.setSize(width: 100, height: 100)
         return button
     }()
-    
-    @objc func favButtonTapped(_ button: UIButton){
-        print("Favorite Button Tapped")
-    }
     
     private lazy var reviewsButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "yourReviewsButton"), for: .normal)
         button.addTarget(self, action: #selector(reviewsButtonTapped(_:)), for: .touchUpInside)
+        button.setSize(width: 100, height: 100)
+
         return button
     }()
     
-    @objc func reviewsButtonTapped(_ button: UIButton){
-        print("Review Button Tapped")
-    }
-    
-    private lazy var topButtonStacks: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [favButton,reviewsButton])
-        stack.axis = .horizontal
-        stack.alignment = .fill
-        stack.distribution = .fillEqually
-        stack.spacing = 4
-        
+    private lazy var leftButtonStacks: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [favButton,favLabel,editProfileButton,editLabel])
+        stack.axis = .vertical
+        stack.alignment = .center
+        stack.distribution = .fillProportionally
+        stack.spacing = 10
         return stack
     }()
     
@@ -71,56 +73,31 @@ class ProfileViewController: UIViewController {
         return label
     }()
     
-//    private lazy var topButtonLabelStacks: UIStackView = {
-//        let stack = UIStackView(arrangedSubviews: [favLabel,reviewLabel])
-//        stack.axis = .horizontal
-//        stack.alignment = .center
-//        stack.distribution = .fillEqually
-//        stack.spacing = 10
-//
-//        return stack
-//    }()
-    
-    private lazy var leftSideStacks: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [favButton,favLabel,editProfileButton,editLabel])
-        stack.axis = .vertical
-        stack.alignment = .center
-        stack.distribution = .fillProportionally
-        stack.spacing = 5
-        return stack
-    }()
-    
     private lazy var editProfileButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "editProfileButton"), for: .normal)
         button.addTarget(self, action: #selector(editProfileButtonTapped(_:)), for: .touchUpInside)
+        button.setSize(width: 100, height: 100)
         return button
     }()
-    
-    @objc func editProfileButtonTapped(_ button: UIButton){
-        print("Edit Button Tapped")
-    }
     
     private lazy var logoutButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "logoutButton"), for: .normal)
         button.addTarget(self, action: #selector(logoutButtonTapped(_:)), for: .touchUpInside)
+        button.setSize(width: 100, height: 100)
+
         return button
     }()
     
-    @objc func logoutButtonTapped(_ button: UIButton){
-        print("Logout Button Tapped")
-    }
-    
-//    private lazy var bottomButtonStacks: UIStackView = {
-//        let stack = UIStackView(arrangedSubviews: [editProfileButton,logoutButton])
-//        stack.axis = .horizontal
-//        stack.alignment = .fill
-//        stack.distribution = .fillEqually
-//        stack.spacing = 3
-//
-//        return stack
-//    }()
+    private lazy var rightButtonStacks: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [reviewsButton,reviewLabel,logoutButton,logoutLabel])
+        stack.axis = .vertical
+        stack.alignment = .center
+        stack.distribution = .fillProportionally
+        stack.spacing = 10
+        return stack
+    }()
     
     private lazy var editLabel: UILabel = {
         let label = UILabel()
@@ -134,53 +111,62 @@ class ProfileViewController: UIViewController {
         return label
     }()
     
-//    private lazy var bottomButtonLabelStacks: UIStackView = {
-//        let stack = UIStackView(arrangedSubviews: [editLabel,logoutLabel])
-//        stack.axis = .horizontal
-//        stack.alignment = .fill
-//        stack.distribution = .fillEqually
-//        stack.spacing = 3
-//
-//        return stack
-//    }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .white
         
+        view.addSubview(profileImage){
+            self.profileImage.setCenterXAnchor(in: self.view)
+            self.profileImage.setAnchor(top: self.view.topAnchor, paddingTop: 150, paddingRight: 8, paddingBottom: 8, paddingLeft: 8)
+        }
+        
         view.addSubview(nameLabel){
             self.nameLabel.setCenterXAnchor(in: self.view)
-            self.nameLabel.setAnchor(top: self.view.topAnchor, paddingTop: 120, paddingRight: 15, paddingBottom: 15, paddingLeft: 15)
+            self.nameLabel.setAnchor(top: self.profileImage.bottomAnchor, paddingTop: 8, paddingRight: 15, paddingBottom: 15, paddingLeft: 15)
         }
         
-        view.addSubview(leftSideStacks){
-            self.leftSideStacks.setAnchor(top: self.nameLabel.bottomAnchor, left: self.view.leftAnchor, paddingTop: 200, paddingRight: 15, paddingBottom: 15, paddingLeft: 15)
+        view.addSubview(leftButtonStacks){
+            self.leftButtonStacks.setAnchor(top: self.nameLabel.bottomAnchor, left: self.view.leftAnchor, paddingTop: 90, paddingLeft: 55)
         }
         
-//        view.addSubview(topButtonStacks){
-//            self.topButtonStacks.setAnchor(top: self.nameLabel.bottomAnchor,right: self.view.rightAnchor, left: self.view.leftAnchor, paddingTop: 200, paddingRight: 15, paddingBottom: 15, paddingLeft: 15)
-//        }
-        
-        
-        
-//        view.addSubview(topButtonLabelStacks){
-//            self.topButtonLabelStacks.setAnchor(top: self.topButtonStacks.bottomAnchor,right: self.view.rightAnchor, left: self.view.leftAnchor, paddingTop: 8, paddingRight: 15, paddingBottom: 15, paddingLeft: 45)
-//        }
-        
-//        view.addSubview(bottomButtonStacks){
-//            self.bottomButtonStacks.setAnchor(top: self.topButtonLabelStacks.bottomAnchor,right: self.view.rightAnchor, left: self.view.leftAnchor, paddingTop: 50, paddingRight: 15, paddingBottom: 15, paddingLeft: 15)
-//        }
-//
-//        view.addSubview(bottomButtonLabelStacks){
-//            self.bottomButtonLabelStacks.setAnchor(top: self.bottomButtonStacks.bottomAnchor,right: self.view.rightAnchor, left: self.view.leftAnchor, paddingTop: 8, paddingRight: 15, paddingBottom: 15, paddingLeft: 15)
-//        }
+        view.addSubview(rightButtonStacks){
+            self.rightButtonStacks.setAnchor(top: self.nameLabel.bottomAnchor, right: self.view.rightAnchor, paddingTop: 90, paddingRight: 55)
+        }
     }
     
     func configureUI() {
         self.view.addSubview(nameLabel)
+        nameLabel.font = UIFont.systemFont(ofSize: 24)
+        nameLabel.textColor = .white
+        nameLabel.setCenterXYAnchor(in: self.view)
         
-        
+//        self.view.addSubview(emailLabel)
+//        emailLabel.font = UIFont.systemFont(ofSize: 24)
+//        emailLabel.textColor = .white
+//        emailLabel.setAnchor(top: nameLabel.bottomAnchor, paddingTop: 30)
+//        emailLabel.setCenterXAnchor(in: self.view)
     }
 
+    
+    @objc func favButtonTapped(_ button: UIButton){
+        print("Favorite Button Tapped")
+    }
+    
+    @objc func reviewsButtonTapped(_ button: UIButton){
+        print("Review Button Tapped")
+        let ReviewVC = AllReviewVC()
+        self.navigationController?.pushViewController(ReviewVC, animated: true)
+    }
+    
+    @objc func editProfileButtonTapped(_ button: UIButton){
+        print("Edit Button Tapped")
+        let editVC = EditProfileViewController()
+        self.navigationController?.pushViewController(editVC, animated: true)
+    }
+    
+    @objc func logoutButtonTapped(_ button: UIButton){
+        print("Logout Button Tapped")
+    }
+    
 }
