@@ -9,10 +9,15 @@
 import Foundation
 import CoreLocation
 
+protocol LocationHandlerDelegate {
+    func locationUnauthorized()
+}
+
 class LocationHandler: NSObject, CLLocationManagerDelegate {
     
     static let shared = LocationHandler()
     var manager: CLLocationManager!
+    var delegate: LocationHandlerDelegate?
     
     override init() {
         super.init()
@@ -27,7 +32,10 @@ class LocationHandler: NSObject, CLLocationManagerDelegate {
             manager.requestAlwaysAuthorization()
             manager.startUpdatingLocation()
             
-        case .denied, .restricted, .notDetermined:
+        case .denied,.restricted:
+            delegate?.locationUnauthorized()
+            
+        case .notDetermined:
             manager.requestWhenInUseAuthorization()
 
         case .authorizedAlways:

@@ -253,7 +253,7 @@ extension MapViewController: MKMapViewDelegate {
             let label = UILabel()
             label.font = UIFont.systemFont(ofSize: 7)
             label.text = merchantAnno.merchant.name
-            annotation.image = #imageLiteral(resourceName: "UserLocation")
+            annotation.image = #imageLiteral(resourceName: "locationPoint")
             annotation.setSize(width: 20, height: 26)
             
             annotation.addSubview(label) {

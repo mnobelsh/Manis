@@ -10,7 +10,7 @@ import UIKit
 import CoreLocation
 
 protocol MainHeaderViewDelegate {
-    func avatarDidTapped()
+    func avatarDidTap()
     func locationDidChanged(locationLabel: UILabel)
     func hideSearchHeaderView()
 }
@@ -53,7 +53,8 @@ class MainHeaderView: UIView {
         return searchbar
     }()
     private var mappinImageView: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "UserLocation"))
+        let imageView = UIImageView()
+        imageView.image = #imageLiteral(resourceName: "locationPoint")
         imageView.contentMode = .scaleAspectFit
         imageView.setSize(width: 24, height: 30)
         return imageView
@@ -120,7 +121,7 @@ class MainHeaderView: UIView {
             self.sortingCollectionView.alpha = 0
         }
         
-        self.backgroundColor = .black
+        self.backgroundColor = .systemBackground
         self.configureRoundedCorners(corners: [.bottomRight,.bottomLeft], radius: 12)
         self.configureShadow(shadowColor: .lightGray, radius: 6)
     }
@@ -179,7 +180,7 @@ class MainHeaderView: UIView {
     
     // MARK: - Targets
     @objc private func avatarImageTapped() {
-        delegate?.avatarDidTapped()
+        delegate?.avatarDidTap()
     }
     
     @objc private func locationLabelTapped() {

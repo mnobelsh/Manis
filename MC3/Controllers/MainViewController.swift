@@ -101,10 +101,14 @@ class MainViewController: UIViewController {
     // MARK: - Lifecycles
     override func viewDidLoad() {
         super.viewDidLoad()
+        locationHandler.delegate = self
         locationHandler.requestLocation()
         configureComponents()
         configureUI()
-        fetchMerchantsData()
+        
+        authorizeUserLocation {
+            self.fetchMerchantsData()
+        }
     }
     
 
@@ -147,6 +151,21 @@ class MainViewController: UIViewController {
         }
         
         self.scrollView.addSubview(searchResultView)
+    }
+    
+    private func authorizeUserLocation(completion: @escaping() -> Void) {
+        if CLLocationManager.authorizationStatus() == .denied || CLLocationManager.authorizationStatus() == .restricted {
+            showSetting()
+        } else {
+            completion()
+        }
+    }
+    
+    private func showSetting() {
+        let url = URL(string: UIApplication.openSettingsURLString)!
+        UIApplication.shared.open(url) { (_) in
+            
+        }
     }
 
     // MARK: - Collection View Configuration
@@ -296,7 +315,7 @@ extension MainViewController: MainHeaderViewDelegate {
         
     }
     
-    func avatarDidTapped() {
+    func avatarDidTap() {
         self.navigationController?.pushViewController(ProfileViewController(), animated: true)
         print("DEBUGS : AVATAR TAPPED")
     }
@@ -401,6 +420,13 @@ extension MainViewController: SectionTitleViewDelegate {
         let merchantListVC = MerchantListViewController()
         merchantListVC.merchantListType = .highRating
         self.navigationController?.pushViewController(merchantListVC, animated: true)
+    }
+}
+
+// MARK: - Location Handler Delegate
+extension MainViewController: LocationHandlerDelegate {
+    func locationUnauthorized() {
+        showSetting()
     }
 }
 

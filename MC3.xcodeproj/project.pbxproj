@@ -11,7 +11,6 @@
 		01495D0A24D2858E009C0069 /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01495D0924D2858E009C0069 /* Review.swift */; };
 		01495D0C24D285BE009C0069 /* ReviewCollectionViewCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01495D0B24D285BE009C0069 /* ReviewCollectionViewCells.swift */; };
 		01495D0E24D2861D009C0069 /* AllReviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01495D0D24D2861D009C0069 /* AllReviewVC.swift */; };
-		01495D1224D7926E009C0069 /* SectTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01495D1124D7926E009C0069 /* SectTitleView.swift */; };
 		01495D1624D88E41009C0069 /* BadgeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01495D1524D88E41009C0069 /* BadgeCell.swift */; };
 		01495D1824D90CFA009C0069 /* BadgeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01495D1724D90CFA009C0069 /* BadgeCollectionViewCell.swift */; };
 		01495D1A24DA61CB009C0069 /* Badges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01495D1924DA61CB009C0069 /* Badges.swift */; };
@@ -875,13 +874,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = BHUM3GM6YZ;
+				DEVELOPMENT_TEAM = 8MV3PNW544;
 				INFOPLIST_FILE = MC3/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = muti.MC3;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mnobelsh.MC3;
 				PRODUCT_NAME = Manice;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -894,13 +893,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = BHUM3GM6YZ;
+				DEVELOPMENT_TEAM = 8MV3PNW544;
 				INFOPLIST_FILE = MC3/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = muti.MC3;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mnobelsh.MC3;
 				PRODUCT_NAME = Manice;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
