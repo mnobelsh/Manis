@@ -103,6 +103,12 @@ class SignUpViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         self.title = "Register"
+        
+        setTransparentNavbar()
+        self.navigationController?.navigationBar.isHidden = false
+        let backButton = UIBarButtonItem(title: "Home", style: .plain, target: self, action: #selector(backToPreviousVC))
+        self.navigationItem.setLeftBarButtonItems([backButton], animated: true)
+        
         view.addSubview(stackk){
             self.stackk.setCenterYAnchor(in: self.view)
             self.stackk.setAnchor(right: self.view.rightAnchor, left: self.view.leftAnchor, paddingRight: 20, paddingLeft: 20)
@@ -111,10 +117,10 @@ class SignUpViewController: UIViewController {
             self.loginButton.setAnchor(top: self.stackk.bottomAnchor,paddingTop:50 , paddingRight: 20, paddingBottom: 30, paddingLeft: 20)
             self.loginButton.setCenterXAnchor(in: self.view)
         }
-//        view.addSubview(labelRegist){
-//            self.labelRegist.setAnchor(top: self.loginButton.bottomAnchor,paddingTop: 10, paddingRight: 20, paddingBottom: 30, paddingLeft: 20)
-//            self.labelRegist.setCenterXAnchor(in: self.view)
-//        }
+        view.addSubview(labelRegist){
+            self.labelRegist.setAnchor(top: self.loginButton.bottomAnchor,paddingTop: 10, paddingRight: 20, paddingBottom: 30, paddingLeft: 20)
+            self.labelRegist.setCenterXAnchor(in: self.view)
+        }
     }
     
     
@@ -133,6 +139,9 @@ class SignUpViewController: UIViewController {
         }
     }
     
+    @objc private func backToPreviousVC() {
+        self.dismiss(animated: true, completion: nil)
+    }
     
     @objc func registButtontTap(_ sender: Any){
 

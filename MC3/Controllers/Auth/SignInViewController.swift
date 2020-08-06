@@ -91,8 +91,10 @@ class SignInViewController: UIViewController {
         view.backgroundColor = .white
         self.title = "Login"
         
-        self.navigationController?.navigationBar.isHidden = false
         setTransparentNavbar()
+        self.navigationController?.navigationBar.isHidden = false
+        let backButton = UIBarButtonItem(title: "Home", style: .plain, target: self, action: #selector(backToPreviousVC))
+        self.navigationItem.setLeftBarButtonItems([backButton], animated: true)
         
         view.addSubview(stackk){
             self.stackk.setCenterYAnchor(in: self.view)
@@ -106,6 +108,10 @@ class SignInViewController: UIViewController {
             self.labelRegist.setAnchor(top: self.button.bottomAnchor,paddingTop: 10, paddingRight: 20, paddingBottom: 30, paddingLeft: 20)
             self.labelRegist.setCenterXAnchor(in: self.view)
         }
+    }
+    
+    @objc private func backToPreviousVC() {
+        self.dismiss(animated: true, completion: nil)
     }
    
 }
