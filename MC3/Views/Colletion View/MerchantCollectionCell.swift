@@ -22,13 +22,25 @@ class MerchantCollectionCell: UICollectionViewCell {
                 lovedLabel.text = "By \(data.lovedBy) Peoples"
                 merchantImageView.image = #imageLiteral(resourceName: "doger")
             
-                if data.section == MainCollectionViewSection.nearby {
-                    let distance = Int(data.location.distance(from: userLocation!).rounded())
-                    distanceLabel.configureHeadingLabel(title: "\(distance) m", fontSize: 9, textColor: .darkGray)
+                print(data)
+                let distance = Int(data.location.distance(from: userLocation!).rounded())
+                distanceLabel.configureHeadingLabel(title: "\(distance) m", fontSize: 9, textColor: .darkGray)
+                ratingLabel.text = String(data.rating)
+
+                guard let section = data.section else {return}
+                switch section {
+                case .nearby:
+                    ratingView.isHidden = true
                     distanceLabel.isHidden = false
-                } else {
+                case .rating:
+                    ratingView.isHidden = false
                     distanceLabel.isHidden = true
+
+                case .trendings:
+                    distanceLabel.isHidden = true
+                    ratingView.isHidden = true
                 }
+
             }
         }
     }
@@ -90,7 +102,19 @@ class MerchantCollectionCell: UICollectionViewCell {
         label.numberOfLines = 1
         return label
     }()
-    private var ratingView: UIView = UIView()
+    private var ratingLabel: UILabel = {
+        let ratingLabel = UILabel()
+        ratingLabel.backgroundColor = .clear
+        ratingLabel.textAlignment = .left
+        ratingLabel.configureHeadingLabel(title: "0.0", fontSize: 9, textColor: .darkGray)
+        ratingLabel.setSize(height: 14)
+        return ratingLabel
+    }()
+    private lazy var ratingView: UIView = {
+        let view = UIView()
+        view.configureRatingView(ratingLabel: ratingLabel)
+        return view
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -151,6 +175,10 @@ class MerchantCollectionCell: UICollectionViewCell {
         self.addSubview(distanceLabel) {
             self.distanceLabel.setSize(width: 30, height: 12)
             self.distanceLabel.setAnchor(right: self.rightAnchor, bottom: self.bottomAnchor, paddingRight: 4, paddingBottom: 8)
+        }
+        
+        self.addSubview(ratingView) {
+            self.ratingView.setAnchor(right: self.rightAnchor, bottom: self.bottomAnchor, paddingRight: 4, paddingBottom: 8)
         }
         
 

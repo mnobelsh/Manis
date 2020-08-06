@@ -97,6 +97,8 @@ class MapViewController: UIViewController {
             self.merchantDetailView.frame = CGRect(x: 0, y: self.mapView.frame.height, width: self.mapView.frame.width, height: MerchantDetailView.height)
             self.merchantDetailView.delegate = self
         }
+        
+        zoomRect(annotations: self.mapView.annotations, width: 0.1, height: 0.1)
     }
     
     private func configureNearbyMerchantListView() {
@@ -205,9 +207,7 @@ class MapViewController: UIViewController {
                 merchants.append(merchant)
                 self.nearbyMerchants = merchants
             }
-            
         }
-        
     }
     
     private func requestDirectionTo(_ merchant: Merchant) {

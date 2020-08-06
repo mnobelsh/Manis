@@ -111,10 +111,10 @@ class SignUpViewController: UIViewController {
             self.loginButton.setAnchor(top: self.stackk.bottomAnchor,paddingTop:50 , paddingRight: 20, paddingBottom: 30, paddingLeft: 20)
             self.loginButton.setCenterXAnchor(in: self.view)
         }
-        view.addSubview(labelRegist){
-            self.labelRegist.setAnchor(top: self.loginButton.bottomAnchor,paddingTop: 10, paddingRight: 20, paddingBottom: 30, paddingLeft: 20)
-            self.labelRegist.setCenterXAnchor(in: self.view)
-        }
+//        view.addSubview(labelRegist){
+//            self.labelRegist.setAnchor(top: self.loginButton.bottomAnchor,paddingTop: 10, paddingRight: 20, paddingBottom: 30, paddingLeft: 20)
+//            self.labelRegist.setCenterXAnchor(in: self.view)
+//        }
     }
     
     

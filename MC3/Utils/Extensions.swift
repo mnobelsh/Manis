@@ -265,7 +265,7 @@ extension UIView {
         let starView = UIImageView(image: UIImage(systemName: "star.fill")?.withTintColor(.systemYellow, renderingMode: .alwaysOriginal))
         starView.contentMode = .scaleAspectFit
         starView.backgroundColor = .clear
-        starView.setSize(width: 20, height: 20)
+        starView.setSize(width: 18, height: 18)
         
         self.addSubview(starView) {
             starView.setAnchor(left: self.leftAnchor)
@@ -273,7 +273,7 @@ extension UIView {
         }
         
         self.addSubview(ratingLabel) {
-            ratingLabel.setAnchor(top: self.topAnchor, right: self.rightAnchor, bottom: self.bottomAnchor, left: starView.rightAnchor, paddingTop: 4, paddingBottom: 4, paddingLeft: 8)
+            ratingLabel.setAnchor(top: self.topAnchor, right: self.rightAnchor, bottom: self.bottomAnchor, left: starView.rightAnchor, paddingTop: 4, paddingBottom: 4, paddingLeft: 4)
         }
         
     }

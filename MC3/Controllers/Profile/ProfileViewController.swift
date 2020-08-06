@@ -10,12 +10,10 @@ import UIKit
 
 class ProfileViewController: UIViewController {
 
-    var data: [String:Any]? = nil {
+    var user: User? {
         didSet {
-            if let data = data {
-                guard let name = data["name"] as? String else {return}
-                nameLabel.text = name
-                configureUI()
+            if let user = user {
+                nameLabel.text = user.name
             }
         }
     }
@@ -136,6 +134,12 @@ class ProfileViewController: UIViewController {
         view.addSubview(rightButtonStacks){
             self.rightButtonStacks.setAnchor(top: self.nameLabel.bottomAnchor, right: self.view.rightAnchor, paddingTop: self.view.frame.height/10, paddingRight: 55)
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        guard let vc = navigationController?.viewControllers.first as? MainViewController else {return}
+        vc.hideNavbar()
     }
     
     
