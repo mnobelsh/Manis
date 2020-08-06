@@ -25,12 +25,6 @@ class AllReviewVC: UIViewController {
         return button
     }()
     
-    private lazy var nameLabel: UILabel = {
-        let label = UILabel()
-        label.configureTextLabel(title: "Review", fontSize: 22, textColor: .black)
-        return label
-    }()
-    
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: configureReviewCollectionViewLayout())
         collectionView.backgroundColor = .clear
@@ -49,13 +43,9 @@ class AllReviewVC: UIViewController {
 
     func configUI(){
         view.backgroundColor = .white
-        
-        view.addSubview(nameLabel){
-            self.nameLabel.setAnchor(top: self.view.topAnchor, right: self.view.rightAnchor, left: self.view.leftAnchor, paddingTop: 50, paddingRight: 8, paddingBottom: 8, paddingLeft: 8)
-        }
     
         self.view.addSubview(collectionView) {
-            self.collectionView.setAnchor(top: self.nameLabel.bottomAnchor, right: self.view.rightAnchor, bottom: self.view.safeAreaLayoutGuide.bottomAnchor, left: self.view.leftAnchor)
+            self.collectionView.setAnchor(top: self.view.safeAreaLayoutGuide.topAnchor, right: self.view.rightAnchor, bottom: self.view.safeAreaLayoutGuide.bottomAnchor, left: self.view.leftAnchor)
         }
         
         view.addSubview(addButton){
