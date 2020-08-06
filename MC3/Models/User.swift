@@ -15,7 +15,9 @@ struct User {
     static let emailField = "email"
     static let passwordField = "password"
     static let nameField = "name"
-    static let profilePicture = "profile_picture"
+    static let profilePictureField = "profile_picture"
+    static let reviewsField = "reviews"
+    static let favoritesField = "favorites"
     
     let id: String
     let email: String

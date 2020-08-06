@@ -9,6 +9,7 @@
 import UIKit
 import CoreLocation
 import MapKit
+import Firebase
 
 typealias MainCollectionDataSource = UICollectionViewDiffableDataSource<MainCollectionViewSection,Merchant>
 typealias MainCollectionSnapshot = NSDiffableDataSourceSnapshot<MainCollectionViewSection,Merchant>
@@ -105,7 +106,6 @@ class MainViewController: UIViewController {
         locationHandler.requestLocation()
         configureComponents()
         configureUI()
-        
         authorizeUserLocation {
             self.fetchMerchantsData()
         }
@@ -123,12 +123,9 @@ class MainViewController: UIViewController {
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        hideNavbar()
-    }
     
     // MARK: - Helpers
+    
     private func configureComponents() {        
         configureDiffableDataSource()
         
@@ -151,6 +148,8 @@ class MainViewController: UIViewController {
         }
         
         self.scrollView.addSubview(searchResultView)
+        hideNavbar()
+        self.navigationController?.navigationBar.tintColor = .black
     }
     
     private func authorizeUserLocation(completion: @escaping() -> Void) {
@@ -316,12 +315,15 @@ extension MainViewController: MainHeaderViewDelegate {
     }
     
     func avatarDidTap() {
-        self.navigationController?.pushViewController(ProfileViewController(), animated: true)
-        print("DEBUGS : AVATAR TAPPED")
+        service.authenticateUser(self) { (user) in
+            if let _ = user {
+                 self.navigationController?.pushViewController(ProfileViewController(), animated: true)
+            }
+        }
     }
     
     func locationDidChanged(locationLabel: UILabel) {
-        print("DEBUGS : LOCATION LABEL TAPPED \(userPlacemark)")
+
     }
     
 }
@@ -345,7 +347,6 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
             let merchantVC = MerchantViewController()
             merchantVC.merchant = collectionViewDataSource?.itemIdentifier(for: indexPath)
             self.navigationController?.pushViewController(merchantVC, animated: true)
-//            print("SELECTED MERCHANT : \(merchant!.name)")
             
         } else if collectionView == self.headerContainerView.sortingCollectionView {
             

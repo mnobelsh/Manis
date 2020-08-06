@@ -19,14 +19,6 @@ class MerchantHeaderView: UIView {
     static let height: CGFloat = 261
     private var phoneNumber: String = "0218641727"
 
-    
-    private var merchant: Merchant?{
-        didSet{
-            nameMerchant.configureHeadingLabel(title: merchant!.name, fontSize: 24, textColor: .white)
-            print("VIEW",merchant)
-        }
-    }
-    
     private lazy var favButton: UIButton = {
        let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "notfav"), for: .normal)
@@ -111,7 +103,7 @@ class MerchantHeaderView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //MARK: - FUNCTIONs
+    //MARK: - FUNCTIONS
     
     @objc private func favisTapped(_ button: UIButton){
         button.isSelected = !button.isSelected
@@ -129,8 +121,7 @@ class MerchantHeaderView: UIView {
     }
     
     func configureComponents(merchant: Merchant){
-        self.merchant = merchant
-
+        nameMerchant.configureHeadingLabel(title: merchant.name, fontSize: 24, textColor: .white)
     }
     
 }

@@ -79,7 +79,9 @@ class MerchantViewController: UIViewController {
         cv.backgroundColor = .clear
         cv.translatesAutoresizingMaskIntoConstraints = false
         cv.register(BadgeCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
-        
+        cv.delegate = self
+        cv.dataSource = self
+
         return cv
     }()
 
@@ -146,9 +148,11 @@ class MerchantViewController: UIViewController {
         layout.sectionInset = UIEdgeInsets(top: .zero, left: 0, bottom: .zero, right: 8)
         
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-//        cv.translatesAutoresizingMaskIntoConstraints = false
         cv.register(BadgeCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
-        
+        cv.showsHorizontalScrollIndicator = false
+        cv.showsVerticalScrollIndicator = false
+        cv.delegate = self
+        cv.dataSource = self
         return cv
     }()
 
@@ -173,35 +177,29 @@ class MerchantViewController: UIViewController {
     //MARK: - Lifecycles
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         setTransparentNavbar()
+        headerView.configureComponents(merchant: merchant!)
+        configReviewCV()
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        configUI()
         UIView.animate(withDuration: 0.35) {
             self.headerView.frame.origin.y = 0
         }
-        self.view.addSubview(self.headerView)
-        headerView.configureComponents(merchant: merchant!)
-        configReviewCV()
-        configUI()
-
-        badgeCollectionView.delegate = self
-        badgeCollectionView.dataSource = self
-        photoCollectionView.delegate = self
-        photoCollectionView.dataSource = self
-        self.navigationController?.navigationBar.isHidden = false
-        self.navigationController?.navigationBar.tintColor = .white
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         guard let vc = navigationController?.viewControllers.first as? MainViewController else {return}
         vc.hideNavbar()
+        self.navigationController?.navigationBar.tintColor = .black
     }
 
     func configUI(){
+        self.view.addSubview(self.headerView)
         self.view.addSubview(scrollView){
             self.scrollView.setAnchor(top: self.view.topAnchor, right: self.view.rightAnchor, bottom: self.view.bottomAnchor, left: self.view.leftAnchor)
         }
@@ -277,6 +275,8 @@ class MerchantViewController: UIViewController {
             self.collectionViewReview.setAnchor(top: self.reviewLabel.bottomAnchor ,right: self.view.rightAnchor, bottom: self.scrollView.bottomAnchor,left: self.view.leftAnchor)
             self.collectionViewReview.setSize( height: 1005)
         }
+        self.navigationController?.navigationBar.isHidden = false
+        self.navigationController?.navigationBar.tintColor = .white
     }
     
     private func configReviewCV(){

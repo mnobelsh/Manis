@@ -53,15 +53,35 @@ class SignInViewController: UIViewController {
         return loginB
     }()
     
-    private lazy var labelRegist: UILabel = {
-        let label = UILabel()
-        label.configureTextLabel(title: "Don't have an account? Register here", fontSize: 14, textColor: .link)
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(goToRegister(_:)))
-        label.addGestureRecognizer(tapGesture)
-        return label
+//    private lazy var labelRegist: UILabel = {
+//        let label = UILabel()
+//        label.configureTextLabel(title: "Don't have an account? Register here", fontSize: 14, textColor: .link)
+//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(goToRegister(_:)))
+//        label.addGestureRecognizer(tapGesture)
+//        label.isUserInteractionEnabled = true
+//        return label
+//    }()
+    
+    private lazy var labelRegist: UIButton = {
+        let button = UIButton(type: .system)
+        var mutableAttributedString1 = NSMutableAttributedString(string: "Don't have an account ? ", attributes: [
+            NSAttributedString.Key.foregroundColor : UIColor.darkGray,
+            NSAttributedString.Key.font : UIFont(name: "Avenir-Light", size: 16)!
+        ])
+        
+        let mutableAttributedString2 = NSAttributedString(string: "Register here", attributes: [
+            NSAttributedString.Key.foregroundColor : UIColor.systemBlue,
+            NSAttributedString.Key.font : UIFont(name: "Avenir-Heavy", size: 16)!
+        ])
+        mutableAttributedString1.append(mutableAttributedString2)
+        
+        button.setAttributedTitle(mutableAttributedString1, for: .normal)
+        button.addTarget(self, action: #selector(goToRegister(_:)), for: .touchUpInside)
+        return button
     }()
     
     @objc func goToRegister(_ button: UIButton){
+//        self.present(SignUpViewController(), animated: true, completion: nil)
         self.navigationController?.pushViewController(SignUpViewController(), animated: true)
     }
     
@@ -70,6 +90,10 @@ class SignInViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         self.title = "Login"
+        
+        self.navigationController?.navigationBar.isHidden = false
+        setTransparentNavbar()
+        
         view.addSubview(stackk){
             self.stackk.setCenterYAnchor(in: self.view)
             self.stackk.setAnchor(right: self.view.rightAnchor, left: self.view.leftAnchor, paddingRight: 20, paddingLeft: 20)
@@ -83,5 +107,5 @@ class SignInViewController: UIViewController {
             self.labelRegist.setCenterXAnchor(in: self.view)
         }
     }
-        // Do any additional setup after loading the view.
+   
 }

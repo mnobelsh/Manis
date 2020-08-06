@@ -24,7 +24,6 @@ func configureMainCollectionViewLayout() -> UICollectionViewCompositionalLayout 
         let sectionTitleSupplementaryItem = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40)), elementKind: SectionTitleView.kind, alignment: .topLeading)
         
         if sectionIndex == MainCollectionViewSection.trendings.rawValue {
-            
             item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
             
             group = NSCollectionLayoutGroup.vertical(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(120)), subitems: [item])
@@ -70,7 +69,6 @@ func configureReviewCollectionViewLayout() ->UICollectionViewCompositionalLayout
             //GROUP
             group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(330)), subitems: [item])
             
-            print("DEBUGS LAYOUT MASUL")
         } else {
             print("Layout ga masuk!")
         }
