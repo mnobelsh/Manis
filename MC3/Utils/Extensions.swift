@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import Firebase
 
 extension UINavigationController {
    open override var preferredStatusBarStyle: UIStatusBarStyle {

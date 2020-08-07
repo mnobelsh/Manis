@@ -15,6 +15,9 @@ class MerchantViewController: UIViewController {
         didSet {
             merchantNameLabel.text = merchant?.name
             addressLabel.text = merchant?.address
+            merchant!.badges.forEach { (badge) in
+                
+            }
         }
     }
     
@@ -68,6 +71,8 @@ class MerchantViewController: UIViewController {
         label.configureHeadingLabel(title: "Badges", fontSize: 20, textColor: .black)
         return label
     }()
+    
+    var badges = [Badge]()
 
     //MARK: - CV Badge
     lazy var badgeCollectionView: UICollectionView = {
@@ -80,7 +85,7 @@ class MerchantViewController: UIViewController {
         cv.translatesAutoresizingMaskIntoConstraints = false
         cv.register(BadgeCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         cv.delegate = self
-        cv.dataSource = self
+//        cv.dataSource = self
 
         return cv
     }()
@@ -152,7 +157,7 @@ class MerchantViewController: UIViewController {
         cv.showsHorizontalScrollIndicator = false
         cv.showsVerticalScrollIndicator = false
         cv.delegate = self
-        cv.dataSource = self
+//        cv.dataSource = self
         return cv
     }()
 
@@ -322,34 +327,29 @@ extension MerchantViewController: MerchantHeaderViewDelegate {
 }
 
 extension MerchantViewController: UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == badgeCollectionView{
-                    return Badges.dataBagde.count
-        }
-        return Badges.dataBagde.count
 
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return badges.count
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! BadgeCollectionViewCell
         cell.backgroundColor = .white
 
         if collectionView == badgeCollectionView{
             cell.configBadgeCV()
-            cell.badgeData = Badges.dataBagde[indexPath.row]
             return cell
         }
         cell.configPhotoCV()
-        cell.photoData = Badges.dataBagde[indexPath.row]
+        cell.photoData = badges[indexPath.row]
         return cell
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if collectionView == badgeCollectionView{
+        if collectionView == badgeCollectionView {
             return CGSize(width: 84 , height: 106)
         }
         return CGSize(width: 135, height: 135)
     }
-    
+
 }

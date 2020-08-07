@@ -13,7 +13,6 @@
 		01495D0E24D2861D009C0069 /* AllReviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01495D0D24D2861D009C0069 /* AllReviewVC.swift */; };
 		01495D1624D88E41009C0069 /* BadgeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01495D1524D88E41009C0069 /* BadgeCell.swift */; };
 		01495D1824D90CFA009C0069 /* BadgeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01495D1724D90CFA009C0069 /* BadgeCollectionViewCell.swift */; };
-		01495D1A24DA61CB009C0069 /* Badges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01495D1924DA61CB009C0069 /* Badges.swift */; };
 		3F282107865D1F6109C07657 /* Pods_MC3_MC3UITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A29C1A9AB60002507D10A2BC /* Pods_MC3_MC3UITests.framework */; };
 		4603FF3FB994E639F1CD3F69 /* Pods_MC3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB023E81723C5B3A0FE3D5F4 /* Pods_MC3.framework */; };
 		747397D724D80C2200E9F9F0 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 747397D624D80C2200E9F9F0 /* ChangePasswordViewController.swift */; };
@@ -84,7 +83,6 @@
 		01495D1124D7926E009C0069 /* SectTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectTitleView.swift; sourceTree = "<group>"; };
 		01495D1524D88E41009C0069 /* BadgeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeCell.swift; sourceTree = "<group>"; };
 		01495D1724D90CFA009C0069 /* BadgeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeCollectionViewCell.swift; sourceTree = "<group>"; };
-		01495D1924DA61CB009C0069 /* Badges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Badges.swift; sourceTree = "<group>"; };
 		1F58DBF8F61A4F2C6D7C214E /* Pods-MC3-MC3UITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MC3-MC3UITests.release.xcconfig"; path = "Target Support Files/Pods-MC3-MC3UITests/Pods-MC3-MC3UITests.release.xcconfig"; sourceTree = "<group>"; };
 		6AA73C471E0FB93B45737454 /* Pods-MC3.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MC3.release.xcconfig"; path = "Target Support Files/Pods-MC3/Pods-MC3.release.xcconfig"; sourceTree = "<group>"; };
 		6AC842672A229DC392ADDA2E /* Pods_MC3Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MC3Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -332,7 +330,6 @@
 			children = (
 				FF3E490124C86B6000719D14 /* Merchant.swift */,
 				FFD493E024CECAB700078E34 /* Sorting.swift */,
-				01495D1924DA61CB009C0069 /* Badges.swift */,
 				01495D0924D2858E009C0069 /* Review.swift */,
 				FF05B2A624D28A7000CE0AEB /* User.swift */,
 				FFBC31E924D815660007062A /* Menu.swift */,
@@ -687,7 +684,6 @@
 				FF4C7E3224C6EEF7000DCC7B /* ProfileViewController.swift in Sources */,
 				FF4C7E2324C6E8D9000DCC7B /* SignUpViewController.swift in Sources */,
 				01495D0E24D2861D009C0069 /* AllReviewVC.swift in Sources */,
-				01495D1A24DA61CB009C0069 /* Badges.swift in Sources */,
 				FF05B2A724D28A7000CE0AEB /* User.swift in Sources */,
 				FF3E490224C86B6000719D14 /* Merchant.swift in Sources */,
 				FF457EFD24B4A29B0052438A /* SceneDelegate.swift in Sources */,

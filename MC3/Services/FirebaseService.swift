@@ -153,7 +153,7 @@ struct FirebaseService {
     }
     
     
-    func fetchUser(userID: String, completion: @escaping(User) -> Void ) {
+    func fetchUser(userID: String, completion: @escaping(User) -> Void ) { 
         USER_REF.document(userID).addSnapshotListener { (snapshot, error) in
             if let err = error {
                 print("ERROR : ",err.localizedDescription)
@@ -248,33 +248,6 @@ struct FirebaseService {
             completion()
         } catch let error as NSError {
             print(error.localizedDescription)
-        }
-    }
-    
-    func fetchUser(byUID uid: String, completion: @escaping(User)->Void) {
-        USER_REF.document(uid).addSnapshotListener { (documentSnapshot, error) in
-            if let err = error {
-                print("ERROR : ",err.localizedDescription)
-                return
-            }
-            
-            guard let data = documentSnapshot?.data() else {return}
-            guard let name = data[User.nameField] as? String else {return}
-            guard let email = data[User.emailField] as? String else {return}
-            let user = User(id: uid, email: email, name: name, profilePicture: "profile", reviews: [], favorites: [])
-            completion(user)
-        }
-    }
-    
-    func authenticateUser(_ viewController: UIViewController, completion: @escaping(User?)->Void) {
-        if let currentUser = Auth.auth().currentUser {
-            fetchUser(byUID: currentUser.uid) { (user) in
-                completion(user)
-            }
-        } else {
-            let signinVC = UINavigationController(rootViewController: SignInViewController())
-            signinVC.modalPresentationStyle = .fullScreen
-            viewController.present(signinVC, animated: true, completion: nil)
         }
     }
 

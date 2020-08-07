@@ -10,7 +10,7 @@ import UIKit
 
 class SignUpViewController: UIViewController {
     
-    private lazy var userNameField: UITextField = {
+    private lazy var usernameTextField: UITextField = {
         let userName = UITextField()
         userName.configureInputTextField(placeholder: "Username", isSecureTextEntry: false)
         userName.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingDidEnd)
@@ -26,12 +26,12 @@ class SignUpViewController: UIViewController {
     
     private lazy var textViewUsername: UIView = {
         let view = UIView()
-        view.configureTextFieldView(icon: UIImage(systemName: "person.fill"), textField: userNameField,errorLabel: "", contrastColorTo: .white)
+        view.configureTextFieldView(icon: UIImage(systemName: "person.fill"), textField: usernameTextField,errorLabel: "", contrastColorTo: .white)
         
         return view
     }()
 
-    private lazy var emailField: UITextField = {
+    private lazy var emailTextField: UITextField = {
         let email = UITextField()
         email.configureInputTextField(placeholder: "E-mail address", isSecureTextEntry: false)
         return email
@@ -39,12 +39,11 @@ class SignUpViewController: UIViewController {
     
     private lazy var textViewEmail: UIView = {
         let view = UIView()
-        view.configureTextFieldView(icon: UIImage(systemName: "envelope.fill"), textField: emailField, errorLabel: "", contrastColorTo: .white)
-        
+        view.configureTextFieldView(icon: UIImage(systemName: "envelope.fill"), textField: emailTextField, errorLabel: "", contrastColorTo: .white)
         return view
     }()
     
-    private lazy var passField: UITextField = {
+    private lazy var passTextField: UITextField = {
        let pass = UITextField()
         pass.configureInputTextField(placeholder: "password", isSecureTextEntry: true)
         return pass
@@ -52,12 +51,12 @@ class SignUpViewController: UIViewController {
     
     private lazy var textViewPass: UIView = {
         let view = UIView()
-        view.configureTextFieldView(icon: UIImage(systemName: "lock.fill"), textField: passField, errorLabel: "asdasdasdadas", contrastColorTo: .white)
+        view.configureTextFieldView(icon: UIImage(systemName: "lock.fill"), textField: passTextField, errorLabel: "asdasdasdadas", contrastColorTo: .white)
         
         return view
     }()
     
-    private lazy var confPassField: UITextField = {
+    private lazy var confPassTextField: UITextField = {
        let pass = UITextField()
         pass.configureInputTextField(placeholder: "Confirm password", isSecureTextEntry: true)
         return pass
@@ -65,7 +64,7 @@ class SignUpViewController: UIViewController {
     
     private lazy var textViewConfPass: UIView = {
         let view = UIView()
-        view.configureTextFieldView(icon: UIImage(systemName: "lock.fill"), textField: confPassField, errorLabel: "", contrastColorTo: .white)
+        view.configureTextFieldView(icon: UIImage(systemName: "lock.fill"), textField: confPassTextField, errorLabel: "", contrastColorTo: .white)
         return view
     }()
 
@@ -79,24 +78,36 @@ class SignUpViewController: UIViewController {
         return stack
     }()
     
-    private lazy var loginButton: UIButton = {
+    private lazy var registerButton: UIButton = {
      let loginB = UIButton()
         loginB.configureButton(title: "Register", titleColor: .white, backgroundColor: .darkGray, isContrastToBackGroundColor: false, cornerRadius: 10)
         loginB.setSize(width: 170, height: 50)
+        loginB.addTarget(self, action: #selector(registerButtontTap(_:)), for: .touchUpInside)
         return loginB
-
     }()
     
-    private lazy var labelRegist: UILabel = {
-        let label = UILabel()
-        label.configureTextLabel(title: "Already have an account? Login here", fontSize: 14, textColor: .link)
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(goToLogin(_:)))
-        label.addGestureRecognizer(tapGesture)
-        return label
+    private lazy var labelRegist: UIButton = {
+        let button = UIButton(type: .system)
+        var mutableAttributedString1 = NSMutableAttributedString(string: "Already have an account ? ", attributes: [
+            NSAttributedString.Key.foregroundColor : UIColor.darkGray,
+            NSAttributedString.Key.font : UIFont(name: "Avenir-Light", size: 16)!
+        ])
+        
+        let mutableAttributedString2 = NSAttributedString(string: "Login here", attributes: [
+            NSAttributedString.Key.foregroundColor : UIColor.systemBlue,
+            NSAttributedString.Key.font : UIFont(name: "Avenir-Heavy", size: 16)!
+        ])
+        mutableAttributedString1.append(mutableAttributedString2)
+        
+        button.setAttributedTitle(mutableAttributedString1, for: .normal)
+        button.addTarget(self, action: #selector(goToLogin(_:)), for: .touchUpInside)
+        return button
     }()
+    
+    private let service = FirebaseService.shared
     
     @objc func goToLogin(_ button: UIButton){
-        self.navigationController?.pushViewController(SignInViewController(), animated: true)
+        self.navigationController?.popToRootViewController(animated: true)
     }
         
     override func viewDidLoad() {
@@ -113,12 +124,12 @@ class SignUpViewController: UIViewController {
             self.stackk.setCenterYAnchor(in: self.view)
             self.stackk.setAnchor(right: self.view.rightAnchor, left: self.view.leftAnchor, paddingRight: 20, paddingLeft: 20)
         }
-        view.addSubview(loginButton){
-            self.loginButton.setAnchor(top: self.stackk.bottomAnchor,paddingTop:50 , paddingRight: 20, paddingBottom: 30, paddingLeft: 20)
-            self.loginButton.setCenterXAnchor(in: self.view)
+        view.addSubview(registerButton){
+            self.registerButton.setAnchor(top: self.stackk.bottomAnchor,paddingTop:50 , paddingRight: 20, paddingBottom: 30, paddingLeft: 20)
+            self.registerButton.setCenterXAnchor(in: self.view)
         }
         view.addSubview(labelRegist){
-            self.labelRegist.setAnchor(top: self.loginButton.bottomAnchor,paddingTop: 10, paddingRight: 20, paddingBottom: 30, paddingLeft: 20)
+            self.labelRegist.setAnchor(top: self.registerButton.bottomAnchor,paddingTop: 10, paddingRight: 20, paddingBottom: 30, paddingLeft: 20)
             self.labelRegist.setCenterXAnchor(in: self.view)
         }
     }
@@ -128,11 +139,11 @@ class SignUpViewController: UIViewController {
     
     @objc func textFieldDidChange(_ sender: UITextField) {
         switch sender {
-        case self.userNameField:
-            if self.userNameField.text == ""{
-                view.configureTextFieldView(icon: nil, textField: userNameField, errorLabel: "Username must be fill!", contrastColorTo: nil)
+        case self.usernameTextField:
+            if self.usernameTextField.text == ""{
+                view.configureTextFieldView(icon: nil, textField: usernameTextField, errorLabel: "Username must be fill!", contrastColorTo: nil)
             } else {
-                view.configureTextFieldView(icon: nil, textField: userNameField, errorLabel: "NAIS", contrastColorTo: nil)
+                view.configureTextFieldView(icon: nil, textField: usernameTextField, errorLabel: "NAIS", contrastColorTo: nil)
             }
         default: break
 
@@ -143,9 +154,22 @@ class SignUpViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-    @objc func registButtontTap(_ sender: Any){
-
-    
+    @objc func registerButtontTap(_ sender: Any){
+        guard let username = usernameTextField.text else {return}
+        guard let email = emailTextField.text else {return}
+        guard let password = passTextField.text else {return}
+        let userData: [String:Any] = [
+            User.emailField : email,
+            User.nameField : username,
+            User.favoritesField : [String](),
+            User.reviewsField : [String](),
+            User.passwordField : password,
+            User.profilePictureField : "profile"
+        ]
+        
+        service.registerUser(userData: userData) {
+            self.dismiss(animated: true, completion: nil)
+        }
     }
 
 

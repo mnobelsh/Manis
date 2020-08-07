@@ -10,7 +10,7 @@ import UIKit
 
 class SignInViewController: UIViewController {
     
-    private lazy var emailField: UITextField = {
+    private lazy var emailTextField: UITextField = {
         let email = UITextField()
         email.configureInputTextField(placeholder: "E-mail address", isSecureTextEntry: false)
         return email
@@ -18,12 +18,12 @@ class SignInViewController: UIViewController {
     
     private lazy var textViewEmail: UIView = {
         let view = UIView()
-        view.configureTextFieldView(icon: UIImage(systemName: "envelope.fill"), textField: emailField, errorLabel: "", contrastColorTo: .white)
+        view.configureTextFieldView(icon: UIImage(systemName: "envelope.fill"), textField: emailTextField, errorLabel: "", contrastColorTo: .white)
         
         return view
     }()
     
-    private lazy var passField: UITextField = {
+    private lazy var passTextField: UITextField = {
        let pass = UITextField()
         pass.configureInputTextField(placeholder: "password", isSecureTextEntry: true)
         return pass
@@ -31,7 +31,7 @@ class SignInViewController: UIViewController {
     
     private lazy var textViewPass: UIView = {
         let view = UIView()
-        view.configureTextFieldView(icon: UIImage(systemName: "lock.fill"), textField: passField, errorLabel: "", contrastColorTo: .white)
+        view.configureTextFieldView(icon: UIImage(systemName: "lock.fill"), textField: passTextField, errorLabel: "", contrastColorTo: .white)
         
         return view
     }()
@@ -50,17 +50,11 @@ class SignInViewController: UIViewController {
      let loginB = UIButton()
         loginB.configureButton(title: "Login", titleColor: .white, backgroundColor: .darkGray, isContrastToBackGroundColor: false, cornerRadius: 10)
         loginB.setSize(width: 170, height: 50)
+        loginB.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
         return loginB
     }()
     
-//    private lazy var labelRegist: UILabel = {
-//        let label = UILabel()
-//        label.configureTextLabel(title: "Don't have an account? Register here", fontSize: 14, textColor: .link)
-//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(goToRegister(_:)))
-//        label.addGestureRecognizer(tapGesture)
-//        label.isUserInteractionEnabled = true
-//        return label
-//    }()
+    private let service = FirebaseService.shared
     
     private lazy var labelRegist: UIButton = {
         let button = UIButton(type: .system)
@@ -80,11 +74,7 @@ class SignInViewController: UIViewController {
         return button
     }()
     
-    @objc func goToRegister(_ button: UIButton){
-//        self.present(SignUpViewController(), animated: true, completion: nil)
-        self.navigationController?.pushViewController(SignUpViewController(), animated: true)
-    }
-    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,6 +102,20 @@ class SignInViewController: UIViewController {
     
     @objc private func backToPreviousVC() {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc private func goToRegister(_ button: UIButton){
+        self.navigationController?.pushViewController(SignUpViewController(), animated: true)
+    }
+    
+    @objc private func loginButtonTapped() {
+        if let email = emailTextField.text, let password = passTextField.text {
+            service.signIn(email: email, password: password) { (user) in
+                guard let presentingVC = (self.presentingViewController as? UINavigationController)?.viewControllers.last as? MainViewController else {return}
+                presentingVC.fetchUser()
+                self.dismiss(animated: true)
+            }
+        }
     }
    
 }
