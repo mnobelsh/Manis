@@ -125,6 +125,7 @@ class MerchantHeaderView: UIView {
     func configureComponents(merchant: Merchant){
         nameMerchant.configureHeadingLabel(title: merchant.name, fontSize: 24, textColor: .white)
         phoneNumber = merchant.phoneNumber
+        ratingLabel.configureHeadingLabel(title: "\(merchant.rating)", fontSize: 14, textColor: .darkGray)
     }
     
 }

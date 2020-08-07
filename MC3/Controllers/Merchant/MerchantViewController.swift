@@ -13,21 +13,33 @@ class MerchantViewController: UIViewController {
     
     var merchant: Merchant? {
         didSet {
-            merchantNameLabel.text = merchant?.name
             addressLabel.text = merchant?.address
+            menuList = merchant?.menu
+            priceMin = menuList!.map { Int($0.price) }.min()
+            priceMax = menuList!.map { Int($0.price) }.max()
         }
     }
     
-     private var merchantNameLabel: UILabel = {
-        let label = UILabel()
-        label.configureHeadingLabel(title: "Merchant Name", fontSize: 20, textColor: .black)
-        return label
-    }()
-     private var addressLabel: UILabel = {
+    private var addressLabel: UILabel = {
         let label = UILabel()
         label.configureTextLabel(title: "Merchant Address", fontSize: 16, textColor: .darkGray)
         return label
     }()
+    
+    private var priceMin: Int?
+    private var priceMax: Int?
+    private func priceFormatter(price: Int) -> String {
+        let formatter = NumberFormatter()
+        formatter.locale = Locale(identifier: "id_ID")
+        formatter.groupingSeparator = "."
+        formatter.numberStyle = .decimal
+        if let formattedTipAmount = formatter.string(from: price as NSNumber) {
+           return "Rp " + formattedTipAmount
+        }
+        return "Rp 0"
+    }
+    
+    private var menuList: [Menu]?
 
     private var checkDataSource: CollectionDataSource?
     private var checkSnapshot:CollectionSnapshot?
@@ -59,7 +71,8 @@ class MerchantViewController: UIViewController {
 
     private lazy var priceRange: UILabel = {
         let label = UILabel()
-        label.configureTextLabel(title: "Rp10.000 - Rp15.000", fontSize: 12, textColor: .black)
+        let priceRange = "\(self.priceFormatter(price: self.priceMin ?? 0)) - \(self.priceFormatter(price: self.priceMax ?? 0))"
+        label.configureTextLabel(title: priceRange, fontSize: 12, textColor: .black)
         return label
     }()
 
