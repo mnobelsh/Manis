@@ -167,8 +167,14 @@ class SignUpViewController: UIViewController {
             User.profilePictureField : "profile"
         ]
         
-        service.registerUser(userData: userData) {
-            self.dismiss(animated: true, completion: nil)
+        service.registerUser(userData: userData) { (data, error) in
+            if let err = error {
+                print("AUTH ERROR : ",err.localizedDescription)
+            } else {
+                guard let presentingVC = (self.presentingViewController as? UINavigationController)?.viewControllers.last as? MainViewController else {return}
+                presentingVC.fetchUser()
+                self.dismiss(animated: true)
+            }
         }
     }
 

@@ -6,11 +6,13 @@
 //  Copyright © 2020 Muhammad Nobel Shidqi. All rights reserved.
 //
 import UIKit
+import Firebase
 
 class AddReviewViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate {
 
     //MARK: - COMPONENTS
     private let scrollView = UIScrollView()
+
 
     //Rating
     private lazy var ratingLabel: UILabel = {
@@ -105,46 +107,51 @@ class AddReviewViewController: UIViewController, UIImagePickerControllerDelegate
         return button
     }()
     
-    @objc func badgeDidTapped(_ button: UIButton){
-        button.isSelected = !button.isSelected
-        if button.isSelected == false {
-            button.setImage(UIImage(named : "bigBadge2"), for: .normal)
-        } else {
-            button.setImage(UIImage(named : "selectedBadge2"), for: .normal)
-        }
-    }
-    
     private lazy var badge2: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "bigBadge3"), for: .normal)
-        button.addTarget(self, action: #selector(badgeDidTapped2(_:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(badgeDidTapped(_:)), for: .touchUpInside)
         return button
     }()
-    
-    @objc func badgeDidTapped2(_ button: UIButton){
-        button.isSelected = !button.isSelected
-        if button.isSelected == false {
-           button.setImage(UIImage(named : "bigBadge3"), for: .normal)
-       } else {
-           button.setImage(UIImage(named : "selectedBadge3"), for: .normal)
-       }
-    }
-    
+
     private lazy var badge3: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "bigBadge1"), for: .normal)
-        button.addTarget(self, action: #selector(badgeDidTapped3(_:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(badgeDidTapped(_:)), for: .touchUpInside)
         return button
     }()
     
-    @objc func badgeDidTapped3(_ button: UIButton){
+    private var badge1Count = 0
+    private var badge2Count = 0
+    private var badge3Count = 0
+    
+    @objc func badgeDidTapped(_ button: UIButton){
         button.isSelected = !button.isSelected
-        if button.isSelected == false {
-            button.setImage(UIImage(named : "bigBadge1"), for: .normal)
+        if button == badge1 {
+            setSelectedButtonImage(button, forBadge: "2")
+            badge1Count = button.isSelected ? 1 : 0
+            print("badge 1 : \(badge1Count)")
+        } else if button == badge2 {
+            setSelectedButtonImage(button, forBadge: "3")
+            badge2Count = button.isSelected ? 1 : 0
+            print("badge 2 : \(badge2Count)")
+        } else if button ==  badge3 {
+            setSelectedButtonImage(button, forBadge: "1")
+            badge3Count = button.isSelected ? 1 : 0
+            print("badge 3 : \(badge3Count)")
+        }
+        
+    }
+    
+    private func setSelectedButtonImage(_ button: UIButton, forBadge badge: String) {
+        if button.isSelected {
+            button.setImage(UIImage(named : "selectedBadge\(badge)"), for: .normal)
         } else {
-            button.setImage(UIImage(named : "selectedBadge1"), for: .normal)
+            button.setImage(UIImage(named: "bigBadge\(badge)"), for: .normal)
         }
     }
+    
+    
     
     private lazy var badgesStacks: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [badge1,badge2,badge3])
@@ -358,6 +365,29 @@ class AddReviewViewController: UIViewController, UIImagePickerControllerDelegate
     @objc func saveButtonTapped(_ button: UIButton){
         let backVC = AllReviewVC()
         self.navigationController?.pushViewController(backVC, animated: true)
+        
+        let badges : [[String:Any]] = [
+            [Badge.typeField : BadgeType.cleanIngredients.rawValue, Badge.countField : badge3Count],
+            [Badge.typeField : BadgeType.cleanTools.rawValue, Badge.countField : badge2Count],
+            [Badge.typeField : BadgeType.greatTaste.rawValue, Badge.countField : badge1Count]
+        ]
+        let reviewData: [String:Any] = [
+            Review.userIDField : Auth.auth().currentUser!.uid,
+            Review.merchantIDField : "E129BF511CB4",
+            Review.ratingField : userRating,
+            Review.detailsField : commentView.text!,
+            Review.badgesField : badges
+        ]
+        
+        FirebaseService.shared.addReview(data: reviewData) { (error) in
+            if let err = error {
+                print(err.localizedDescription)
+            } else {
+//                FirebaseService.shared.updateMerchantData(merchantID: "E129BF511CB4", data: [String : Any]) { () in
+//                    <#code#>
+//                }
+            }
+        }
 //        self.navigationController?.dismiss(animated: true, completion: nil)
     }
     

@@ -110,15 +110,19 @@ class WelcomeViewController: UIViewController, UIScrollViewDelegate {
             let vc = NavigationViewController.shared
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
-        
-            UserDefaults.standard.set(true, forKey: "onboardingDone")
+            self.present(vc, animated: true) {
+                UserDefaults.standard.set(true, forKey: "onboardingDone")
+            }
         }
     }
     
     @objc func didTapSkipButton(_ button:UIButton) {
+            UserDefaults.standard.set(true, forKey: "onboardingDone")
             let vc = NavigationViewController.shared
             vc.modalPresentationStyle = .fullScreen
-            self.present(vc, animated: true, completion: nil)
+            self.present(vc, animated: true) {
+                UserDefaults.standard.set(true, forKey: "onboardingDone")
+            }
     }
 
     private lazy var pageControl: UIPageControl = {

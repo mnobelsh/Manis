@@ -25,12 +25,6 @@ class AllReviewVC: UIViewController {
         return button
     }()
     
-    private lazy var nameLabel: UILabel = {
-        let label = UILabel()
-        label.configureTextLabel(title: "Review", fontSize: 22, textColor: .black)
-        return label
-    }()
-    
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: configureReviewCollectionViewLayout())
         collectionView.backgroundColor = .clear
@@ -50,12 +44,9 @@ class AllReviewVC: UIViewController {
     func configUI(){
         view.backgroundColor = .white
         
-        view.addSubview(nameLabel){
-            self.nameLabel.setAnchor(top: self.view.topAnchor, right: self.view.rightAnchor, left: self.view.leftAnchor, paddingTop: 50, paddingRight: 8, paddingBottom: 8, paddingLeft: 8)
-        }
-    
+        title = "All Review"
         self.view.addSubview(collectionView) {
-            self.collectionView.setAnchor(top: self.nameLabel.bottomAnchor, right: self.view.rightAnchor, bottom: self.view.safeAreaLayoutGuide.bottomAnchor, left: self.view.leftAnchor)
+            self.collectionView.setAnchor(top: self.view.safeAreaLayoutGuide.topAnchor, right: self.view.rightAnchor, bottom: self.view.safeAreaLayoutGuide.bottomAnchor, left: self.view.leftAnchor)
         }
         
         view.addSubview(addButton){
@@ -64,7 +55,6 @@ class AllReviewVC: UIViewController {
         }
         self.navigationController?.navigationBar.isHidden = false
         self.navigationController?.navigationBar.tintColor = .black
-        self.title = "Reviews"
     }
     
     private func configAllneededforCV(){
@@ -98,7 +88,7 @@ class AllReviewVC: UIViewController {
 extension AllReviewVC: UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let review = ViewDataSource?.itemIdentifier(for: indexPath)
-            print("SELECTED Review : \(review!.userName)")
+//            print("SELECTED Review : \(review!.userName)")
         }
     }
 

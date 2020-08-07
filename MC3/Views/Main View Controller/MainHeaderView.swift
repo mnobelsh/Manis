@@ -24,6 +24,7 @@ class MainHeaderView: UIView {
     
     var user: User? {
         didSet {
+            print("USER HEADER : \(user)")
             self.avatarImageView.configureAvatarView(avatarImage: UIImage(named: user!.profilePicture), dimension: 65)
             self.locationLabel.text = "Location"
         }
@@ -36,7 +37,7 @@ class MainHeaderView: UIView {
     
     private lazy var avatarImageView: AvatarImageView = {
         let avatarImage = AvatarImageView(frame: .zero)
-        avatarImage.configureAvatarView(avatarImage: #imageLiteral(resourceName: "profile"), dimension: 65)
+        avatarImage.configureAvatarView(dimension: 65)
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(avatarImageTapped))
         avatarImage.addGestureRecognizer(tapGesture)

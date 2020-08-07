@@ -112,6 +112,7 @@ class MainViewController: UIViewController {
         configureComponents()
         authorizeUserLocationAndFetch()
         fetchUser()
+        print("DEBUGS : DID LOAD")
     }
     
 
@@ -140,7 +141,6 @@ class MainViewController: UIViewController {
         self.searchResultView.isHidden = true
         
         self.scrollView.addSubview(self.headerContainerView)
-        headerContainerView.user = User(id: "123", email: "abc", name: "User", profilePicture: "profile", reviews: [], favorites: [])
         
         self.scrollView.addSubview(collectionView) {
             self.collectionView.setAnchor(top: self.headerContainerView.bottomAnchor, right: self.view.rightAnchor, bottom: self.view.bottomAnchor, left: self.view.leftAnchor, paddingTop: 20)
@@ -385,7 +385,9 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
 extension MainViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("DEBUGS : search result selected \(tableViewDataSource?.itemIdentifier(for: indexPath))")
+        let merchantVC = MerchantViewController()
+        merchantVC.merchant = tableViewDataSource?.itemIdentifier(for: indexPath)
+        self.navigationController?.pushViewController(merchantVC, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

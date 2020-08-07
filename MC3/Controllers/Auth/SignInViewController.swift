@@ -110,10 +110,14 @@ class SignInViewController: UIViewController {
     
     @objc private func loginButtonTapped() {
         if let email = emailTextField.text, let password = passTextField.text {
-            service.signIn(email: email, password: password) { (user) in
-                guard let presentingVC = (self.presentingViewController as? UINavigationController)?.viewControllers.last as? MainViewController else {return}
-                presentingVC.fetchUser()
-                self.dismiss(animated: true)
+            service.signIn(email: email, password: password) { (user, error) in
+                if let err = error {
+                    print("AUTH ERROR : ",err.localizedDescription)
+                } else {
+                    guard let presentingVC = (self.presentingViewController as? UINavigationController)?.viewControllers.last as? MainViewController else {return}
+                    presentingVC.fetchUser()
+                    self.dismiss(animated: true)
+                }
             }
         }
     }

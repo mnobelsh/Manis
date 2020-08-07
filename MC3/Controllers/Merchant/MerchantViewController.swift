@@ -11,36 +11,33 @@ import ChameleonFramework
 
 class MerchantViewController: UIViewController {
     
+    private var checkDataSource: CollectionDataSource?
+    private var checkSnapshot:CollectionSnapshot?
+    
+    // MARK: - Properties
     var merchant: Merchant? {
         didSet {
-            merchantNameLabel.text = merchant?.name
-            addressLabel.text = merchant?.address
-            merchant!.badges.forEach { (badge) in
-                
-            }
+            print("DEBUGS MERCHANT VC : \(merchant)")
         }
     }
     
-     private var merchantNameLabel: UILabel = {
+    private lazy var badges = [Badge]()
+    private lazy var merchantNameLabel: UILabel = {
         let label = UILabel()
         label.configureHeadingLabel(title: "Merchant Name", fontSize: 20, textColor: .black)
         return label
     }()
-     private var addressLabel: UILabel = {
-        let label = UILabel()
-        label.configureTextLabel(title: "Merchant Address", fontSize: 16, textColor: .darkGray)
-        return label
-    }()
-
-    private var checkDataSource: CollectionDataSource?
-    private var checkSnapshot:CollectionSnapshot?
-
+    
+    private lazy var addressLabel: UILabel = {
+    let label = UILabel()
+    label.configureTextLabel(title: "Merchant Address", fontSize: 16, textColor: .darkGray)
+    return label
+}()
     private lazy var headerView: MerchantHeaderView = {
         let header = MerchantHeaderView(frame: .init(x: 0, y: -MerchantHeaderView.height, width: self.view.frame.width, height: MerchantHeaderView.height))
         header.delegate = self
         return header
     }()
-
     private lazy var scrollView: UIScrollView = {
         let scrollV = UIScrollView()
         scrollV.frame = self.view.bounds
@@ -53,29 +50,25 @@ class MerchantViewController: UIViewController {
 
         return scrollV
     }()
-
     private lazy var priceLabel: UILabel = {
         let label = UILabel()
         label.configureHeadingLabel(title: "Price Range", fontSize: 20, textColor: .black)
         return label
     }()
-
     private lazy var priceRange: UILabel = {
         let label = UILabel()
         label.configureTextLabel(title: "Rp10.000 - Rp15.000", fontSize: 12, textColor: .black)
         return label
     }()
-
     private lazy var badgeLabel: UILabel = {
         let label = UILabel()
         label.configureHeadingLabel(title: "Badges", fontSize: 20, textColor: .black)
         return label
     }()
     
-    var badges = [Badge]()
+    
 
-    //MARK: - CV Badge
-    lazy var badgeCollectionView: UICollectionView = {
+    private lazy var badgeCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.sectionInset = UIEdgeInsets(top: .zero, left: 9, bottom: .zero, right: 8)
@@ -166,30 +159,42 @@ class MerchantViewController: UIViewController {
         label.configureHeadingLabel(title: "Reviews", fontSize: 20, textColor: .black)
         return label
     }()
+    
+    private var reviews: [Review] = [Review]() {
+        didSet {
+            self.updateSnapshot(self.reviews)
+        }
+    }
 
-    //MARK: - CollectionView Review
     private lazy var collectionViewReview: UICollectionView = {
-        let cv = UICollectionView(frame: .zero, collectionViewLayout: configureReviewCollectionViewLayout())
-        cv.backgroundColor = .clear
-        cv.delegate = self
-        cv.isScrollEnabled = false
-        cv.register(ReviewCollectionViewCells.self, forCellWithReuseIdentifier: ReviewCollectionViewCells.identifier)
-        
-        return cv
+        let collectionViewReview = UICollectionView(frame: .zero, collectionViewLayout: configureReviewCollectionViewLayout())
+        collectionViewReview.backgroundColor = .clear
+        collectionViewReview.delegate = self
+        collectionViewReview.isScrollEnabled = false
+        collectionViewReview.register(ReviewCollectionViewCells.self, forCellWithReuseIdentifier: ReviewCollectionViewCells.identifier)
+        return collectionViewReview
     }()
     
+
+
 
     //MARK: - Lifecycles
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         setTransparentNavbar()
+        configDatasource()
+        configSnapshot()
         headerView.configureComponents(merchant: merchant!)
-        configReviewCV()
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        fetchMerchantReviews { (review) in
+            DispatchQueue.main.async {
+                self.reviews.append(review)
+            }
+        }
         configUI()
         UIView.animate(withDuration: 0.35) {
             self.headerView.frame.origin.y = 0
@@ -203,6 +208,18 @@ class MerchantViewController: UIViewController {
         self.navigationController?.navigationBar.tintColor = .black
     }
 
+    // MARK: - Helpers
+    private func fetchMerchantReviews(completion: @escaping(Review) -> Void) {
+        FirebaseService.shared.fetchMerchantReviews(merchantID: merchant!.id, withLimit: 3, completion: { (review, error) in
+            if let err = error {
+                print(err.localizedDescription)
+            } else {
+                guard let rev = review else {return}
+                completion(rev)
+            }
+        })
+    }
+    
     func configUI(){
         self.view.addSubview(self.headerView)
         self.view.addSubview(scrollView){
@@ -283,11 +300,6 @@ class MerchantViewController: UIViewController {
         self.navigationController?.navigationBar.isHidden = false
         self.navigationController?.navigationBar.tintColor = .white
     }
-    
-    private func configReviewCV(){
-        configDatasource()
-        configSnapshott()
-    }
 
     private func configDatasource(){
         checkDataSource = UICollectionViewDiffableDataSource(collectionView: self.collectionViewReview) { (collectionV, indexPath, review) -> UICollectionViewCell? in
@@ -298,20 +310,25 @@ class MerchantViewController: UIViewController {
         }
     }
     
-    private func configSnapshott(){
+    private func configSnapshot(){
         checkSnapshot = CollectionSnapshot()
         checkSnapshot!.appendSections([.main])
-        checkSnapshot!.appendItems(Review.reviewDetails, toSection: .main)
-        checkDataSource?.apply(checkSnapshot!, animatingDifferences: true, completion: nil)
+        checkDataSource!.apply(checkSnapshot!, animatingDifferences: true, completion: nil)
     }
 
+    
+    private func updateSnapshot(_ data: [Review]) {
+        checkSnapshot!.appendItems(data, toSection: .main)
+        checkDataSource!.apply(checkSnapshot!, animatingDifferences: true, completion: nil)
+    }
 
 }
 
-extension MerchantViewController: UICollectionViewDelegate{
+// MARK: - Collection View Delegate
+extension MerchantViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let merchantReview = checkDataSource?.itemIdentifier(for: indexPath)
-        print("DEBUGS Merchant Review : \(merchantReview!.userName)")
+//        print("DEBUGS Merchant Review : \(merchantReview!.userName)")
     }
 }
 
@@ -322,6 +339,14 @@ extension MerchantViewController: MerchantHeaderViewDelegate {
     }
 
     func favDidTapped() {
+//        FirebaseService.shared.fetchUser(userID: "wdwdw") { (user) in
+//            var fav = user.favorites
+//            fav.append(merchant!.id)
+//            FirebaseService.shared.updateUserData(userID: <#T##String#>, data: fav) { (error) in
+//                <#code#>
+//            }
+//        }
+
         print("DEBUGS: Fav is Tapped!")
     }
 }

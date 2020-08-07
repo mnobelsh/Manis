@@ -19,10 +19,9 @@ struct User {
     static let reviewsField = "reviews"
     static let favoritesField = "favorites"
     
-    let id: String
-    let email: String
-    let name: String
-    let profilePicture: String
-    let reviews: [Review]
-    let favorites: [Merchant]
+    var id: String
+    var email: String
+    var name: String
+    var profilePicture: String
+    var favorites: [String]
 }

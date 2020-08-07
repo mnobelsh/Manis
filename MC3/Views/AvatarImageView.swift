@@ -21,10 +21,14 @@ class AvatarImageView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configureAvatarView(avatarImage img: UIImage?, dimension: CGFloat) {
+    func configureAvatarView(avatarImage img: UIImage? = nil, dimension: CGFloat) {
+        self.imageView = UIImageView()
+        
         
         if img == nil {
-            self.imageView.image = UIImage(systemName: "person.fill")?.withTintColor(.darkGray, renderingMode: .alwaysOriginal)
+            self.imageView.image = #imageLiteral(resourceName: "profilePictureBig")
+        } else {
+            self.imageView.image = img
         }
         
         self.frame.size = CGSize(width: dimension, height: dimension)
@@ -32,9 +36,7 @@ class AvatarImageView: UIView {
         self.configureShadow(shadowColor: .darkGray, radius: 4)
         self.configureRoundedCorners(corners: [.allCorners], radius: self.frame.width/2)
         
-        imageView = UIImageView(image: img)
         imageView.contentMode = .scaleAspectFill
-
         imageView.layer.masksToBounds = true
         imageView.frame = self.bounds
         imageView.configureRoundedCorners(corners: [.allCorners], radius: self.frame.width/2)
