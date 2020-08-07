@@ -17,7 +17,7 @@ class MerchantHeaderView: UIView {
     
     var delegate: MerchantHeaderViewDelegate?
     static let height: CGFloat = 261
-    private var phoneNumber: String = "0218641727"
+    private var phoneNumber: String = "+62218641727"
 
     private lazy var favButton: UIButton = {
        let button = UIButton()
@@ -116,12 +116,15 @@ class MerchantHeaderView: UIView {
     }
     
     @objc private func callTapped(_ button: UIButton){
-        let url:NSURL = URL(string: "+62\(self.phoneNumber)")! as NSURL
-        UIApplication.shared.open(url as URL, options: [:], completionHandler: nil)
+        print("DEBUGS call button tapped: \(self.phoneNumber)")
+        if let url = URL(string: "tel://\(self.phoneNumber)"), UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
     }
     
     func configureComponents(merchant: Merchant){
         nameMerchant.configureHeadingLabel(title: merchant.name, fontSize: 24, textColor: .white)
+        phoneNumber = merchant.phoneNumber
     }
     
 }
