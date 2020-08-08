@@ -10,21 +10,21 @@ import UIKit
 
 class BadgeCollectionViewCell: UICollectionViewCell {
         
-    var badgeData: Badges? {
+    var badgeData: Badge? {
         didSet{
-            if let badgeData = badgeData{
-                badgeImage.image = badgeData.badgeImg
-                badgeLabel.text = badgeData.title
-                badgeCount.text = badgeData.counts
-            }
+//            if let badgeData = badgeData{
+//                badgeImage.image = badgeData.badgeImg
+//                badgeLabel.text = badgeData.title
+//                badgeCount.text = badgeData.counts
+//            }
         }
     }
     
-    var photoData: Badges? {
+    var photoData: Badge? {
         didSet{
-            if let photoData = photoData{
-                photoImage.image = photoData.photos
-            }
+//            if let photoData = photoData{
+//                photoImage.image = photoData.photos
+//            }
         }
     }
     

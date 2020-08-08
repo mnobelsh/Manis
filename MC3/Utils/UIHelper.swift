@@ -21,6 +21,7 @@ func configureMainCollectionViewLayout() -> UICollectionViewCompositionalLayout 
         var item: NSCollectionLayoutItem!
         var group: NSCollectionLayoutGroup!
         var section: NSCollectionLayoutSection!
+        print("DEBUGS : LAYOUT MAIN")
         let sectionTitleSupplementaryItem = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40)), elementKind: SectionTitleView.kind, alignment: .topLeading)
         
         if sectionIndex == MainCollectionViewSection.trendings.rawValue {
@@ -56,10 +57,11 @@ enum Sections: Int {
     case main = 0
 }
 
-func configureReviewCollectionViewLayout() ->UICollectionViewCompositionalLayout { return UICollectionViewCompositionalLayout { (section,env) -> NSCollectionLayoutSection? in
+func configureReviewCollectionViewLayout() -> UICollectionViewCompositionalLayout {
+    return UICollectionViewCompositionalLayout { (section,env) -> NSCollectionLayoutSection? in
         var item: NSCollectionLayoutItem!
         var group: NSCollectionLayoutGroup!
-        print("DEBUGS : While Set up Layout")
+        print("DEBUGS : While Set up Layout yeyah")
 
         if section == Sections.main.rawValue {
             //ITEM
@@ -174,27 +176,56 @@ func configureMerchantListCollectionViewLayout() -> UICollectionViewCompositiona
 
 
 
-//        let menus: [[String: Any]] = [
-//            [Menu.titleField : "Es Cincau Hitam", Menu.priceField : 17000],
-//            [Menu.titleField : "Es Cincau Hijau", Menu.priceField : 16500],
-//        ]
+//    let menus: [[String: Any]] = [
+//        [Menu.titleField : "Es Goyobod", Menu.priceField : 15000],
+//        [Menu.titleField : "Es Teler", Menu.priceField : 26500],
+//    ]
 //
-//        let badges : [[String:Any]] = [
-//            [Badge.typeField : BadgeType.cleanIngredients.rawValue, Badge.countField : 0],
-//            [Badge.typeField : BadgeType.cleanTools.rawValue, Badge.countField : 0],
-//            [Badge.typeField : BadgeType.greatTaste.rawValue, Badge.countField : 0],
-//        ]
+//    let badges : [String:Any] = [
+//        String(BadgeType.cleanIngredients.rawValue) : 0,
+//        String(BadgeType.cleanTools.rawValue) : 0,
+//        String(BadgeType.greatTaste.rawValue) : 0,
+//    ]
 //
-//        let merchantdata: [String:Any] = [
-//            Merchant.nameField : "Es Uhuy bang muthi",
-//            Merchant.addressField: "Jalan Hayam Wuruk 5",
-//            Merchant.menuField: menus,
-//            Merchant.badgeField: badges,
-//            Merchant.lovedByField: 0,
-//            Merchant.phoneNumberField: "89172101",
-//            Merchant.ratingField: 3.8,
-//            Merchant.locationField: locationHandler.manager.location!
-//        ]
-//        FirebaseService.shared.registerMerchant(merchantData: merchantdata) {
-//            print("Success add new merchant!")
+//    let merchantdata: [String:Any] = [
+//        Merchant.nameField : "Es Top Bandung",
+//        Merchant.addressField: "Jalan Hayam Wuruk 5",
+//        Merchant.menuField: menus,
+//        Merchant.badgeField: badges,
+//        Merchant.lovedByField: 0,
+//        Merchant.phoneNumberField: "89172101",
+//        Merchant.ratingField: 0.0,
+//        Merchant.locationField: locationHandler.manager.location!
+//    ]
+//    FirebaseService.shared.addMerchant(merchantData: merchantdata) {
+//        print("Success add new merchant!")
+//    }
+
+
+//let badges : [String:Any] = [
+//    String(BadgeType.cleanIngredients.rawValue) : 50,
+//    String(BadgeType.cleanTools.rawValue) : 70,
+//    String(BadgeType.greatTaste.rawValue) : 150
+//]
+//let reviewData: [String:Any] = [
+//    Review.userIDField : user.uid,
+//    Review.merchantIDField : "3B505B252489",
+//    Review.ratingField : 5,
+//    Review.detailsField : "Es ternikmat di jakarta, legendary!",
+//    Review.badgesField : badges
+//]
+//
+//service.addReview(data: reviewData) { (error) in
+//    if let err = error {
+//        print(err.localizedDescription)
+//    } else {
+//        print("SUCCESS ADD REVIEW!")
+//        self.service.updateMerchantData(merchantID: "3B505B252489", data: badges) { (error) in
+//            if let err = error {
+//                print(err.localizedDescription)
+//            } else {
+//                print("SUCCESS ADD REVIEW!")
+//            }
 //        }
+//    }
+//}

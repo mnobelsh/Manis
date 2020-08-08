@@ -11,18 +11,20 @@ import UIKit
 
 struct Review: Hashable{
     
-    static var reviewDetails: [Review] =
-    [Review(id: UUID().uuidString, userName: "Bambang"),
-     Review(id: UUID().uuidString, userName: "Nobal"),
-     Review(id: UUID().uuidString, userName: "Sukma"),
-     Review(id: UUID().uuidString, userName: "kamu"),
-     Review(id: UUID().uuidString, userName: "I"),
-     Review(id: UUID().uuidString, userName: "Hate"),
-     Review(id: UUID().uuidString, userName: "U")]
+    static var reviewDetails: [Review] = []
+    
+    static let reviewIDField = "reviewID"
+    static let userIDField = "userID"
+    static let merchantIDField = "merchantID"
+    static let ratingField = "rating"
+    static let badgesField = "badges"
+    static let detailsField = "details"
     
     var id:String
-    var userName:String
-//    var rate: Double
-//    var badge: UIImage?
-//    var details:String?
+    var userID:String
+    var merchantID: String
+    var rating: Double
+    var badges: [Badge]
+    var details: String
+
 }

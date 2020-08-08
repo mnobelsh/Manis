@@ -9,12 +9,19 @@
 import UIKit
 
 class ReviewCollectionViewCells: UICollectionViewCell, UITextViewDelegate {
-    static let identifier = "ReviewCells"
+    static let identifier = UUID().uuidString
     
     var details: Review? = nil {
         didSet {
             if let details = details {
-                nameLabel.text = details.userName
+                print("DEBUGS REVIEW CELL : \(details)")
+                FirebaseService.shared.fetchUser(userID: details.userID) { (user) in
+                    DispatchQueue.main.async {
+                        self.nameLabel.text = user.name
+                    }
+                }
+                self.commentView.text = details.details
+                self.stars = configureStar(rating: Int(details.rating.rounded()))
             }
         }
     }
@@ -30,7 +37,6 @@ class ReviewCollectionViewCells: UICollectionViewCell, UITextViewDelegate {
     var starsButton: UIButton!
     private var stars: [UIButton]!
     let imagePicker = UIImagePickerController()
-    
     var userRating: Int = 0
         
     //
@@ -51,8 +57,6 @@ class ReviewCollectionViewCells: UICollectionViewCell, UITextViewDelegate {
     private lazy var stackStar: UIStackView = {
         print("DEBUGS Rating")
         
-        stars = configureStar(rating: 5)
-
         let stack = UIStackView(arrangedSubviews: stars)
         stack.axis = .horizontal
         stack.distribution = .fillEqually
@@ -89,7 +93,7 @@ class ReviewCollectionViewCells: UICollectionViewCell, UITextViewDelegate {
     
     private lazy var commentView: UITextView = {
         let textVIew = UITextView()
-        textVIew.text = "Enak es cendolnya udah gitu abangnya baik pas diajak ngobrol ramah terus padahal saya banyak mau banget minta nambah gula arennya lah, minta sendoknya dibersihin dulu"
+        textVIew.text = "Review details"
         textVIew.textColor = .black
         textVIew.translatesAutoresizingMaskIntoConstraints = true
         textVIew.layer.cornerRadius = 10
@@ -112,13 +116,14 @@ class ReviewCollectionViewCells: UICollectionViewCell, UITextViewDelegate {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .white
+        self.backgroundColor = .systemBackground
         self.configureRoundedCorners(corners: [.allCorners], radius: 8)
-        self.configureShadow(shadowColor: .darkGray, radius: 2)
+        self.configureShadow(shadowColor: .lightGray, radius: 4)
     }
     
     func configureCells(){
         //USERNAME
+        print("DETAIL REVIEW : CONFIGURE CELL")
         self.addSubview(nameLabel){
             self.nameLabel.setAnchor(top: self.topAnchor, right: self.rightAnchor, left: self.leftAnchor, paddingTop: 8, paddingLeft: 8)
         }

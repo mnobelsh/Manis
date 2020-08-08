@@ -83,7 +83,6 @@ class ProfileViewController: UIViewController {
         button.setImage(UIImage(named: "logoutButton"), for: .normal)
         button.addTarget(self, action: #selector(logoutButtonTapped(_:)), for: .touchUpInside)
         button.setSize(width: 100, height: 100)
-
         return button
     }()
     
@@ -139,7 +138,6 @@ class ProfileViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         guard let vc = navigationController?.viewControllers.first as? MainViewController else {return}
-        vc.hideNavbar()
     }
     
     
@@ -174,7 +172,9 @@ class ProfileViewController: UIViewController {
     }
     
     @objc func logoutButtonTapped(_ button: UIButton){
-        print("Logout Button Tapped")
+        FirebaseService.shared.signOut {
+            self.navigationController?.popToRootViewController(animated: true)
+        }
     }
     
 }

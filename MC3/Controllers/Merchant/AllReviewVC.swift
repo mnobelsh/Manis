@@ -43,7 +43,8 @@ class AllReviewVC: UIViewController {
 
     func configUI(){
         view.backgroundColor = .white
-    
+        
+        title = "All Review"
         self.view.addSubview(collectionView) {
             self.collectionView.setAnchor(top: self.view.safeAreaLayoutGuide.topAnchor, right: self.view.rightAnchor, bottom: self.view.safeAreaLayoutGuide.bottomAnchor, left: self.view.leftAnchor)
         }
@@ -54,7 +55,6 @@ class AllReviewVC: UIViewController {
         }
         self.navigationController?.navigationBar.isHidden = false
         self.navigationController?.navigationBar.tintColor = .black
-        self.title = "Reviews"
     }
     
     private func configAllneededforCV(){
@@ -88,7 +88,7 @@ class AllReviewVC: UIViewController {
 extension AllReviewVC: UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let review = ViewDataSource?.itemIdentifier(for: indexPath)
-            print("SELECTED Review : \(review!.userName)")
+//            print("SELECTED Review : \(review!.userName)")
         }
     }
 

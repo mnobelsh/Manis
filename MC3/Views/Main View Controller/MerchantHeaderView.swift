@@ -50,7 +50,7 @@ class MerchantHeaderView: UIView {
     private var ratingLabel: UILabel = {
         let ratingLabel = UILabel()
         ratingLabel.backgroundColor = .clear
-        ratingLabel.configureHeadingLabel(title: "0.0", fontSize: 14, textColor: .darkGray)
+        ratingLabel.configureHeadingLabel(title: "0.0", fontSize: 14, textColor: .black)
         ratingLabel.textAlignment = .left
         return ratingLabel
     }()
@@ -123,9 +123,9 @@ class MerchantHeaderView: UIView {
     }
     
     func configureComponents(merchant: Merchant){
-        nameMerchant.configureHeadingLabel(title: merchant.name, fontSize: 24, textColor: .white)
+        nameMerchant.text = merchant.name
         phoneNumber = merchant.phoneNumber
-        ratingLabel.configureHeadingLabel(title: "\(merchant.rating)", fontSize: 14, textColor: .darkGray)
+        ratingLabel.text = String(merchant.rating)
     }
     
 }

@@ -97,6 +97,11 @@ class MainViewController: UIViewController {
             self.headerContainerView.placeMark = userPlacemark
         }
     }
+    var currentUser: User? {
+        didSet {
+            print("CURRENT USER : \(currentUser)")
+        }
+    }
     private let service = FirebaseService.shared
     
     // MARK: - Lifecycles
@@ -105,19 +110,14 @@ class MainViewController: UIViewController {
         locationHandler.delegate = self
         locationHandler.requestLocation()
         configureComponents()
-        configureUI()
-        authorizeUserLocation {
-            self.fetchMerchantsData()
-        }
+        authorizeUserLocationAndFetch()
+        fetchUser()
+        print("DEBUGS : DID LOAD")
     }
     
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        setPlacemark(withLocation: locationHandler.manager.location!) { (placeMark) in
-            self.userPlacemark = placeMark
-        }
-
         UIView.animate(withDuration: 0.35) {
             self.headerContainerView.frame.origin.y = 0
         }
@@ -141,7 +141,6 @@ class MainViewController: UIViewController {
         self.searchResultView.isHidden = true
         
         self.scrollView.addSubview(self.headerContainerView)
-        headerContainerView.user = User(id: "123", email: "abc", name: "User", profilePicture: "profile", reviews: [], favorites: [])
         
         self.scrollView.addSubview(collectionView) {
             self.collectionView.setAnchor(top: self.headerContainerView.bottomAnchor, right: self.view.rightAnchor, bottom: self.view.bottomAnchor, left: self.view.leftAnchor, paddingTop: 20)
@@ -152,21 +151,36 @@ class MainViewController: UIViewController {
         self.navigationController?.navigationBar.tintColor = .black
     }
     
-    private func authorizeUserLocation(completion: @escaping() -> Void) {
-        if CLLocationManager.authorizationStatus() == .denied || CLLocationManager.authorizationStatus() == .restricted {
+    private func authorizeUserLocationAndFetch() {
+        switch CLLocationManager.authorizationStatus() {
+        case .authorizedAlways,.authorizedWhenInUse:
+            self.fetchMerchantsData()
+            self.setPlacemark(withLocation: self.locationHandler.manager.location!) { (placeMark) in
+                self.userPlacemark = placeMark
+            }
+            configureUI()
+        case .denied :
             showSetting()
-        } else {
-            completion()
+        default:
+            locationHandler.requestLocation()
         }
     }
     
     private func showSetting() {
         let url = URL(string: UIApplication.openSettingsURLString)!
-        UIApplication.shared.open(url) { (_) in
-            
+        UIApplication.shared.open(url)
+    }
+    
+    func fetchUser() {
+        if let user = Auth.auth().currentUser {
+            service.fetchUser(userID: user.uid) { (user) in
+                DispatchQueue.main.async {
+                    self.currentUser = user
+                }
+            }
         }
     }
-
+    
     // MARK: - Collection View Configuration
     private func configureDiffableDataSource() {
         configureCollectionViewDataSource()
@@ -315,10 +329,12 @@ extension MainViewController: MainHeaderViewDelegate {
     }
     
     func avatarDidTap() {
-        service.authenticateUser(self) { (user) in
-            if let _ = user {
-                 self.navigationController?.pushViewController(ProfileViewController(), animated: true)
-            }
+        if let _ = Auth.auth().currentUser {
+             self.navigationController?.pushViewController(ProfileViewController(), animated: true)
+        } else {
+            let signinVC = UINavigationController(rootViewController: SignInViewController())
+            signinVC.modalPresentationStyle = .fullScreen
+            self.present(signinVC, animated: true, completion: nil)
         }
     }
     
@@ -369,7 +385,9 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
 extension MainViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("DEBUGS : search result selected \(tableViewDataSource?.itemIdentifier(for: indexPath))")
+        let merchantVC = MerchantViewController()
+        merchantVC.merchant = tableViewDataSource?.itemIdentifier(for: indexPath)
+        self.navigationController?.pushViewController(merchantVC, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
