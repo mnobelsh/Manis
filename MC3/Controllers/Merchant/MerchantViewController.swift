@@ -38,13 +38,6 @@ class MerchantViewController: UIViewController {
     }
     
     private var menuList: [Menu]?
-
-    private var checkDataSource: CollectionDataSource?
-    private var checkSnapshot:CollectionSnapshot?
-
-            print("DEBUGS MERCHANT VC : \(merchant)")
-        }
-    }
     
     private lazy var badges = [Badge]()
     private lazy var merchantNameLabel: UILabel = {
@@ -229,12 +222,6 @@ class MerchantViewController: UIViewController {
         }
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        guard let vc = navigationController?.viewControllers.first as? MainViewController else {return}
-        vc.hideNavbar()
-        self.navigationController?.navigationBar.tintColor = .black
-    }
 
     // MARK: - Helpers
     private func fetchMerchantReviews(completion: @escaping(Review) -> Void) {
