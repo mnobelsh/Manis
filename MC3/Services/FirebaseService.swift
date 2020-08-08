@@ -175,21 +175,21 @@ struct FirebaseService {
     
     private func getReviewModel(data: [String:Any], completion: @escaping(Review) ->Void) {
 
+        print("FETCH 1")
         guard let userID = data[Review.userIDField] as? String else {return}
         guard let merchantID = data[Review.merchantIDField] as? String else {return}
         guard let rating = data[Review.ratingField] as? Double else {return}
         guard let details = data[Review.detailsField] as? String else {return}
         guard let reviewID = data[Review.reviewIDField] as? String else {return}
-        guard let badgesData = data[Review.badgesField] as? [[String:Any]] else {return}
+        guard let badge = data[Merchant.badgeField] as? [String:Any] else {return}
         
-        var badges = [Badge]()
-        badgesData.forEach { (b) in
-            guard let type = b[Badge.typeField] as? Int else {return}
-            guard let count = b[Badge.countField] as? Int else {return}
-            badges.append(Badge(type: BadgeType(rawValue: type)!, count: count))
-        }
         
-        let review = Review(id: reviewID, userID: userID, merchantID: merchantID, rating: rating, badges: badges, details: details)
+        let greatTasteBadge = Badge(type: .greatTaste, count: badge[String(BadgeType.greatTaste.rawValue)] as! Int)
+        let cleanToolsBadge = Badge(type: .cleanTools, count: badge[String(BadgeType.cleanTools.rawValue)] as! Int)
+        let cleanIngredientsBadge = Badge(type: .cleanIngredients, count: badge[String(BadgeType.cleanIngredients.rawValue)] as! Int)
+         
+        
+        let review = Review(id: reviewID, userID: userID, merchantID: merchantID, rating: rating, badges: [greatTasteBadge,cleanToolsBadge,cleanIngredientsBadge], details: details)
         completion(review)
     }
     

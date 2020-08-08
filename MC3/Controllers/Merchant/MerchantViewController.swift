@@ -162,6 +162,7 @@ class MerchantViewController: UIViewController {
     
     private var reviews: [Review] = [Review]() {
         didSet {
+            print("REVIEWS : \(self.reviews)")
             self.updateSnapshot(self.reviews)
         }
     }
