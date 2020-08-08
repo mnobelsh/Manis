@@ -11,6 +11,7 @@ import ChameleonFramework
 
 class MerchantViewController: UIViewController {
     
+    // MARK: - Properties
     private var checkDataSource: CollectionDataSource?
     private var checkSnapshot:CollectionSnapshot?
     
@@ -182,7 +183,6 @@ class MerchantViewController: UIViewController {
     
     private var reviews: [Review] = [Review]() {
         didSet {
-            print("REVIEWS : \(self.reviews)")
             self.updateSnapshot(self.reviews)
         }
     }

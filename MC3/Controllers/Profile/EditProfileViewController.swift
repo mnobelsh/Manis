@@ -170,11 +170,19 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        guard let pickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage else { return }
-        //imageView.image = pickedImage
-        profileImage.image = pickedImage
+        if let pickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage, let data = pickedImage.pngData() {
+            
+            FirebaseService.shared.uploadUserProfileImage(forUserID: "uAidgM23qscUVc3JJqk6199fZT83", withImageData: data) { (error) in
+                
+                if let err = error {
+                    print(err.localizedDescription)
+                } else {
+                    self.dismiss(animated: true, completion: nil)
+                }
+                
+            }
+        }
         
-        dismiss(animated: true, completion: nil)
     }
 }
 
