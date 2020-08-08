@@ -12,6 +12,10 @@ import Geofirestore
 import CoreLocation
 
 let DB_REF = Firestore.firestore()
+let STORAGE_REF = Storage.storage()
+let REVIEWS_IMAGE_REF = STORAGE_REF.reference(withPath: "reviews")
+let USERS_IMAGE_REF = STORAGE_REF.reference(withPath: "users")
+let MERCHANT_IMAGE_REF = STORAGE_REF.reference(withPath: "merchants")
 let USER_REF = DB_REF.collection("users")
 let MERCHANT_REF = DB_REF.collection("merchants")
 let GEOFIRE_REF = DB_REF.collection("merchant_locations")
@@ -21,6 +25,7 @@ struct FirebaseService {
     
     static let shared = FirebaseService()
     let geofireStore = GeoFirestore(collectionRef: GEOFIRE_REF)
+    
     
     private func getMerchantModel(snapshotData data: [String:Any], completion: @escaping(Merchant) -> Void ) {
         guard let merchantID = data[Merchant.merchantIDField] as? String else {return}
@@ -344,6 +349,37 @@ struct FirebaseService {
         } catch let error as NSError {
             print(error.localizedDescription)
         }
+    }
+    
+    func uploadUserProfileImage(forUserID userID: String, withImageData imageData: Data, completion: @escaping(Error?) -> Void ) {
+        
+        let ref = USERS_IMAGE_REF.child(userID).child("profile.png")
+
+        let metaData = StorageMetadata()
+        metaData.contentType = "image/png"
+        
+        ref.putData(imageData, metadata: metaData) { (storageMetaData, error) in
+            if let err = error {
+                completion(err)
+            } else {
+                completion(nil)
+            }
+        }
+    }
+    
+    func downloadUserProfileImage(forUserID userID: String, completion: @escaping(UIImage?,Error?) -> Void) {
+        
+        let ref = USERS_IMAGE_REF.child(userID).child("profile.png")
+        
+        ref.getData(maxSize: 1 * 1024 * 1024) { data, error in
+          if let err = error {
+            completion(nil,err)
+          } else {
+            let image = UIImage(data: data!)
+            completion(image,nil)
+          }
+        }
+        
     }
 
     

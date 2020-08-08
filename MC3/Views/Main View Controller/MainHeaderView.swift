@@ -22,20 +22,13 @@ class MainHeaderView: UIView {
     var delegate: MainHeaderViewDelegate?
     static let height: CGFloat = 200
     
-    var user: User? {
-        didSet {
-            print("USER HEADER : \(user)")
-            self.avatarImageView.configureAvatarView(avatarImage: UIImage(named: user!.profilePicture), dimension: 65)
-            self.locationLabel.text = "Location"
-        }
-    }
     var placeMark: CLPlacemark? {
         didSet {
             self.locationLabel.text = placeMark?.locality
         }
     }
     
-    private lazy var avatarImageView: AvatarImageView = {
+    lazy var avatarImageView: AvatarImageView = {
         let avatarImage = AvatarImageView(frame: .zero)
         avatarImage.configureAvatarView(dimension: 65)
         

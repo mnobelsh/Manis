@@ -97,11 +97,9 @@ class MainViewController: UIViewController {
             self.headerContainerView.placeMark = userPlacemark
         }
     }
-    var currentUser: User? {
-        didSet {
-            print("CURRENT USER : \(currentUser)")
-        }
-    }
+    
+    var currentUser: User?
+    
     private let service = FirebaseService.shared
     
     // MARK: - Lifecycles
@@ -174,8 +172,13 @@ class MainViewController: UIViewController {
     func fetchUser() {
         if let user = Auth.auth().currentUser {
             service.fetchUser(userID: user.uid) { (user) in
-                DispatchQueue.main.async {
-                    self.currentUser = user
+                self.currentUser = user
+                self.service.downloadUserProfileImage(forUserID: user.id) { (image, error) in
+                    if let err = error {
+                        print(err.localizedDescription)
+                    } else {
+                        self.headerContainerView.avatarImageView.configureAvatarView(avatarImage: image, dimension: 65)
+                    }
                 }
             }
         }

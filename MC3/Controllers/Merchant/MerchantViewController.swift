@@ -11,15 +11,11 @@ import ChameleonFramework
 
 class MerchantViewController: UIViewController {
     
+    // MARK: - Properties
     private var checkDataSource: CollectionDataSource?
     private var checkSnapshot:CollectionSnapshot?
     
-    // MARK: - Properties
-    var merchant: Merchant? {
-        didSet {
-            print("DEBUGS MERCHANT VC : \(merchant)")
-        }
-    }
+    var merchant: Merchant?
     
     private lazy var badges = [Badge]()
     private lazy var merchantNameLabel: UILabel = {
@@ -162,7 +158,6 @@ class MerchantViewController: UIViewController {
     
     private var reviews: [Review] = [Review]() {
         didSet {
-            print("REVIEWS : \(self.reviews)")
             self.updateSnapshot(self.reviews)
         }
     }
