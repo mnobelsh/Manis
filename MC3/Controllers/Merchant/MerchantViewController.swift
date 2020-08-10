@@ -123,7 +123,7 @@ class MerchantViewController: UIViewController {
         print("DEBUGS stackMenu")
         var stacksArr = [UIStackView]()
         
-        for menu in menuList! {
+        for menu in merchant!.menu {
             let menuLabel = UILabel()
             menuLabel.configureTextLabel(title: menu.title, fontSize: 12, textColor: .black)
             let priceLabel = UILabel()
@@ -145,7 +145,7 @@ class MerchantViewController: UIViewController {
     private lazy var menuView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
-        let height: CGFloat = CGFloat(20 + (20 * menuList!.count))
+        let height: CGFloat = CGFloat(20 + (20 * merchant!.menu.count))
         view.setSize( height: height)
         view.configureShadow(shadowColor: .lightGray, radius: 3)
         view.configureRoundedCorners(corners: [.allCorners], radius: 8)
