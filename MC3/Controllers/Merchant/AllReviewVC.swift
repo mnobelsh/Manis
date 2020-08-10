@@ -37,7 +37,7 @@ class AllReviewVC: UIViewController {
         }
     }
     
-    private lazy var addButton: UIButton = {
+    lazy var addButton: UIButton = {
         let button = UIButton()
         button.configureButton(title: "Add Review", titleColor: .black, backgroundColor: UIColor(hexString: "9CE4E5"), cornerRadius: 8)
         button.setSize(width: 170, height: 50)

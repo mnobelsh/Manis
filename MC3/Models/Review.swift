@@ -20,6 +20,7 @@ struct Review: Hashable{
     static let badgesField = "badges"
     static let detailsField = "details"
     
+    let uuid = UUID().uuidString
     var id:String
     var userID:String
     var merchantID: String

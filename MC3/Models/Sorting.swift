@@ -18,7 +18,7 @@ struct Sorting: Hashable {
                                    Sorting(title: "Good Taste", type: .taste),
                                    Sorting(title: "Lowest Price", type: .lowestPrice),
                                    Sorting(title: "Hygiene", type: .hygiene)]
-    
+    let uuid = UUID().uuidString
     let title: String
     let type: SortingType
     

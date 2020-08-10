@@ -152,6 +152,7 @@ class ProfileViewController: UIViewController {
     @objc func reviewsButtonTapped(_ button: UIButton){
         print("Review Button Tapped")
         let allReviewVC = AllReviewVC()
+        allReviewVC.addButton.isHidden = true
         allReviewVC.userID = user!.id
         allReviewVC.allReviewsFor = .user
         self.navigationController?.pushViewController(allReviewVC, animated: true)

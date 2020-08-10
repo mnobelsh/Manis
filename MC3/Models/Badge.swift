@@ -17,6 +17,7 @@ struct Badge: Hashable {
     static let typeField = "type"
     static let countField = "count"
     
+    let uuid = UUID().uuidString
     var type: BadgeType
     var title: String
     var count: Int

@@ -13,6 +13,7 @@ struct Menu: Hashable {
     static let titleField = "title"
     static let priceField = "price"
     
+    let uuid = UUID().uuidString
     let title: String
     let price: Double
 }

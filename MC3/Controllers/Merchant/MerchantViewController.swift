@@ -344,6 +344,7 @@ class MerchantViewController: UIViewController {
     // MARK: - Targets
     @objc private func seeAllReviewButtonDidTap() {
         let allReviewVC = AllReviewVC()
+        allReviewVC.addButton.isHidden = false
         allReviewVC.merchantID = merchant!.id
         allReviewVC.allReviewsFor = .merchant
         self.navigationController?.pushViewController(allReviewVC, animated: true)
