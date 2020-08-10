@@ -19,28 +19,38 @@ class MerchantViewController: UIViewController {
     var merchant: Merchant? {
         didSet {
             addressLabel.text = merchant?.address
-            menuList = merchant?.menu
-            priceMin = menuList!.map { Int($0.price) }.min()
-            priceMax = menuList!.map { Int($0.price) }.max()
+            let priceMin = merchant!.menu.map { Int($0.price) }.min()
+            let priceMax = merchant!.menu.map { Int($0.price) }.max()
+            let priceMinStr = self.priceFormatter(price: priceMin ?? 0)
+            let priceMaxStr = self.priceFormatter(price: priceMax ?? 0)
+            if priceMin! == priceMax! {
+                priceRange.text = priceMinStr
+            } else {
+                priceRange.text = "\(priceMinStr) - \(priceMaxStr)"
+            }
+            
+            var badgesList = [Badge]()
+            merchant!.badges.forEach({ (badge) in
+                if badge.count > 0 {
+                    badgesList.append(badge)
+                }
+            })
+            
+            self.badges = badgesList
+            
+            FirebaseService.shared.downloadMerchantPhotos(forMerchantID: merchant!.id) { (image, error) in
+                
+            }
         }
     }
     
-    private var priceMin: Int?
-    private var priceMax: Int?
-    private func priceFormatter(price: Int) -> String {
-        let formatter = NumberFormatter()
-        formatter.locale = Locale(identifier: "id_ID")
-        formatter.groupingSeparator = "."
-        formatter.numberStyle = .decimal
-        if let formattedTipAmount = formatter.string(from: price as NSNumber) {
-           return "Rp " + formattedTipAmount
+    private var badges: [Badge] = [Badge]() {
+        didSet {
+            self.badgeCollectionView.reloadData()
         }
-        return "Rp 0"
     }
+    private var photos: [String]!
     
-    private var menuList: [Menu]?
-    
-    private lazy var badges = [Badge]()
     private lazy var merchantNameLabel: UILabel = {
         let label = UILabel()
         label.configureHeadingLabel(title: "Merchant Name", fontSize: 20, textColor: .black)
@@ -77,8 +87,7 @@ class MerchantViewController: UIViewController {
     }()
     private lazy var priceRange: UILabel = {
         let label = UILabel()
-        let priceRange = "\(self.priceFormatter(price: self.priceMin ?? 0)) - \(self.priceFormatter(price: self.priceMax ?? 0))"
-        label.configureTextLabel(title: priceRange, fontSize: 12, textColor: .black)
+        label.configureTextLabel(title: "Rp. 0", fontSize: 12, textColor: .black)
         return label
     }()
     private lazy var badgeLabel: UILabel = {
@@ -97,9 +106,9 @@ class MerchantViewController: UIViewController {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = .clear
         cv.translatesAutoresizingMaskIntoConstraints = false
-        cv.register(BadgeCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        cv.register(MerchantPropertiesCollectionViewCell.self, forCellWithReuseIdentifier: MerchantPropertiesCollectionViewCell.identifier)
         cv.delegate = self
-//        cv.dataSource = self
+        cv.dataSource = self
 
         return cv
     }()
@@ -167,7 +176,7 @@ class MerchantViewController: UIViewController {
         layout.sectionInset = UIEdgeInsets(top: .zero, left: 0, bottom: .zero, right: 8)
         
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.register(BadgeCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        cv.register(MerchantPropertiesCollectionViewCell.self, forCellWithReuseIdentifier: MerchantPropertiesCollectionViewCell.identifier)
         cv.showsHorizontalScrollIndicator = false
         cv.showsVerticalScrollIndicator = false
         cv.delegate = self
@@ -179,6 +188,14 @@ class MerchantViewController: UIViewController {
         let label = UILabel()
         label.configureHeadingLabel(title: "Reviews", fontSize: 20, textColor: .black)
         return label
+    }()
+    
+    private lazy var seeAllReviewButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("See all", for: .normal)
+        button.tintColor = .systemBlue
+        button.addTarget(self, action: #selector(seeAllReviewButtonDidTap), for: .touchUpInside)
+        return button
     }()
     
     private var reviews: [Review] = [Review]() {
@@ -308,6 +325,12 @@ class MerchantViewController: UIViewController {
             self.reviewLabel.setAnchor(top: self.photoCollectionView.bottomAnchor, left: self.view.leftAnchor, paddingTop: 16, paddingLeft: 16)
         }
         
+        //HERE
+        self.scrollView.addSubview(seeAllReviewButton) {
+            self.seeAllReviewButton.setAnchor(top: self.reviewLabel.topAnchor, right: self.photoCollectionView.rightAnchor, bottom: self.reviewLabel.bottomAnchor, paddingRight: 8)
+            self.seeAllReviewButton.setSize(width: 100)
+        }
+        
         self.scrollView.addSubview(collectionViewReview){
             self.collectionViewReview.setAnchor(top: self.reviewLabel.bottomAnchor ,right: self.view.rightAnchor, bottom: self.scrollView.bottomAnchor,left: self.view.leftAnchor)
             self.collectionViewReview.setSize( height: 1005)
@@ -331,10 +354,28 @@ class MerchantViewController: UIViewController {
         checkDataSource!.apply(checkSnapshot!, animatingDifferences: true, completion: nil)
     }
 
-    
     private func updateSnapshot(_ data: [Review]) {
         checkSnapshot!.appendItems(data, toSection: .main)
         checkDataSource!.apply(checkSnapshot!, animatingDifferences: true, completion: nil)
+    }
+    
+    private func priceFormatter(price: Int) -> String {
+        let formatter = NumberFormatter()
+        formatter.locale = Locale(identifier: "id_ID")
+        formatter.groupingSeparator = "."
+        formatter.numberStyle = .decimal
+        if let formattedTipAmount = formatter.string(from: price as NSNumber) {
+           return "Rp " + formattedTipAmount
+        }
+        return "Rp 0"
+    }
+    
+    // MARK: - Targets
+    @objc private func seeAllReviewButtonDidTap() {
+        let allReviewVC = AllReviewVC()
+        allReviewVC.merchantID = merchant!.id
+        allReviewVC.allReviewsFor = .merchant
+        self.navigationController?.pushViewController(allReviewVC, animated: true)
     }
 
 }
@@ -354,14 +395,6 @@ extension MerchantViewController: MerchantHeaderViewDelegate {
     }
 
     func favDidTapped() {
-//        FirebaseService.shared.fetchUser(userID: "wdwdw") { (user) in
-//            var fav = user.favorites
-//            fav.append(merchant!.id)
-//            FirebaseService.shared.updateUserData(userID: <#T##String#>, data: fav) { (error) in
-//                <#code#>
-//            }
-//        }
-
         print("DEBUGS: Fav is Tapped!")
     }
 }
@@ -369,19 +402,25 @@ extension MerchantViewController: MerchantHeaderViewDelegate {
 extension MerchantViewController: UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return badges.count
+        if collectionView == badgeCollectionView {
+            return badges.count
+        } else if collectionView == photoCollectionView {
+            return photos.count
+        }
+        return 0
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! BadgeCollectionViewCell
-        cell.backgroundColor = .white
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MerchantPropertiesCollectionViewCell.identifier, for: indexPath) as! MerchantPropertiesCollectionViewCell
 
         if collectionView == badgeCollectionView{
+            cell.badgeData = badges[indexPath.row]
             cell.configBadgeCV()
             return cell
+        } else if collectionView == photoCollectionView {
+            
         }
-        cell.configPhotoCV()
-        cell.photoData = badges[indexPath.row]
+        
         return cell
     }
 

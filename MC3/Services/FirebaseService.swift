@@ -11,6 +11,7 @@ import Firebase
 import Geofirestore
 import CoreLocation
 
+
 let DB_REF = Firestore.firestore()
 let STORAGE_REF = Storage.storage()
 let REVIEWS_IMAGE_REF = STORAGE_REF.reference(withPath: "reviews")
@@ -100,21 +101,21 @@ struct FirebaseService {
         }
     }
     
-    func fetchHighRatingMerchants(limitMerchants limit: Int? = nil, completion: @escaping(Merchant) -> Void) {
+    func fetchHighRatingMerchants(limitMerchants limit: Int? = nil, completion: @escaping(Merchant?,Error?) -> Void) {
         let lim: Int = limit == nil ? .max : limit!
         MERCHANT_REF.order(by: Merchant.ratingField, descending: true).limit(to: lim).addSnapshotListener { (querySnapshot, error) in
             if let err = error {
-                print("ERROR : ",err.localizedDescription)
-                return
-            }
-            guard let documents = querySnapshot?.documents else {return}
-            documents.forEach { (document) in
-                var data = document.data()
-                data[Merchant.merchantIDField] = document.documentID
-                self.getMerchantModel(snapshotData: data) { (merchant) in
-                    var m = merchant
-                    m.section = .rating
-                    completion(m)
+                completion(nil,err)
+            } else {
+                guard let documents = querySnapshot?.documents else {return}
+                documents.forEach { (document) in
+                    var data = document.data()
+                    data[Merchant.merchantIDField] = document.documentID
+                    self.getMerchantModel(snapshotData: data) { (merchant) in
+                        var m = merchant
+                        m.section = .rating
+                        completion(m,nil)
+                    }
                 }
             }
         }
@@ -241,6 +242,7 @@ struct FirebaseService {
                 guard let dataCollection = querySnapshot?.documents else {return}
                 dataCollection.forEach { (dataSnapshot) in
                     var reviewData = dataSnapshot.data()
+                    print("REVIEW USER FETCH : \(reviewData)")
                     reviewData[Review.reviewIDField] = dataSnapshot.documentID
                     self.getReviewModel(data: reviewData) { (review) in
                         completion(review,nil)
@@ -368,7 +370,6 @@ struct FirebaseService {
     }
     
     func downloadUserProfileImage(forUserID userID: String, completion: @escaping(UIImage?,Error?) -> Void) {
-        
         let ref = USERS_IMAGE_REF.child(userID).child("profile.png")
         
         ref.getData(maxSize: 1 * 1024 * 1024) { data, error in
@@ -380,6 +381,39 @@ struct FirebaseService {
           }
         }
         
+    }
+    
+    func downloadMerchantPhotos(forMerchantID merchantID: String, completion: @escaping(UIImage?,Error?) -> Void) {
+        
+        let ref = MERCHANT_IMAGE_REF.child(merchantID).child("photo1.jpg")
+        
+        ref.getData(maxSize: 1 * 1024 * 1024) { data, error in
+          if let err = error {
+            completion(nil,err)
+          } else {
+            let image = UIImage(data: data!)
+            completion(image,nil)
+          }
+        }
+
+        
+    }
+    
+    func fetchUserFavourites(userID: String, completion: @escaping(Merchant?,Error?) -> Void) {
+        USER_REF.document(userID).addSnapshotListener { (querySnapshot, error) in
+            if let err = error {
+                completion(nil,err)
+            } else {
+                if let snapshot = querySnapshot?.data() {
+                    guard let merchantID = snapshot[User.favoritesField] as? [String] else {return}
+                    merchantID.forEach { (id) in
+                        self.fetchMerchant(merchantID: id) { (merchant) in
+                            completion(merchant,nil)
+                        }
+                    }
+                }
+            }
+        }
     }
 
     

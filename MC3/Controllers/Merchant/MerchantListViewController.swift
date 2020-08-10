@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 typealias MerchantListDataSource = UICollectionViewDiffableDataSource<MerchantListCollectionViewSection, Merchant>
 typealias MerchantListSnapshot = NSDiffableDataSourceSnapshot<MerchantListCollectionViewSection, Merchant>
@@ -37,7 +38,8 @@ class MerchantListViewController: UIViewController {
     
     var merchantListType: MerchantListType? {
         didSet {
-            self.fetchMerchants(fetchType: merchantListType!, merchantLimit: 16)
+            let limit = self.merchantListType! == .favorites ? .max : 16
+            self.fetchMerchants(fetchType: merchantListType!, merchantLimit: limit)
         }
     }
     
@@ -98,10 +100,24 @@ class MerchantListViewController: UIViewController {
     private func fetchMerchants(fetchType type: MerchantListType, merchantLimit limit: Int) {
         switch type {
             case .favorites:
-                print("MERCHANTS :FAVORITES LIST")
+                if let user = Auth.auth().currentUser {
+                    service.fetchUserFavourites(userID: user.uid) { (merchant, error) in
+                        if let err = error {
+                            print(err.localizedDescription)
+                        } else {
+                            guard let merchant = merchant else {return}
+                            self.merchantList.append(merchant)
+                        }
+                    }
+                }
             case .highRating:
-                service.fetchHighRatingMerchants(limitMerchants: limit) { (merchant) in
-                    self.merchantList.append(merchant)
+                service.fetchHighRatingMerchants(limitMerchants: limit) { (merchant, error) in
+                    if let err = error {
+                        print(err.localizedDescription)
+                    } else {
+                        guard let merchant = merchant else {return}
+                        self.merchantList.append(merchant)
+                    }
                 }
         }
     }

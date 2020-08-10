@@ -27,9 +27,10 @@ class MainViewController: UIViewController {
     
     private var nearbyMerchants: [Merchant] = [Merchant]()  {
         didSet {
-            let userLocation = locationHandler.manager.location!
-            self.nearbyMerchants = self.nearbyMerchants.sorted{  (merchant1, merchant2) -> Bool in
-                merchant1.location.distance(from: userLocation) < merchant2.location.distance(from: userLocation)
+            if let userLocation = locationHandler.manager.location {
+                self.nearbyMerchants = self.nearbyMerchants.sorted{  (merchant1, merchant2) -> Bool in
+                    merchant1.location.distance(from: userLocation) < merchant2.location.distance(from: userLocation)
+                }
             }
             updateCollectionViewSnapshot(merchantData: self.nearbyMerchants, forSection: .nearby)
         }
@@ -110,6 +111,7 @@ class MainViewController: UIViewController {
         configureComponents()
         authorizeUserLocationAndFetch()
         fetchUser()
+        
         print("DEBUGS : DID LOAD")
     }
     
@@ -157,10 +159,7 @@ class MainViewController: UIViewController {
     private func authorizeUserLocationAndFetch() {
         switch CLLocationManager.authorizationStatus() {
         case .authorizedAlways,.authorizedWhenInUse:
-            self.fetchMerchantsData()
-            self.setPlacemark(withLocation: self.locationHandler.manager.location!) { (placeMark) in
-                self.userPlacemark = placeMark
-            }
+            self.fetchMerchantsDataAndUpdateLocation()
             configureUI()
         case .denied :
             showSetting()
@@ -182,10 +181,13 @@ class MainViewController: UIViewController {
                     if let err = error {
                         print(err.localizedDescription)
                     } else {
+                        print("IMAGE : \(image)")
                         self.headerContainerView.avatarImageView.configureAvatarView(avatarImage: image, dimension: 65)
                     }
                 }
             }
+        } else {
+            self.headerContainerView.avatarImageView.configureAvatarView(dimension: 65)
         }
     }
     
@@ -271,18 +273,30 @@ class MainViewController: UIViewController {
 
     
     // MARK: - Fetch Data
-    private func fetchNearbyMerchants() {
-        service.fetchNearbyMerchants(location: locationHandler.manager.location!, withRadius: 0.2) { (merchant, merchantLocation) in
-            DispatchQueue.main.async {
-                self.nearbyMerchants.append(merchant)
+    private func fetchMerchantsDataAndUpdateLocation() {
+        if let location = locationHandler.manager.location {
+            service.fetchNearbyMerchants(location: location, withRadius: 0.15) { (merchant, merchantLocation) in
+                DispatchQueue.main.async {
+                    self.nearbyMerchants.append(merchant)
+                }
+            }
+            self.setPlacemark(withLocation: location) { (placeMark) in
+                self.userPlacemark = placeMark
             }
         }
+        fetchHighRatingMerchants(limitMerchants: 5)
+        fetchTrendingMerchants(limitMerchants: 3)
     }
     
     private func fetchHighRatingMerchants(limitMerchants limit: Int? = nil) {
-        service.fetchHighRatingMerchants(limitMerchants: limit) { (merchant) in
-            DispatchQueue.main.async {
-                self.highRatingMerchants.append(merchant)
+        service.fetchHighRatingMerchants(limitMerchants: limit) { (merchant, error)  in
+            if let err = error {
+                print(err.localizedDescription)
+            } else {
+                DispatchQueue.main.async {
+                    guard let merchant = merchant else {return}
+                    self.highRatingMerchants.append(merchant)
+                }
             }
         }
     }
@@ -293,12 +307,6 @@ class MainViewController: UIViewController {
                 self.trendingMerchants.append(merchant)
             }
         }
-    }
-    
-    private func fetchMerchantsData() {
-        fetchNearbyMerchants()
-        fetchHighRatingMerchants(limitMerchants: 5)
-        fetchTrendingMerchants(limitMerchants: 3)
     }
     
     private func searchMerchantsByName(merchantName: String) {
@@ -338,7 +346,9 @@ extension MainViewController: MainHeaderViewDelegate {
     
     func avatarDidTap() {
         if let _ = Auth.auth().currentUser {
-             self.navigationController?.pushViewController(ProfileViewController(), animated: true)
+            let profileVC = ProfileViewController()
+            profileVC.user = self.currentUser
+            self.navigationController?.pushViewController(profileVC, animated: true)
         } else {
             let signinVC = UINavigationController(rootViewController: SignInViewController())
             signinVC.modalPresentationStyle = .fullScreen
@@ -423,9 +433,6 @@ extension MainViewController: UISearchBarDelegate {
         self.scrollView.bringSubviewToFront(self.headerContainerView)
     }
     
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        print("CANCEL")
-    }
     
 }
 

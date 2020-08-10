@@ -10,13 +10,7 @@ import UIKit
 
 class ProfileViewController: UIViewController {
 
-    var user: User? {
-        didSet {
-            if let user = user {
-                nameLabel.text = user.name
-            }
-        }
-    }
+    var user: User?
     
     private lazy var profileImage: UIImageView = {
         let img = UIImageView()
@@ -146,23 +140,21 @@ class ProfileViewController: UIViewController {
         nameLabel.font = UIFont.systemFont(ofSize: 24)
         nameLabel.textColor = .white
         nameLabel.setCenterXYAnchor(in: self.view)
-        
-//        self.view.addSubview(emailLabel)
-//        emailLabel.font = UIFont.systemFont(ofSize: 24)
-//        emailLabel.textColor = .white
-//        emailLabel.setAnchor(top: nameLabel.bottomAnchor, paddingTop: 30)
-//        emailLabel.setCenterXAnchor(in: self.view)
     }
 
     
     @objc func favButtonTapped(_ button: UIButton){
-        print("Favorite Button Tapped")
+        let merchantListVC = MerchantListViewController()
+        merchantListVC.merchantListType = .favorites
+        self.navigationController?.pushViewController(merchantListVC, animated: true)
     }
     
     @objc func reviewsButtonTapped(_ button: UIButton){
         print("Review Button Tapped")
-        let ReviewVC = AllReviewVC()
-        self.navigationController?.pushViewController(ReviewVC, animated: true)
+        let allReviewVC = AllReviewVC()
+        allReviewVC.userID = user!.id
+        allReviewVC.allReviewsFor = .user
+        self.navigationController?.pushViewController(allReviewVC, animated: true)
     }
     
     @objc func editProfileButtonTapped(_ button: UIButton){
@@ -173,6 +165,8 @@ class ProfileViewController: UIViewController {
     
     @objc func logoutButtonTapped(_ button: UIButton){
         FirebaseService.shared.signOut {
+            guard let vc = self.navigationController?.viewControllers.first as? MainViewController else {return}
+            vc.fetchUser()
             self.navigationController?.popToRootViewController(animated: true)
         }
     }

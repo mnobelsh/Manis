@@ -9,12 +9,30 @@
 import UIKit
 
 class MerchantPropertiesCollectionViewCell: UICollectionViewCell {
+    
+    static let identifier = UUID().uuidString
         
     var badgeData: Badge? {
         didSet{
-            print("BADGE CELL : \(self.badgeData)")
+            if let badgeData = badgeData {
+                
+                switch badgeData.type {
+                    case .cleanIngredients:
+                        self.badgeImage.image = #imageLiteral(resourceName: "bigBadge1")
+                    case .cleanTools:
+                        self.badgeImage.image = #imageLiteral(resourceName: "bigBadge3")
+                    case .greatTaste:
+                        self.badgeImage.image = #imageLiteral(resourceName: "bigBadge2")
+                }
+                
+                self.badgeLabel.text = badgeData.title
+                self.badgeCount.text = String(badgeData.count)
+                
+            }
         }
     }
+    
+    var photoData: UIImage!
 
     
     private var badgeImage: UIImageView = {
@@ -31,14 +49,14 @@ class MerchantPropertiesCollectionViewCell: UICollectionViewCell {
 
     private var badgeLabel: UILabel = {
         let label = UILabel()
-        label.configureTextLabel(title: "Great Taste", fontSize: 12, textColor: .black)
+        label.configureTextLabel(title: "Badge Title", fontSize: 12, textColor: .black)
         label.setSize(height: 15)
         return label
     }()
 
     private var badgeCount: UILabel = {
         let label = UILabel()
-        label.configureTextLabel(title: "25", fontSize: 12, textColor: .black)
+        label.configureTextLabel(title: "0", fontSize: 12, textColor: .black)
         label.setSize(height: 15)
         return label
     }()
@@ -70,6 +88,7 @@ class MerchantPropertiesCollectionViewCell: UICollectionViewCell {
     }
     
     func configBadgeCV(){
+        self.backgroundColor = .clear
         self.addSubview(badgeImage){
             self.badgeImage.setAnchor(top: self.topAnchor,paddingTop: 2)
             self.badgeImage.setCenterXAnchor(in: self)
