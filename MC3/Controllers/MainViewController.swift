@@ -25,13 +25,15 @@ class MainViewController: UIViewController {
     private var tableViewDataSource: SearchResultTableViewDataSource?
     private var tableViewSnapShot: SearchResultSnapshot?
     
+    private var testLocation = LocationHandler.testLocation
+    
     private var nearbyMerchants: [Merchant] = [Merchant]()  {
         didSet {
-            if let userLocation = locationHandler.manager.location {
+//            if let userLocation = locationHandler.manager.location {
                 self.nearbyMerchants = self.nearbyMerchants.sorted{  (merchant1, merchant2) -> Bool in
-                    merchant1.location.distance(from: userLocation) < merchant2.location.distance(from: userLocation)
+                    merchant1.location.distance(from: testLocation) < merchant2.location.distance(from: testLocation)
                 }
-            }
+//            }
             updateCollectionViewSnapshot(merchantData: self.nearbyMerchants, forSection: .nearby)
         }
     }
@@ -112,7 +114,7 @@ class MainViewController: UIViewController {
         authorizeUserLocationAndFetch()
         fetchUser()
         
-        print("DEBUGS : DID LOAD")
+        
     }
     
 
@@ -137,6 +139,7 @@ class MainViewController: UIViewController {
         let hideKeyboardTapGesture = UITapGestureRecognizer(target: self, action: #selector(hideSearchBarKeyboard))
         hideKeyboardTapGesture.cancelsTouchesInView = false
         self.view.addGestureRecognizer(hideKeyboardTapGesture)
+        
     }
     
     func configureUI() {
@@ -166,6 +169,7 @@ class MainViewController: UIViewController {
         default:
             locationHandler.requestLocation()
         }
+        
     }
     
     private func showSetting() {
@@ -181,7 +185,6 @@ class MainViewController: UIViewController {
                     if let err = error {
                         print(err.localizedDescription)
                     } else {
-                        print("IMAGE : \(image)")
                         self.headerContainerView.avatarImageView.configureAvatarView(avatarImage: image, dimension: 65)
                     }
                 }
@@ -274,16 +277,16 @@ class MainViewController: UIViewController {
     
     // MARK: - Fetch Data
     private func fetchMerchantsDataAndUpdateLocation() {
-        if let location = locationHandler.manager.location {
-            service.fetchNearbyMerchants(location: location, withRadius: 0.15) { (merchant, merchantLocation) in
+//        if let location = locationHandler.manager.location {
+            service.fetchNearbyMerchants(location: testLocation, withRadius: 0.15) { (merchant, merchantLocation) in
                 DispatchQueue.main.async {
                     self.nearbyMerchants.append(merchant)
                 }
             }
-            self.setPlacemark(withLocation: location) { (placeMark) in
+            self.setPlacemark(withLocation: testLocation) { (placeMark) in
                 self.userPlacemark = placeMark
             }
-        }
+//        }
         fetchHighRatingMerchants(limitMerchants: 5)
         fetchTrendingMerchants(limitMerchants: 3)
     }

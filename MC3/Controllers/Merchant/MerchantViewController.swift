@@ -187,7 +187,6 @@ class MerchantViewController: UIViewController {
     
     private var reviews: [Review] = [Review]() {
         didSet {
-            print("MERCHANT REVIES FIX : \(self.reviews)")
             self.updateSnapshot(self.reviews)
         }
     }
@@ -371,7 +370,7 @@ extension MerchantViewController: MerchantHeaderViewDelegate {
     }
 
     func favDidTapped() {
-        print("DEBUGS: Fav is Tapped!")
+  
     }
 }
 

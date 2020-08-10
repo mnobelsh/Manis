@@ -19,6 +19,8 @@ class LocationHandler: NSObject, CLLocationManagerDelegate {
     var manager: CLLocationManager!
     var delegate: LocationHandlerDelegate?
     
+    static let testLocation = CLLocation(latitude: -6.24200439453125, longitude: 106.90338159547089)
+    
     override init() {
         super.init()
         self.manager = CLLocationManager()
