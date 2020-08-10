@@ -109,47 +109,35 @@ class MerchantViewController: UIViewController {
         label.configureHeadingLabel(title: "Menu", fontSize: 20, textColor: .black)
         return label
     }()
+    
+    private lazy var stackMenu: UIStackView = {
+        print("DEBUGS stackMenu")
+        var stacksArr = [UIStackView]()
+        
+        for menu in menuList! {
+            let menuLabel = UILabel()
+            menuLabel.configureTextLabel(title: menu.title, fontSize: 12, textColor: .black)
+            let priceLabel = UILabel()
+            priceLabel.configureTextLabel(title: priceFormatter(price: Int(menu.price)), fontSize: 12, textColor: .black)
+            
+            let stack = UIStackView(arrangedSubviews: [menuLabel, priceLabel])
+            stack.axis = .horizontal
+            stack.spacing = 250
+            stacksArr.append(stack)
+        }
 
-    private lazy var menu1: UILabel = {
-        let label = UILabel()
-        label.configureTextLabel(title: "es cendol", fontSize: 12, textColor: .black)
-        return label
-    }()
-
-    private lazy var menu2: UILabel = {
-        let label = UILabel()
-        label.configureTextLabel(title: "es cendol + Jelly", fontSize: 12, textColor: .black)
-        return label
-    }()
-
-    private lazy var menu3: UILabel = {
-        let label = UILabel()
-        label.configureTextLabel(title: "es cendol ++", fontSize: 12, textColor: .black)
-        return label
-    }()
-
-    private lazy var harga1: UILabel = {
-        let label = UILabel()
-        label.configureTextLabel(title: "Rp 10.000", fontSize: 12, textColor: .black)
-        return label
-    }()
-
-    private lazy var harga2: UILabel = {
-        let label = UILabel()
-        label.configureTextLabel(title: "Rp 15.000", fontSize: 12, textColor: .black)
-        return label
-    }()
-
-    private lazy var harga3: UILabel = {
-        let label = UILabel()
-        label.configureTextLabel(title: "Rp 18.000", fontSize: 12, textColor: .black)
-        return label
+        let stack = UIStackView(arrangedSubviews: stacksArr)
+        stack.axis = .vertical
+        stack.distribution = .fillEqually
+        stack.spacing = 4
+        return stack
     }()
 
     private lazy var menuView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
-        view.setSize( height: 80)
+        let height: CGFloat = CGFloat(20 + (20 * menuList!.count))
+        view.setSize( height: height)
         view.configureShadow(shadowColor: .lightGray, radius: 3)
         view.configureRoundedCorners(corners: [.allCorners], radius: 8)
         return view
@@ -272,26 +260,9 @@ class MerchantViewController: UIViewController {
 
         self.scrollView.addSubview(menuView){
             self.menuView.setAnchor(top: self.menuLabel.bottomAnchor, right:self.view.rightAnchor, left: self.view.leftAnchor, paddingTop: 4, paddingRight: 16, paddingLeft: 16)
-            self.menuView.addSubview(self.menu1){
-                self.menu1.setAnchor(top: self.menuView.topAnchor, left: self.menuView.leftAnchor, paddingTop: 8, paddingLeft: 8)
+            self.menuView.addSubview(self.stackMenu){
+                self.stackMenu.setAnchor(top: self.menuView.topAnchor, left: self.menuView.leftAnchor, paddingTop: 8, paddingLeft: 8)
             }
-            self.menuView.addSubview(self.harga1){
-                self.harga1.setAnchor(top: self.menuView.topAnchor, right: self.menuView.rightAnchor, paddingTop: 8, paddingRight: 8)
-            }
-
-            self.menuView.addSubview(self.menu2){
-                    self.menu2.setAnchor(top: self.menu1.topAnchor, left: self.menuView.leftAnchor, paddingTop: 24, paddingLeft: 8)
-                }
-            self.menuView.addSubview(self.harga2){
-                self.harga2.setAnchor(top: self.menu1.topAnchor, right: self.menuView.rightAnchor, paddingTop: 24, paddingRight: 8)
-            }
-
-            self.menuView.addSubview(self.menu3){
-                   self.menu3.setAnchor(top: self.menu2.topAnchor, left: self.menuView.leftAnchor, paddingTop: 24, paddingLeft: 8)
-               }
-           self.menuView.addSubview(self.harga3){
-               self.harga3.setAnchor(top: self.menu2.topAnchor, right: self.menuView.rightAnchor, paddingTop: 24, paddingRight: 8)
-           }
         }
 
         self.scrollView.addSubview(photoLabel){
