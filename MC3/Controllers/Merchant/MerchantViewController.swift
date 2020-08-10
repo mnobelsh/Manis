@@ -120,7 +120,6 @@ class MerchantViewController: UIViewController {
     }()
     
     private lazy var stackMenu: UIStackView = {
-        print("DEBUGS stackMenu")
         var stacksArr = [UIStackView]()
         
         for menu in merchant!.menu {
@@ -188,6 +187,7 @@ class MerchantViewController: UIViewController {
     
     private var reviews: [Review] = [Review]() {
         didSet {
+            print("MERCHANT REVIES FIX : \(self.reviews)")
             self.updateSnapshot(self.reviews)
         }
     }
@@ -212,10 +212,12 @@ class MerchantViewController: UIViewController {
         configDatasource()
         configSnapshot()
         headerView.configureComponents(merchant: merchant!)
+
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        self.reviews = [Review]()
         fetchMerchantReviews { (review) in
             DispatchQueue.main.async {
                 self.reviews.append(review)
@@ -326,8 +328,10 @@ class MerchantViewController: UIViewController {
     }
 
     private func updateSnapshot(_ data: [Review]) {
-        checkSnapshot!.appendItems(data, toSection: .main)
-        checkDataSource!.apply(checkSnapshot!, animatingDifferences: true, completion: nil)
+        if !data.isEmpty {
+            checkSnapshot!.appendItems(data, toSection: .main)
+            checkDataSource!.apply(checkSnapshot!, animatingDifferences: true, completion: nil)
+        }
     }
     
     private func priceFormatter(price: Int) -> String {

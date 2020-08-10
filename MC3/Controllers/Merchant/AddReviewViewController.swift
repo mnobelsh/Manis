@@ -26,6 +26,17 @@ class AddReviewViewController: UIViewController, UIImagePickerControllerDelegate
         label.configureCustomLabel(title: "Very bad", fontType: "Book", fontSize: 12, textColor: .black)
         return label
     }()
+    
+    var merchantID: String? {
+        didSet {
+            guard let id = merchantID else {return}
+            FirebaseService.shared.fetchMerchant(merchantID: id) { (merchant) in
+                self.merchant = merchant
+            }
+        }
+    }
+    
+    private var merchant: Merchant?
 
     var starsButton: UIButton!
     private var stars: [UIButton]!
@@ -362,18 +373,16 @@ class AddReviewViewController: UIViewController, UIImagePickerControllerDelegate
         
     }
     
-    @objc func saveButtonTapped(_ button: UIButton){
-        let backVC = AllReviewVC()
-        self.navigationController?.pushViewController(backVC, animated: true)
-        
-        let badges : [[String:Any]] = [
-            [Badge.typeField : BadgeType.cleanIngredients.rawValue, Badge.countField : badge3Count],
-            [Badge.typeField : BadgeType.cleanTools.rawValue, Badge.countField : badge2Count],
-            [Badge.typeField : BadgeType.greatTaste.rawValue, Badge.countField : badge1Count]
+    @objc func saveButtonTapped(_ button: UIButton){        
+        guard let merchant = merchant else {return}
+        let badges : [String:Any] = [
+            String(BadgeType.cleanIngredients.rawValue) : badge3Count,
+            String(BadgeType.cleanTools.rawValue) : badge2Count,
+            String(BadgeType.greatTaste.rawValue) : badge1Count
         ]
         let reviewData: [String:Any] = [
             Review.userIDField : Auth.auth().currentUser!.uid,
-            Review.merchantIDField : "E129BF511CB4",
+            Review.merchantIDField : merchant.id,
             Review.ratingField : userRating,
             Review.detailsField : commentView.text!,
             Review.badgesField : badges
@@ -383,9 +392,50 @@ class AddReviewViewController: UIViewController, UIImagePickerControllerDelegate
             if let err = error {
                 print(err.localizedDescription)
             } else {
-//                FirebaseService.shared.updateMerchantData(merchantID: "E129BF511CB4", data: [String : Any]) { () in
-//                    <#code#>
-//                }
+                
+                var ingredientsCount = merchant.badges.first { (badge) -> Bool in
+                    badge.type == .cleanIngredients
+                }!.count
+                var toolsCount = merchant.badges.first { (badge) -> Bool in
+                    badge.type == .cleanTools
+                }!.count
+                var tasteCount = merchant.badges.first { (badge) -> Bool in
+                    badge.type == .greatTaste
+                }!.count
+                
+                badges.forEach { (badgeData) in
+                    guard let badgeCount = badgeData.value as? Int else {return}
+                    let rawValue = Int(badgeData.key)!
+                    let badgeType = BadgeType(rawValue: rawValue)!
+                    switch badgeType {
+                        case .cleanIngredients:
+                            if badgeCount > 0 {
+                                ingredientsCount += 1
+                            }
+                        
+                        case .cleanTools:
+                            if badgeCount > 0 {
+                                toolsCount += 1
+                            }
+                            
+                        case .greatTaste:
+                            if badgeCount > 0 {
+                                tasteCount += 1
+                            }
+                    }
+                }
+
+                let updatedData = [
+                    String(BadgeType.cleanIngredients.rawValue) : ingredientsCount,
+                    String(BadgeType.cleanTools.rawValue) : toolsCount,
+                    String(BadgeType.greatTaste.rawValue) : tasteCount
+                ]
+                
+
+                FirebaseService.shared.updateMerchantData(merchantID: merchant.id, data: updatedData) { (error) in
+                    print("SUCCESS ADD NEW REVIEW")
+                    self.navigationController?.popToRootViewController(animated: true)
+                }
             }
         }
 //        self.navigationController?.dismiss(animated: true, completion: nil)

@@ -26,13 +26,21 @@ class AllReviewVC: UIViewController {
     
     var allReviewsFor: AllReviewSourceType? {
         didSet {
+            configAllneededforCV()
             guard let allreviewType = allReviewsFor else {return}
             self.fetchReviews(reviewsFor: allreviewType)
+            
+            if allreviewType == .merchant {
+                title = "Merchant's Reviews"
+            } else {
+                title = "All Reviews"
+            }
         }
     }
     
     private var reviews: [Review] = [Review]() {
         didSet {
+             
             self.updateSnapshot(data: self.reviews)
         }
     }
@@ -57,14 +65,12 @@ class AllReviewVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configAllneededforCV()
         configUI()
     }
 
     func configUI(){
         view.backgroundColor = .white
-        
-        title = "All Review"
+    
         self.view.addSubview(collectionView) {
             self.collectionView.setAnchor(top: self.view.safeAreaLayoutGuide.topAnchor, right: self.view.rightAnchor, bottom: self.view.safeAreaLayoutGuide.bottomAnchor, left: self.view.leftAnchor)
         }
@@ -117,8 +123,10 @@ class AllReviewVC: UIViewController {
             if let err = error {
                 print(err.localizedDescription)
             } else {
+                DispatchQueue.main.async {
                     guard let review = review else {return}
                     self.reviews.append(review)
+                }
             }
         }
     }
@@ -132,7 +140,6 @@ class AllReviewVC: UIViewController {
                 DispatchQueue.main.async {
                     guard let review = review else {return}
                     self.reviews.append(review)
-                
                 }
             }
         }
@@ -141,6 +148,7 @@ class AllReviewVC: UIViewController {
     
     @objc func addButtonDidTapped(_ Button: UIButton){
         let addReviewVC = AddReviewViewController()
+        addReviewVC.merchantID = self.merchantID
         self.navigationController?.pushViewController(addReviewVC, animated: true)
     }
     
