@@ -425,11 +425,11 @@ class AddReviewViewController: UIViewController, UIImagePickerControllerDelegate
                     }
                 }
 
-                let updatedData = [
+                let updatedData = [Review.badgesField : [
                     String(BadgeType.cleanIngredients.rawValue) : ingredientsCount,
                     String(BadgeType.cleanTools.rawValue) : toolsCount,
                     String(BadgeType.greatTaste.rawValue) : tasteCount
-                ]
+                ]]
                 
 
                 FirebaseService.shared.updateMerchantData(merchantID: merchant.id, data: updatedData) { (error) in
