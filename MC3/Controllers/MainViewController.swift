@@ -9,7 +9,7 @@
 import UIKit
 import CoreLocation
 import MapKit
-import Firebase
+import FirebaseAuth
 
 typealias MainCollectionDataSource = UICollectionViewDiffableDataSource<MainCollectionViewSection,Merchant>
 typealias MainCollectionSnapshot = NSDiffableDataSourceSnapshot<MainCollectionViewSection,Merchant>
@@ -278,15 +278,22 @@ class MainViewController: UIViewController {
     // MARK: - Fetch Data
     private func fetchMerchantsDataAndUpdateLocation() {
 //        if let location = locationHandler.manager.location {
-            service.fetchNearbyMerchants(location: testLocation, withRadius: 0.15) { (merchant, merchantLocation) in
-                DispatchQueue.main.async {
-                    self.nearbyMerchants.append(merchant)
+            service.fetchNearbyMerchants(from: testLocation, withMaximumDistance: 1500) { (merchant, error) in
+                if let err = error {
+                    print(err.localizedDescription)
+                } else {
+                    DispatchQueue.main.async {
+                        guard let merchant = merchant else {return}
+                        self.nearbyMerchants.append(merchant)
+                    }
                 }
             }
+        
             self.setPlacemark(withLocation: testLocation) { (placeMark) in
                 self.userPlacemark = placeMark
             }
 //        }
+        
         fetchHighRatingMerchants(limitMerchants: 5)
         fetchTrendingMerchants(limitMerchants: 3)
     }
@@ -305,8 +312,9 @@ class MainViewController: UIViewController {
     }
     
     private func fetchTrendingMerchants(limitMerchants limit: Int? = nil) {
-        service.fetchTrendingMerchants(limitMerchants: limit) { (merchant) in
+        service.fetchTrendingMerchants(limitMerchants: limit) { (merchant,error) in
             DispatchQueue.main.async {
+                guard let merchant = merchant else {return}
                 self.trendingMerchants.append(merchant)
             }
         }
@@ -314,8 +322,9 @@ class MainViewController: UIViewController {
     
     private func searchMerchantsByName(merchantName: String) {
         var merchants = [Merchant]()
-        service.fetchMerchants { (merchant) in
+        service.fetchMerchants { (merchant,error) in
             DispatchQueue.main.async {
+                    guard let merchant = merchant else {return}
                     if merchant.name.lowercased().contains(merchantName) {
                     merchants.append(merchant)
                     self.searchResultMerchants = merchants

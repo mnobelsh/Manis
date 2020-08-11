@@ -23,6 +23,9 @@ struct Merchant: Hashable {
     static let ratingField = "rating"
     static let merchantIDField = "merchantID"
     
+    static let latitudeField = "lat"
+    static let longitudeField = "lon"
+    
     let uuid = UUID().uuidString
     var id: String
     var name: String

@@ -35,7 +35,6 @@ class MerchantCollectionCell: UICollectionViewCell {
                 case .rating:
                     ratingView.isHidden = false
                     distanceLabel.isHidden = true
-
                 case .trendings:
                     distanceLabel.isHidden = true
                     ratingView.isHidden = true

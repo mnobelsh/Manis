@@ -7,28 +7,28 @@
 //
 
 import Foundation
-import Firebase
-import Geofirestore
+import FirebaseFirestore
+import FirebaseStorage
+import FirebaseAuth
 import CoreLocation
 
 
-let DB_REF = Firestore.firestore()
 let STORAGE_REF = Storage.storage()
+let DB_REF = Firestore.firestore()
 let REVIEWS_IMAGE_REF = STORAGE_REF.reference(withPath: "reviews")
 let USERS_IMAGE_REF = STORAGE_REF.reference(withPath: "users")
 let MERCHANT_IMAGE_REF = STORAGE_REF.reference(withPath: "merchants")
 let USER_REF = DB_REF.collection("users")
 let MERCHANT_REF = DB_REF.collection("merchants")
-let GEOFIRE_REF = DB_REF.collection("merchant_locations")
+let LOCATION_REF = DB_REF.collection("merchant_locations")
 let REVIEW_REF = DB_REF.collection("reviews")
 
 struct FirebaseService {
     
     static let shared = FirebaseService()
-    let geofireStore = GeoFirestore(collectionRef: GEOFIRE_REF)
     
     
-    private func getMerchantModel(snapshotData data: [String:Any], completion: @escaping(Merchant) -> Void ) {
+    private func getMerchantModel(snapshotData data: [String:Any], completion: @escaping(Merchant?,Error?) -> Void ) {
         guard let merchantID = data[Merchant.merchantIDField] as? String else {return}
         guard let address = data[Merchant.addressField] as? String else {return}
         guard let name = data[Merchant.nameField] as? String else {return}
@@ -38,7 +38,6 @@ struct FirebaseService {
         guard let phoneNumber = data[Merchant.phoneNumberField] as? String else {return}
         guard let rating = data[Merchant.ratingField] as? Double else {return}
         
-
         let greatTasteBadge = Badge(type: .greatTaste, count: badge[String(BadgeType.greatTaste.rawValue)] as! Int)
         let cleanToolsBadge = Badge(type: .cleanTools, count: badge[String(BadgeType.cleanTools.rawValue)] as! Int)
         let cleanIngredientsBadge = Badge(type: .cleanIngredients, count: badge[String(BadgeType.cleanIngredients.rawValue)] as! Int)
@@ -52,30 +51,32 @@ struct FirebaseService {
             merchantMenu.append(Menu(title: title, price: price))
         }
         
-        fetchMerchantLocation(merchantID: merchantID) { (location) in
-            let merchant = Merchant(id: merchantID, name: name, address: address, lovedBy: lovedBy, menu: merchantMenu, badges: [greatTasteBadge,cleanToolsBadge,cleanIngredientsBadge], phoneNumber: phoneNumber, rating: rating, location: location)
-            completion(merchant)
+        fetchMerchantLocation(merchantID: merchantID) { (location, error)  in
+            if let err = error {
+                completion(nil,err)
+            } else {
+                let merchant = Merchant(id: merchantID, name: name, address: address, lovedBy: lovedBy, menu: merchantMenu, badges: [greatTasteBadge,cleanToolsBadge,cleanIngredientsBadge], phoneNumber: phoneNumber, rating: rating, location: location!)
+                completion(merchant,nil)
+            }
         }
     }
     
-    private func fetchMerchantLocation(merchantID: String, completion: @escaping(CLLocation) -> Void ) {
-        GEOFIRE_REF.document(merchantID).addSnapshotListener { (documentSnapshot, error) in
+    private func fetchMerchantLocation(merchantID: String, completion: @escaping(CLLocation?, Error?) -> Void ) {
+        LOCATION_REF.document(merchantID).addSnapshotListener { (documentSnapshot, error) in
             if let err = error {
-                print("ERROR : ",err.localizedDescription)
-                return
+                completion(nil,err)
             }
             
             guard let data = documentSnapshot?.data() else {return}
-            guard let location = data["l"] as? [CLLocationDegrees] else {return}
-            guard let lat = location.first else {return}
-            guard let lon = location.last else {return}
+            guard let lat = data[Merchant.latitudeField] as? CLLocationDegrees else {return}
+            guard let lon = data[Merchant.longitudeField] as? CLLocationDegrees else {return}
         
             let loc = CLLocation(latitude: lat, longitude: lon)
-            completion(loc)
+            completion(loc,nil)
         }
     }
     
-    func fetchMerchant(merchantID: String, completion: @escaping(Merchant) -> Void ) {
+    func fetchMerchant(merchantID: String, completion: @escaping(Merchant?,Error?) -> Void ) {
         MERCHANT_REF.document(merchantID).addSnapshotListener { (snapshot, error) in
             if let err = error {
                 print("ERROR : ",err.localizedDescription)
@@ -85,20 +86,30 @@ struct FirebaseService {
             guard let data = snapshot?.data() else {return}
             var snapshotData = data
             snapshotData[Merchant.merchantIDField] = merchantID
-            self.getMerchantModel(snapshotData: snapshotData) { (merchant) in
-                completion(merchant)
+            self.getMerchantModel(snapshotData: snapshotData) { (merchant,error)  in
+                if let err = error {
+                    completion(nil,err)
+                } else {
+                    completion(merchant,nil)
+                }
             }
         }
     }
     
-    func fetchNearbyMerchants(location: CLLocation, withRadius radius: Double, completion: @escaping(Merchant,CLLocation)->Void) {
-        let _ = geofireStore.query(withCenter: location, radius: radius).observe(.documentEntered) { (merchantID, location) in
-            self.fetchMerchant(merchantID: merchantID!) { (merchant) in
-                var m = merchant
-                m.section = .nearby
-                completion(m, location!)
+    func fetchNearbyMerchants(from location: CLLocation, withMaximumDistance maxDistance: Double, completion: @escaping(Merchant?,Error?)->Void) {
+        
+        self.fetchMerchants { (merchant, error) in
+            if let err = error {
+                completion(nil,err)
+            } else {
+                guard var merchant = merchant else {return}
+                if location.distance(from: merchant.location) <= maxDistance {
+                    merchant.section = .nearby
+                    completion(merchant,nil)
+                }
             }
         }
+        
     }
     
     func fetchHighRatingMerchants(limitMerchants limit: Int? = nil, completion: @escaping(Merchant?,Error?) -> Void) {
@@ -111,17 +122,21 @@ struct FirebaseService {
                 documents.forEach { (document) in
                     var data = document.data()
                     data[Merchant.merchantIDField] = document.documentID
-                    self.getMerchantModel(snapshotData: data) { (merchant) in
-                        var m = merchant
-                        m.section = .rating
-                        completion(m,nil)
+                    self.getMerchantModel(snapshotData: data) { (merchant,error) in
+                        if let err = error {
+                            completion(nil,err)
+                        } else {
+                            guard var m = merchant else {return}
+                            m.section = .rating
+                            completion(m,nil)
+                        }
                     }
                 }
             }
         }
     }
     
-    func fetchTrendingMerchants(limitMerchants limit: Int? = nil, completion: @escaping(Merchant) -> Void) {
+    func fetchTrendingMerchants(limitMerchants limit: Int? = nil, completion: @escaping(Merchant?,Error?) -> Void) {
         let lim: Int = limit == nil ? .max : limit!
         MERCHANT_REF.order(by: Merchant.lovedByField, descending: true).limit(to: lim).addSnapshotListener { (querySnapshot, error) in
             if let err = error {
@@ -132,16 +147,20 @@ struct FirebaseService {
             documents.forEach { (document) in
                 var data = document.data()
                 data[Merchant.merchantIDField] = document.documentID
-                self.getMerchantModel(snapshotData: data) { (merchant) in
-                    var m = merchant
-                    m.section = .trendings
-                    completion(m)
+                self.getMerchantModel(snapshotData: data) { (merchant,error) in
+                    if let err = error {
+                        completion(nil,err)
+                    } else {
+                        guard var m = merchant else {return}
+                        m.section = .trendings
+                        completion(m,nil)
+                    }
                 }
             }
         }
     }
     
-    func fetchMerchants(completion: @escaping(Merchant) -> Void) {
+    func fetchMerchants(completion: @escaping(Merchant?,Error?) -> Void) {
         MERCHANT_REF.addSnapshotListener { (querySnapshot, error) in
             if let err = error {
                 print("ERROR : ",err.localizedDescription)
@@ -151,8 +170,12 @@ struct FirebaseService {
             documents.forEach { (document) in
                 var data = document.data()
                 data[Merchant.merchantIDField] = document.documentID
-                self.getMerchantModel(snapshotData: data) { (merchant) in
-                    completion(merchant)
+                self.getMerchantModel(snapshotData: data) { (merchant,error) in
+                    if let err = error {
+                        completion(nil,err)
+                    } else {
+                        completion(merchant,nil)
+                    }
                 }
             }
         }
@@ -295,13 +318,18 @@ struct FirebaseService {
                 return
             }
             
-            self.geofireStore.setLocation(location: location, forDocumentWithID: merchantID) { (error) in
+            let locData = [
+                Merchant.latitudeField : location.coordinate.latitude,
+                Merchant.longitudeField : location.coordinate.longitude
+            ]
+            LOCATION_REF.document(merchantID).setData(locData) { (error) in
                 if let err = error {
                     print(err.localizedDescription)
                     return
                 }
                 completion()
             }
+
         }
     }
     
@@ -385,7 +413,7 @@ struct FirebaseService {
     
     func downloadMerchantPhotos(forMerchantID merchantID: String, completion: @escaping(UIImage?,Error?) -> Void) {
         
-        let ref = MERCHANT_IMAGE_REF.child(merchantID).child("photo1.jpg")
+        let ref = MERCHANT_IMAGE_REF.child(merchantID)
         
         ref.getData(maxSize: 1 * 1024 * 1024) { data, error in
           if let err = error {
@@ -407,8 +435,12 @@ struct FirebaseService {
                 if let snapshot = querySnapshot?.data() {
                     guard let merchantID = snapshot[User.favoritesField] as? [String] else {return}
                     merchantID.forEach { (id) in
-                        self.fetchMerchant(merchantID: id) { (merchant) in
-                            completion(merchant,nil)
+                        self.fetchMerchant(merchantID: id) { (merchant,err) in
+                            if let err = error {
+                                completion(nil,err)
+                            } else {
+                                completion(merchant,nil)
+                            }
                         }
                     }
                 }

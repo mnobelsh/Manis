@@ -202,8 +202,9 @@ class MapViewController: UIViewController {
     
     private func fetchNearbyMerchants() {
         var merchants = [Merchant]()
-        service.fetchNearbyMerchants(location: testLocation, withRadius: 0.2) { (merchant, merchantLocation) in
-            let merchAnno = MerchantAnnotation(merchant: merchant, coordinate: merchantLocation.coordinate)
+        service.fetchNearbyMerchants(from: testLocation, withMaximumDistance: 1500) { (merchant, error) in
+            guard let merchant = merchant else {return}
+            let merchAnno = MerchantAnnotation(merchant: merchant, coordinate: merchant.location.coordinate)
             self.mapView.addAnnotation(merchAnno)
             DispatchQueue.main.async {
                 merchants.append(merchant)

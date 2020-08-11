@@ -30,7 +30,8 @@ class AddReviewViewController: UIViewController, UIImagePickerControllerDelegate
     var merchantID: String? {
         didSet {
             guard let id = merchantID else {return}
-            FirebaseService.shared.fetchMerchant(merchantID: id) { (merchant) in
+            FirebaseService.shared.fetchMerchant(merchantID: id) { (merchant,error) in
+                guard let merchant = merchant else {return}
                 self.merchant = merchant
             }
         }
