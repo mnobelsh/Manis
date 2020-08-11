@@ -122,16 +122,26 @@ class MerchantViewController: UIViewController {
     private lazy var stackMenu: UIStackView = {
         var stacksArr = [UIStackView]()
         
-        for menu in merchant!.menu {
+        if merchant!.menu.count > 0 {
+            for menu in merchant!.menu {
+                let menuLabel = UILabel()
+                menuLabel.configureTextLabel(title: menu.title, fontSize: 12, textColor: .black)
+                let priceLabel = UILabel()
+                priceLabel.configureTextLabel(title: priceFormatter(price: Int(menu.price)), fontSize: 12, textColor: .black)
+
+                let stack = UIStackView(arrangedSubviews: [menuLabel, priceLabel])
+                stack.axis = .horizontal
+                stack.spacing = 250
+                stacksArr.append(stack)
+            }
+        } else {
             let menuLabel = UILabel()
-            menuLabel.configureTextLabel(title: menu.title, fontSize: 12, textColor: .black)
-            let priceLabel = UILabel()
-            priceLabel.configureTextLabel(title: priceFormatter(price: Int(menu.price)), fontSize: 12, textColor: .black)
-            
-            let stack = UIStackView(arrangedSubviews: [menuLabel, priceLabel])
-            stack.axis = .horizontal
-            stack.spacing = 250
-            stacksArr.append(stack)
+            menuLabel.configureTextLabel(title: "Menu is not available", fontSize: 14, textColor: .darkGray)
+            let stack1 = UIStackView(arrangedSubviews: [menuLabel])
+            stack1.alignment = .center
+//            stack1.distribution = .fill
+//            stack1.axis = .vertical
+            stacksArr.append(stack1)
         }
 
         let stack = UIStackView(arrangedSubviews: stacksArr)

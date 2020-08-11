@@ -20,7 +20,7 @@ class MerchantCollectionCell: UICollectionViewCell {
                 nameLabel.text = data.name
                 addressLabel.text = data.address
                 lovedLabel.text = "By \(data.lovedBy) Peoples"
-                merchantImageView.image = #imageLiteral(resourceName: "doger")
+                merchantImageView.image = #imageLiteral(resourceName: "default no photo")
             
                 print(data)
                 let distance = Int(data.location.distance(from: userLocation!).rounded())

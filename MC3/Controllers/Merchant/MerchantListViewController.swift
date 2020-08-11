@@ -52,6 +52,11 @@ class MerchantListViewController: UIViewController {
         configureUI()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.tintColor = .link
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         guard let mainVC = navigationController?.viewControllers.first as? MainViewController else {return}

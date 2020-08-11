@@ -62,7 +62,7 @@ class MerchantHeaderView: UIView {
     
     private lazy var reviewerLabel: UILabel = {
         let label = UILabel()
-        label.configureHeadingLabel(title: "(300 Review)", fontSize: 12, textColor: .white)
+        label.configureHeadingLabel(title: "(0 Review)", fontSize: 12, textColor: .white)
         return label
     }()
     
@@ -95,6 +95,17 @@ class MerchantHeaderView: UIView {
         }
         
         self.backgroundColor = .gray
+        
+//        let width = self.frame.width
+//        let height = self.frame.height
+//
+//        let imageViewBackground = UIImageView(frame: CGRect(x: 0, y: 0, width: width, height: height))
+//        imageViewBackground.image = UIImage(named: "default header")
+//        imageViewBackground.contentMode = UIView.ContentMode.scaleAspectFill
+//
+//        self.addSubview(imageViewBackground)
+//        self.sendSubviewToBack(imageViewBackground)
+        
         self.configureRoundedCorners(corners: [.bottomLeft,.bottomRight], radius: 25)
         self.configureShadow(shadowColor: .lightGray, radius: 6)
     }

@@ -16,7 +16,7 @@ class MerchantTableCell: UITableViewCell {
     var merchant: Merchant? {
         didSet {
             guard let merchant = merchant else {return}
-            merchantImageView.image = #imageLiteral(resourceName: "doger")
+            merchantImageView.image = #imageLiteral(resourceName: "default no photo")
             merchantNameLabel.text = merchant.name
             ratingLabel.text = String(merchant.rating)
             
