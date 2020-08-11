@@ -310,7 +310,7 @@ PODS:
     - nanopb/encode (= 1.30905.0)
   - nanopb/decode (1.30905.0)
   - nanopb/encode (1.30905.0)
-  - PromisesObjC (1.2.9)
+  - PromisesObjC (1.2.10)
 
 DEPENDENCIES:
   - ChameleonFramework (~> 2.1)
@@ -358,8 +358,8 @@ SPEC CHECKSUMS:
   IQKeyboardManager: 2a6e97afdafc7becf0cb17a9a8d795e3a980717f
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: c43f40fadfe79e8b8db116583945847910cbabc9
-  PromisesObjC: b48e0338dbbac2207e611750777895f7a5811b75
+  PromisesObjC: b14b1c6b68e306650688599de8a45e49fae81151
 
 PODFILE CHECKSUM: 283f146448615b56d26308058bd35b517fabea6c
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.9.3

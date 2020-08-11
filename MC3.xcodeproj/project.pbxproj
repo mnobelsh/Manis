@@ -90,6 +90,7 @@
 		6CA4AA09CD7781B84FFDE268 /* Pods-MC3Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MC3Tests.release.xcconfig"; path = "Target Support Files/Pods-MC3Tests/Pods-MC3Tests.release.xcconfig"; sourceTree = "<group>"; };
 		722F7221EE26E19E880AE1D6 /* Pods-MC3-MC3UITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MC3-MC3UITests.debug.xcconfig"; path = "Target Support Files/Pods-MC3-MC3UITests/Pods-MC3-MC3UITests.debug.xcconfig"; sourceTree = "<group>"; };
 		747397D624D80C2200E9F9F0 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
+		747A906424E29828002E2B62 /* Manis.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Manis.entitlements; sourceTree = "<group>"; };
 		74CCD63424D19396005AFB7D /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		76D55F534EE03B9CFFE7301C /* Pods-MC3.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MC3.debug.xcconfig"; path = "Target Support Files/Pods-MC3/Pods-MC3.debug.xcconfig"; sourceTree = "<group>"; };
 		7BAA99D24DD0163B0B2A3B84 /* Pods-MC3.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MC3.release.xcconfig"; path = "Target Support Files/Pods-MC3/Pods-MC3.release.xcconfig"; sourceTree = "<group>"; };
@@ -100,7 +101,7 @@
 		FF3E490324C86D8600719D14 /* MerchantCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantCollectionCell.swift; sourceTree = "<group>"; };
 		FF3F72F124C981DA00D201FA /* SectionTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionTitleView.swift; sourceTree = "<group>"; };
 		FF3F72F324C994D100D201FA /* AvatarImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarImageView.swift; sourceTree = "<group>"; };
-		FF457EF724B4A29B0052438A /* Manice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Manice.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF457EF724B4A29B0052438A /* Manis.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Manis.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF457EFA24B4A29B0052438A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FF457EFC24B4A29B0052438A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		FF457F0124B4A29B0052438A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -220,7 +221,7 @@
 		FF457EF824B4A29B0052438A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FF457EF724B4A29B0052438A /* Manice.app */,
+				FF457EF724B4A29B0052438A /* Manis.app */,
 				FF457F0D24B4A29E0052438A /* MC3Tests.xctest */,
 				FF457F1824B4A29E0052438A /* MC3UITests.xctest */,
 			);
@@ -230,6 +231,7 @@
 		FF457EF924B4A29B0052438A /* MC3 */ = {
 			isa = PBXGroup;
 			children = (
+				747A906424E29828002E2B62 /* Manis.entitlements */,
 				FF5D4FC124B4A6E900951879 /* Models */,
 				FF5D4FC224B4A6F400951879 /* Views */,
 				FF5D4FBF24B4A6E200951879 /* Controllers */,
@@ -399,7 +401,7 @@
 			);
 			name = MC3;
 			productName = MC3;
-			productReference = FF457EF724B4A29B0052438A /* Manice.app */;
+			productReference = FF457EF724B4A29B0052438A /* Manis.app */;
 			productType = "com.apple.product-type.application";
 		};
 		FF457F0C24B4A29E0052438A /* MC3Tests */ = {
@@ -833,15 +835,17 @@
 			baseConfigurationReference = 76D55F534EE03B9CFFE7301C /* Pods-MC3.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = MC3/Manis.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8MV3PNW544;
+				CURRENT_PROJECT_VERSION = 5;
+				DEVELOPMENT_TEAM = Q86F6ZL538;
 				INFOPLIST_FILE = MC3/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.mnobelsh.MC3;
-				PRODUCT_NAME = Manice;
+				PRODUCT_BUNDLE_IDENTIFIER = com.id.manis;
+				PRODUCT_NAME = Manis;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -852,15 +856,17 @@
 			baseConfigurationReference = 7BAA99D24DD0163B0B2A3B84 /* Pods-MC3.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = MC3/Manis.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8MV3PNW544;
+				CURRENT_PROJECT_VERSION = 5;
+				DEVELOPMENT_TEAM = Q86F6ZL538;
 				INFOPLIST_FILE = MC3/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.mnobelsh.MC3;
-				PRODUCT_NAME = Manice;
+				PRODUCT_BUNDLE_IDENTIFIER = com.id.manis;
+				PRODUCT_NAME = Manis;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
