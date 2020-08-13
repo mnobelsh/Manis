@@ -55,8 +55,14 @@ struct FirebaseService {
             if let err = error {
                 completion(nil,err)
             } else {
-                let merchant = Merchant(id: merchantID, name: name, address: address, lovedBy: lovedBy, menu: merchantMenu, badges: [greatTasteBadge,cleanToolsBadge,cleanIngredientsBadge], phoneNumber: phoneNumber, rating: rating, location: location!)
-                completion(merchant,nil)
+                self.downloadMerchantHeaderPhoto(forMerchantID: merchantID) { (image, error) in
+                    if let err = error {
+                        completion(nil,err)
+                    } else {
+                        let merchant = Merchant(id: merchantID, name: name, address: address, lovedBy: lovedBy, menu: merchantMenu, badges: [greatTasteBadge,cleanToolsBadge,cleanIngredientsBadge], phoneNumber: phoneNumber, rating: rating, location: location!, headerPhoto: image ?? #imageLiteral(resourceName: "default no photo"))
+                        completion(merchant,nil)
+                    }
+                }
             }
         }
     }
@@ -233,7 +239,6 @@ struct FirebaseService {
     
     private func getReviewModel(data: [String:Any], completion: @escaping(Review) ->Void) {
 
-        print("FETCH 1")
         guard let userID = data[Review.userIDField] as? String else {return}
         guard let merchantID = data[Review.merchantIDField] as? String else {return}
         guard let rating = data[Review.ratingField] as? Double else {return}
@@ -429,7 +434,7 @@ struct FirebaseService {
     func downloadUserProfileImage(forUserID userID: String, completion: @escaping(UIImage?,Error?) -> Void) {
         let ref = USERS_IMAGE_REF.child(userID).child("profile.png")
         
-        ref.getData(maxSize: 1 * 1024 * 1024) { data, error in
+        ref.getData(maxSize: 1 * 2080 * 2080) { data, error in
           if let err = error {
             completion(nil,err)
           } else {
@@ -444,16 +449,47 @@ struct FirebaseService {
         
         let ref = MERCHANT_IMAGE_REF.child(merchantID)
         
-        ref.getData(maxSize: 1 * 1024 * 1024) { data, error in
-          if let err = error {
-            completion(nil,err)
-          } else {
-            let image = UIImage(data: data!)
-            completion(image,nil)
-          }
+        ref.listAll { (storageResult, error) in
+            if let err = error {
+                completion(nil,err)
+            } else {
+                storageResult.items.forEach { (reference) in
+                    reference.getData(maxSize: 1 * 2080 * 2080) { data, error in
+                      if let err = error {
+                        completion(nil,err)
+                      } else {
+                        guard let data = data else {return}
+                        let image = UIImage(data: data)
+                        completion(image,nil)
+                      }
+                    }
+                }
+            }
         }
-
         
+    }
+    
+    func downloadMerchantHeaderPhoto(forMerchantID merchantID: String, completion: @escaping(UIImage?,Error?) -> Void) {
+        let ref = MERCHANT_IMAGE_REF.child(merchantID)
+        
+        ref.listAll { (storageResult, error) in
+            if let err = error {
+                completion(nil,err)
+            } else {
+                if let ref = storageResult.items.first {
+                    ref.getData(maxSize: 1 * 2080 * 2080) { data, error in
+                      if let err = error {
+                        completion(nil,err)
+                      } else {
+                        let image = UIImage(data: data!)
+                        completion(image,nil)
+                      }
+                    }
+                } else {
+                    completion(#imageLiteral(resourceName: "default no photo"),nil)
+                }
+            }
+        }
     }
     
     func fetchUserFavourites(userID: String, completion: @escaping(Merchant?,Error?) -> Void) {

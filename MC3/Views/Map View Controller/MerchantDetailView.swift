@@ -15,7 +15,8 @@ protocol MerchantDetailViewDelegate {
 
 class MerchantDetailView: UIView {
     
-    static let height: CGFloat = 300
+    static let detailViewHeight: CGFloat = 300
+    static let directionViewHeight: CGFloat = 150
     
     var merchantDetails: MerchantRoute? {
         didSet {
@@ -42,6 +43,13 @@ class MerchantDetailView: UIView {
         button.configureButton(title: "Start", titleColor: .black, backgroundColor: .systemTeal, cornerRadius: 12)
         button.setSize(height: 50)
         button.addTarget(self, action: #selector(getDirectionButtonDidTap), for: .touchUpInside)
+        return button
+    }()
+    private lazy var endDirectionButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.configureButton(title: "End", titleColor: .black, backgroundColor: .systemPink, cornerRadius: 12)
+        button.setSize(height: 50)
+        button.addTarget(self, action: #selector(endDirectionButtonDidTap), for: .touchUpInside)
         return button
     }()
     private var mainView: UIView = {
@@ -101,8 +109,13 @@ class MerchantDetailView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+    }
+    
+    func configureMerchantDetailView() {
+        self.subviews.forEach { (subview) in
+            subview.removeFromSuperview()
+        }
         self.backgroundColor = .clear
-        
         self.addSubview(mainView) {
             self.mainView.setAnchor(top: self.topAnchor, right: self.rightAnchor, bottom: self.bottomAnchor, left: self.leftAnchor, paddingTop: 50)
         }
@@ -138,12 +151,35 @@ class MerchantDetailView: UIView {
         }
     }
     
+    func configureDirectionView() {
+        self.subviews.forEach { (subview) in
+            subview.removeFromSuperview()
+        }
+        self.configureRoundedCorners(corners: [.topLeft,.topRight], radius: 12)
+        self.backgroundColor = .systemBackground
+        
+        self.addSubview(endDirectionButton) {
+            self.endDirectionButton.setAnchor(right: self.rightAnchor, paddingRight: 16)
+            self.endDirectionButton.setCenterXYAnchor(in: self)
+            self.endDirectionButton.setSize(width: 170)
+        }
+
+        self.addSubview(estimatedTimeLabel) {
+            self.estimatedTimeLabel.setCenterXYAnchor(in: self)
+            self.estimatedTimeLabel.setAnchor(right: self.endDirectionButton.leftAnchor, left: self.leftAnchor, paddingRight: 8, paddingLeft: 16)
+        }
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     @objc private func getDirectionButtonDidTap() {
         delegate?.getDirectionToSelectedMerchant(merchantDetails!)
+    }
+    
+    @objc private func endDirectionButtonDidTap() {
+        delegate?.hideMerchantDetailView()
     }
     
     @objc private func backButtonDidTap() {

@@ -6,7 +6,7 @@
 //  Copyright © 2020 Muhammad Nobel Shidqi. All rights reserved.
 //
 import UIKit
-import Firebase
+import FirebaseAuth
 
 class AddReviewViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate {
 
@@ -434,12 +434,10 @@ class AddReviewViewController: UIViewController, UIImagePickerControllerDelegate
                 
 
                 FirebaseService.shared.updateMerchantData(merchantID: merchant.id, data: updatedData) { (error) in
-                    print("SUCCESS ADD NEW REVIEW")
                     self.navigationController?.popToRootViewController(animated: true)
                 }
             }
         }
-//        self.navigationController?.dismiss(animated: true, completion: nil)
     }
     
 }

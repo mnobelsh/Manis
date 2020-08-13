@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreLocation
+import UIKit
 
 struct Merchant: Hashable {
     
@@ -37,6 +38,7 @@ struct Merchant: Hashable {
     var rating: Double
     var section: MainCollectionViewSection? = nil
     var location: CLLocation
+    var headerPhoto: UIImage?
     
 }
 

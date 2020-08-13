@@ -22,6 +22,17 @@ class ReviewCollectionViewCells: UICollectionViewCell, UITextViewDelegate {
                 }
                 self.commentView.text = details.details
                 self.stars = configureStar(rating: Int(details.rating.rounded()))
+                
+                details.badges.forEach { (badge) in
+                    switch badge.type {
+                    case .cleanIngredients :
+                        self.badgeCleanIce.isHidden = badge.count == 0 ? true : false
+                    case .cleanTools :
+                        self.badgeCleanTools.isHidden = badge.count == 0 ? true : false
+                    case .greatTaste :
+                        self.badgeGreatTaste.isHidden = badge.count == 0 ? true : false
+                    }
+                }
             }
         }
     }

@@ -96,7 +96,7 @@ class MapViewController: UIViewController {
         }
 
         self.mapView.addSubview(merchantDetailView) {
-            self.merchantDetailView.frame = CGRect(x: 0, y: self.mapView.frame.height, width: self.mapView.frame.width, height: MerchantDetailView.height)
+            self.merchantDetailView.frame = CGRect(x: 0, y: self.mapView.frame.height, width: self.mapView.frame.width, height: .zero)
             self.merchantDetailView.delegate = self
         }
         
@@ -175,9 +175,19 @@ class MapViewController: UIViewController {
     }
     
     private func showMerchantDetailView() {
+        self.merchantDetailView.frame.size.height = MerchantDetailView.detailViewHeight
         UIView.animate(withDuration: 0.3) {
-            self.merchantDetailView.frame.origin.y = self.mapView.frame.height - MerchantDetailView.height
+            self.merchantDetailView.frame.origin.y = self.mapView.frame.height - MerchantDetailView.detailViewHeight
         }
+        self.merchantDetailView.configureMerchantDetailView()
+    }
+    
+    private func showMerchantDirectionView() {
+        self.merchantDetailView.frame.size.height = MerchantDetailView.directionViewHeight
+        UIView.animate(withDuration: 0.3) {
+            self.merchantDetailView.frame.origin.y = self.mapView.frame.height - MerchantDetailView.directionViewHeight
+        }
+        self.merchantDetailView.configureDirectionView()
     }
     
     private func showSelectedMerchantDetail(selectedMerchant: Merchant) {
@@ -304,7 +314,9 @@ extension MapViewController: UITableViewDelegate {
 
 // MARK: - Merchant Detail View Delegate
 extension MapViewController: MerchantDetailViewDelegate {
+
     func getDirectionToSelectedMerchant(_ routeInfo: MerchantRoute) {
+        self.showMerchantDirectionView()
         self.mapView.annotations.forEach { (annotation) in
             if let annotation = annotation as? MKUserLocation {
                 self.mapView.camera.pitch = 85.0
@@ -314,6 +326,7 @@ extension MapViewController: MerchantDetailViewDelegate {
             }
         }
     }
+    
     
     func hideMerchantDetailView() {
         UIView.animate(withDuration: 0.3) {

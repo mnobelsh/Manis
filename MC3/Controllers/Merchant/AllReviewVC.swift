@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 typealias CollectionDataSource = UICollectionViewDiffableDataSource<Sections,Review>
 typealias CollectionSnapshot = NSDiffableDataSourceSnapshot<Sections,Review>
@@ -81,6 +82,7 @@ class AllReviewVC: UIViewController {
         }
         self.navigationController?.navigationBar.isHidden = false
         self.navigationController?.navigationBar.tintColor = .black
+        addButton.isHidden = Auth.auth().currentUser != nil ? false : true
     }
     
     private func configAllneededforCV(){

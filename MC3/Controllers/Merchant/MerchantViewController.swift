@@ -37,10 +37,7 @@ class MerchantViewController: UIViewController {
             })
             
             self.badges = badgesList
-            
-            FirebaseService.shared.downloadMerchantPhotos(forMerchantID: merchant!.id) { (image, error) in
-                
-            }
+
         }
     }
     
@@ -49,7 +46,11 @@ class MerchantViewController: UIViewController {
             self.badgeCollectionView.reloadData()
         }
     }
-    private var photos: [String]!
+    private var photos: [UIImage] = [#imageLiteral(resourceName: "default no photo")] {
+        didSet {
+            self.photoCollectionView.reloadData()
+        }
+    }
     
     private lazy var merchantNameLabel: UILabel = {
         let label = UILabel()
@@ -141,8 +142,6 @@ class MerchantViewController: UIViewController {
             menuLabel.configureTextLabel(title: "Menu is not available", fontSize: 14, textColor: .darkGray)
             let stack1 = UIStackView(arrangedSubviews: [menuLabel])
             stack1.alignment = .center
-//            stack1.distribution = .fill
-//            stack1.axis = .vertical
             stacksArr.append(stack1)
         }
 
@@ -179,7 +178,7 @@ class MerchantViewController: UIViewController {
         cv.showsHorizontalScrollIndicator = false
         cv.showsVerticalScrollIndicator = false
         cv.delegate = self
-//        cv.dataSource = self
+        cv.dataSource = self
         return cv
     }()
 
@@ -228,10 +227,20 @@ class MerchantViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.reviews = [Review]()
+
         fetchMerchantReviews { (review) in
             DispatchQueue.main.async {
                 self.reviews.append(review)
+                print("REPIEW : ",review)
+            }
+        }
+        
+        var merchPhoto = [UIImage]()
+        FirebaseService.shared.downloadMerchantPhotos(forMerchantID: merchant!.id) { (image, error) in
+            DispatchQueue.main.async {
+                guard let image = image else {return}
+                merchPhoto.append(image)
+                self.photos = merchPhoto
             }
         }
         configUI()
@@ -239,7 +248,6 @@ class MerchantViewController: UIViewController {
             self.headerView.frame.origin.y = 0
         }
     }
-
 
     // MARK: - Helpers
     private func fetchMerchantReviews(completion: @escaping(Review) -> Void) {
@@ -339,10 +347,8 @@ class MerchantViewController: UIViewController {
     }
 
     private func updateSnapshot(_ data: [Review]) {
-        if !data.isEmpty {
-            checkSnapshot!.appendItems(data, toSection: .main)
-            checkDataSource!.apply(checkSnapshot!, animatingDifferences: true, completion: nil)
-        }
+        checkSnapshot!.appendItems(data, toSection: .main)
+        checkDataSource!.apply(checkSnapshot!, animatingDifferences: true, completion: nil)
     }
     
     private func priceFormatter(price: Int) -> String {
@@ -405,7 +411,8 @@ extension MerchantViewController: UICollectionViewDataSource,UICollectionViewDel
             cell.configBadgeCV()
             return cell
         } else if collectionView == photoCollectionView {
-            
+            cell.photoData = photos[indexPath.row]
+            cell.configPhotoCV()
         }
         
         return cell
