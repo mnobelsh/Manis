@@ -486,4 +486,21 @@ struct FirebaseService {
     }
 
     
+    func updateUserFavorites(userID: String, favorites: [String], completion: @escaping(Error?) -> Void) {
+        
+        let updatedData = [
+            User.favoritesField : favorites
+        ]
+        USER_REF.document(userID).updateData(updatedData) { (error) in
+            if let err = error {
+                completion(err)
+            } else {
+                completion(nil)
+            }
+        }
+
+    }
+ 
+
+    
 }

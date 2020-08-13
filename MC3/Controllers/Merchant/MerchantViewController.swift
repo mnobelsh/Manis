@@ -8,6 +8,7 @@
 
 import UIKit
 import ChameleonFramework
+import FirebaseAuth
 
 class MerchantViewController: UIViewController {
     
@@ -40,6 +41,7 @@ class MerchantViewController: UIViewController {
 
         }
     }
+    var user: User?
     
     private var badges: [Badge] = [Badge]() {
         didSet {
@@ -219,7 +221,14 @@ class MerchantViewController: UIViewController {
         setTransparentNavbar()
         configDatasource()
         configSnapshot()
-        headerView.configureComponents(merchant: merchant!)
+        
+        
+        if let userID = Auth.auth().currentUser?.uid {
+            FirebaseService.shared.fetchUser(userID: userID) { (user) in
+                self.user = user
+                self.headerView.configureComponents(merchant: self.merchant!, userFavs: self.user?.favorites)
+            }
+        }
 
     }
 
@@ -229,7 +238,6 @@ class MerchantViewController: UIViewController {
         fetchMerchantReviews { (review) in
             DispatchQueue.main.async {
                 self.reviews.append(review)
-                print("REPIEW : ",review)
             }
         }
         
@@ -381,13 +389,33 @@ extension MerchantViewController: UICollectionViewDelegate {
 
 //MARK: - Main Header View Delegate
 extension MerchantViewController: MerchantHeaderViewDelegate {
+    func favDidTapped(_ button: UIButton) {
+        guard let merchantID = merchant?.id else {return}
+        guard let user = self.user else {return}
+        
+        
+        var userFavs = [String]()
+        if button.isSelected {
+            userFavs = user.favorites
+            if !userFavs.contains(merchantID) {
+              userFavs.append(merchantID)
+            }
+        } else {
+            userFavs = user.favorites.filter({ (id) -> Bool in
+                return id != merchantID
+            })
+        }
+        
+        FirebaseService.shared.updateUserFavorites(userID: user.id, favorites: userFavs) { (error) in
+            
+        }
+
+    }
+    
     func backButtView() {
 
     }
 
-    func favDidTapped() {
-  
-    }
 }
 
 extension MerchantViewController: UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {

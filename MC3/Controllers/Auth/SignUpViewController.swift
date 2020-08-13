@@ -13,7 +13,6 @@ class SignUpViewController: UIViewController {
     private lazy var usernameTextField: UITextField = {
         let userName = UITextField()
         userName.configureInputTextField(placeholder: "Username", isSecureTextEntry: false)
-        userName.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingDidEnd)
         return userName
     }()
 
@@ -68,7 +67,7 @@ class SignUpViewController: UIViewController {
         return view
     }()
 
-    private lazy var stackk: UIStackView = {
+    private lazy var signUpFormStack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [textViewUsername, textViewEmail,textViewPass,textViewConfPass])
         stack.axis = .vertical
         stack.alignment = .fill
@@ -120,12 +119,12 @@ class SignUpViewController: UIViewController {
         let backButton = UIBarButtonItem(title: "Home", style: .plain, target: self, action: #selector(backToPreviousVC))
         self.navigationItem.setLeftBarButtonItems([backButton], animated: true)
         
-        view.addSubview(stackk){
-            self.stackk.setCenterYAnchor(in: self.view)
-            self.stackk.setAnchor(right: self.view.rightAnchor, left: self.view.leftAnchor, paddingRight: 20, paddingLeft: 20)
+        view.addSubview(signUpFormStack){
+            self.signUpFormStack.setCenterYAnchor(in: self.view)
+            self.signUpFormStack.setAnchor(right: self.view.rightAnchor, left: self.view.leftAnchor, paddingRight: 20, paddingLeft: 20)
         }
         view.addSubview(registerButton){
-            self.registerButton.setAnchor(top: self.stackk.bottomAnchor,paddingTop:50 , paddingRight: 20, paddingBottom: 30, paddingLeft: 20)
+            self.registerButton.setAnchor(top: self.signUpFormStack.bottomAnchor,paddingTop:50 , paddingRight: 20, paddingBottom: 30, paddingLeft: 20)
             self.registerButton.setCenterXAnchor(in: self.view)
         }
         view.addSubview(labelRegist){

@@ -185,6 +185,7 @@ class MainViewController: UIViewController {
                     if let err = error {
                         print(err.localizedDescription)
                     } else {
+                        print("USER IMAGE : \(image)")
                         self.headerContainerView.avatarImageView.configureAvatarView(avatarImage: image, dimension: 65)
                     }
                 }

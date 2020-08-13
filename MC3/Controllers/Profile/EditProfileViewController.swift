@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class EditProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -172,7 +173,8 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let pickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage, let data = pickedImage.pngData() {
             
-            FirebaseService.shared.uploadUserProfileImage(forUserID: "uAidgM23qscUVc3JJqk6199fZT83", withImageData: data) { (error) in
+            guard let userID = Auth.auth().currentUser?.uid else {return}
+            FirebaseService.shared.uploadUserProfileImage(forUserID: userID, withImageData: data) { (error) in
                 
                 if let err = error {
                     print(err.localizedDescription)

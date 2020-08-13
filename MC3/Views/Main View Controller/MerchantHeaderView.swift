@@ -9,7 +9,7 @@
 import UIKit
 
 protocol MerchantHeaderViewDelegate {
-    func favDidTapped()
+    func favDidTapped(_ button: UIButton)
 //    func backButtView()
 }
 
@@ -123,7 +123,7 @@ class MerchantHeaderView: UIView {
         }else{
             button.setImage(#imageLiteral(resourceName: "notfav"), for: .normal)
         }
-        delegate?.favDidTapped()
+        delegate?.favDidTapped(button)
     }
     
     @objc private func callTapped(_ button: UIButton){
@@ -133,10 +133,18 @@ class MerchantHeaderView: UIView {
         }
     }
     
-    func configureComponents(merchant: Merchant){
+    func configureComponents(merchant: Merchant, userFavs: [String]?){
         nameMerchant.text = merchant.name
         phoneNumber = merchant.phoneNumber
         ratingLabel.text = String(merchant.rating)
+        
+        print("USER FAVS : \(userFavs)")
+        if let userFavs = userFavs, userFavs.contains(merchant.id) {
+            self.favButton.setImage(#imageLiteral(resourceName: "addToFavoriteButton"), for: .normal)
+        } else {
+            self.favButton.setImage(#imageLiteral(resourceName: "notfav"), for: .normal)
+        }
+        
     }
     
 }
