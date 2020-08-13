@@ -442,14 +442,15 @@ struct FirebaseService {
     
     func downloadMerchantHeaderPhoto(forMerchantID merchantID: String, completion: @escaping(UIImage?,Error?) -> Void) {
         let ref = MERCHANT_IMAGE_REF.child(merchantID)
-        
         ref.listAll { (storageResult, error) in
             if let err = error {
+                print("FETCH MERCHANT HEADER PHOTO ERR 1:  \(err.localizedDescription)")
                 completion(nil,err)
             } else {
                 if let ref = storageResult.items.first {
                     ref.getData(maxSize: 1 * 2080 * 2080) { data, error in
                       if let err = error {
+                        print("FETCH MERCHANT HEADER PHOTO ERR 2: \(err.localizedDescription)")
                         completion(nil,err)
                       } else {
                         let image = UIImage(data: data!)

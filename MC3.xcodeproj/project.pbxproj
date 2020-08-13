@@ -19,6 +19,7 @@
 		74CCD63524D19396005AFB7D /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CCD63424D19396005AFB7D /* WelcomeViewController.swift */; };
 		DEACF79356C8A4030BCAFFB8 /* Pods_MC3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33E5BC9253FD66F87F1B4498 /* Pods_MC3.framework */; };
 		FF05B2A724D28A7000CE0AEB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF05B2A624D28A7000CE0AEB /* User.swift */; };
+		FF1A988424E52FE600502021 /* Fixes in Resources */ = {isa = PBXBuildFile; fileRef = FF1A988324E52FE600502021 /* Fixes */; };
 		FF3E490024C8508500719D14 /* UIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3E48FF24C8508500719D14 /* UIHelper.swift */; };
 		FF3E490224C86B6000719D14 /* Merchant.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3E490124C86B6000719D14 /* Merchant.swift */; };
 		FF3E490424C86D8600719D14 /* MerchantCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3E490324C86D8600719D14 /* MerchantCollectionCell.swift */; };
@@ -97,6 +98,7 @@
 		7D9E01806AFE652AE21BD684 /* Pods_MC3_MC3UITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MC3_MC3UITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF05B2A624D28A7000CE0AEB /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		FF1A987924E3BA2600502021 /* ManisRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ManisRelease.entitlements; sourceTree = "<group>"; };
+		FF1A988324E52FE600502021 /* Fixes */ = {isa = PBXFileReference; lastKnownFileType = text; path = Fixes; sourceTree = "<group>"; };
 		FF3E48FF24C8508500719D14 /* UIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHelper.swift; sourceTree = "<group>"; };
 		FF3E490124C86B6000719D14 /* Merchant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Merchant.swift; sourceTree = "<group>"; };
 		FF3E490324C86D8600719D14 /* MerchantCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantCollectionCell.swift; sourceTree = "<group>"; };
@@ -245,6 +247,7 @@
 				FF457F0524B4A29E0052438A /* LaunchScreen.storyboard */,
 				FF457F0824B4A29E0052438A /* Info.plist */,
 				FF457F2A24B4A2DA0052438A /* GoogleService-Info.plist */,
+				FF1A988324E52FE600502021 /* Fixes */,
 			);
 			path = MC3;
 			sourceTree = "<group>";
@@ -494,6 +497,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF457F0724B4A29E0052438A /* LaunchScreen.storyboard in Resources */,
+				FF1A988424E52FE600502021 /* Fixes in Resources */,
 				FF457F2B24B4A2DA0052438A /* GoogleService-Info.plist in Resources */,
 				FF457F0424B4A29E0052438A /* Assets.xcassets in Resources */,
 				FF457F0224B4A29B0052438A /* Main.storyboard in Resources */,
