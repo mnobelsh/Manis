@@ -18,18 +18,17 @@ class ProfileViewController: UIViewController {
                 if let err = error {
                     print(err.localizedDescription)
                 } else {
-                    self.profileImage.image = image                }
+                    self.profileImage.configureAvatarView(avatarImage: image, dimension: 150)
+                }
             }
             self.nameLabel.text = user.name
         }
     }
     
-    private lazy var profileImage: UIImageView = {
-        let img = UIImageView()
-        img.image = UIImage(named: "profilePictureBig")
-        img.setSize(width: 120, height: 120)
-        
-        return img
+    private lazy var profileImage: AvatarImageView = {
+        let profileImg = AvatarImageView(frame: .zero)
+        profileImg.configureAvatarView(avatarImage: UIImage(named: "profilePictureBig"), dimension: 150)
+        return profileImg
     }()
     
     private lazy var nameLabel: UILabel = {
@@ -140,12 +139,6 @@ class ProfileViewController: UIViewController {
             self.rightButtonStacks.setAnchor(top: self.nameLabel.bottomAnchor, right: self.view.rightAnchor, paddingTop: self.view.frame.height/10, paddingRight: 55)
         }
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        guard let vc = navigationController?.viewControllers.first as? MainViewController else {return}
-    }
-    
     
     func configureUI() {
         self.view.addSubview(nameLabel)

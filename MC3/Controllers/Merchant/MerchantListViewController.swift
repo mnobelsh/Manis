@@ -110,7 +110,8 @@ class MerchantListViewController: UIViewController {
                         if let err = error {
                             print(err.localizedDescription)
                         } else {
-                            guard let merchant = merchant else {return}
+                            guard var merchant = merchant else {return}
+                            merchant.section = .nearby
                             self.merchantList.append(merchant)
                         }
                     }

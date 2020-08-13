@@ -25,8 +25,8 @@ class MerchantDetailView: UIView {
             
             merchantNameLabel.text = merchant.name
             
-            let distance = Int(merchant.location.distance(from: LocationHandler.shared.manager.location!).rounded())
-            distanceLabel.text = "\(distance) m"
+            let distance = merchant.location.distance(from: LocationHandler.shared.manager.location!).rounded()/1000
+            distanceLabel.text = String(format: "%.2f Km", distance)
             
             addressLabel.text = merchant.address
             ratingLabel.text = String(merchant.rating)
@@ -75,8 +75,8 @@ class MerchantDetailView: UIView {
     }()
     private var distanceLabel: UILabel = {
         let label = UILabel()
-        label.configureTextLabel(title: "Distance", fontSize: 20, textColor: .darkGray)
-        label.setSize(width: 60)
+        label.configureTextLabel(title: "Distance", fontSize: 18, textColor: .darkGray)
+        label.setSize(width: 75)
         label.textAlignment = .right
         label.numberOfLines = 1
         return label

@@ -36,7 +36,7 @@ class MerchantViewController: UIViewController {
                     badgesList.append(badge)
                 }
             })
-            
+            self.merchantNameLabel.text = merchant?.name
             self.badges = badgesList
 
         }
@@ -230,6 +230,8 @@ class MerchantViewController: UIViewController {
                 self.user = user
                 self.headerView.configureComponents(merchant: self.merchant!, userFavs: self.user?.favorites)
             }
+        } else {
+            self.headerView.configureComponents(merchant: self.merchant!, userFavs: nil)
         }
 
     }
@@ -248,6 +250,7 @@ class MerchantViewController: UIViewController {
             DispatchQueue.main.async {
                 guard let image = image else {return}
                 merchPhoto.append(image)
+                print("MERCHANT PHOTOS : \(image)")
                 self.photos = merchPhoto
             }
         }
@@ -409,7 +412,7 @@ extension MerchantViewController: MerchantHeaderViewDelegate {
         }
         
         FirebaseService.shared.updateUserFavorites(userID: user.id, favorites: userFavs) { (error) in
-            
+            print("Success updated user's favorites")
         }
 
     }

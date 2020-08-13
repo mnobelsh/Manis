@@ -529,7 +529,25 @@ struct FirebaseService {
         }
 
     }
+    
+    
+    func fetchMerchantRating(forMerchantID merchantID: String, completion: @escaping(Double?,Int?,Error?)->Void) {
+        REVIEW_REF.whereField(Review.merchantIDField, isEqualTo: merchantID).addSnapshotListener { (querySnapshot, error) in
+            if let err = error {
+                completion(nil,nil,err)
+            } else {
+                guard let documents = querySnapshot?.documents else {return}
+                let reviewersCount = documents.count
+                var ratings: Int = 0
+                documents.forEach { (document) in
+                    guard let rating = document.data()[Review.ratingField] as? Int else {return}
+                    ratings += rating
+                }
+                let totalRating = Double(ratings)/Double(reviewersCount)
+                completion(totalRating,reviewersCount,nil)
+            }
+        }
+    }
  
-
     
 }

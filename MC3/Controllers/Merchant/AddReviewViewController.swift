@@ -434,7 +434,7 @@ class AddReviewViewController: UIViewController, UIImagePickerControllerDelegate
                 
 
                 FirebaseService.shared.updateMerchantData(merchantID: merchant.id, data: updatedData) { (error) in
-                    self.navigationController?.popToRootViewController(animated: true)
+                    self.navigationController?.popViewController(animated: true)
                 }
             }
         }

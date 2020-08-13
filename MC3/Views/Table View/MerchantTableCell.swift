@@ -16,16 +16,17 @@ class MerchantTableCell: UITableViewCell {
     var merchant: Merchant? {
         didSet {
             guard let merchant = merchant else {return}
-            merchantImageView.image = #imageLiteral(resourceName: "default no photo")
             merchantNameLabel.text = merchant.name
             ratingLabel.text = String(merchant.rating)
             
             if merchant.section == MainCollectionViewSection.nearby {
-                let distance = Int(merchant.location.distance(from: LocationHandler.shared.manager.location!).rounded())
-                locationLabel.text = "\(distance) m"
+                let distance = merchant.location.distance(from: LocationHandler.shared.manager.location!).rounded()/1000
+                locationLabel.text = String(format: "%.2f Km", distance)
             } else {
                 locationLabel.text = merchant.address
             }
+            
+            merchantImageView.image = merchant.headerPhoto
         }
     }
     

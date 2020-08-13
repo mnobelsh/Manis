@@ -22,8 +22,8 @@ class MerchantCollectionCell: UICollectionViewCell {
                 lovedLabel.text = "By \(data.lovedBy) Peoples"
                 merchantImageView.image = data.headerPhoto ?? #imageLiteral(resourceName: "default no photo")
 
-                let distance = Int(data.location.distance(from: userLocation!).rounded())
-                distanceLabel.configureHeadingLabel(title: "\(distance) m", fontSize: 9, textColor: .darkGray)
+                let distance = data.location.distance(from: userLocation!).rounded()/1000
+                distanceLabel.configureHeadingLabel(title: String(format: "%.2f Km", distance), fontSize: 9, textColor: .darkGray)
                 ratingLabel.text = String(data.rating)
 
                 guard let section = data.section else {return}
@@ -37,6 +37,13 @@ class MerchantCollectionCell: UICollectionViewCell {
                 case .trendings:
                     distanceLabel.isHidden = true
                     ratingView.isHidden = true
+                }
+                
+                FirebaseService.shared.fetchMerchantRating(forMerchantID: data.id) { (rating,_, error)  in
+                    if let rating = rating {
+                        self.ratingLabel.text = String(rating)
+                    }
+                    
                 }
 
             }
@@ -171,7 +178,7 @@ class MerchantCollectionCell: UICollectionViewCell {
         }
         
         self.addSubview(distanceLabel) {
-            self.distanceLabel.setSize(width: 30, height: 12)
+            self.distanceLabel.setSize(width: 50, height: 12)
             self.distanceLabel.setAnchor(right: self.rightAnchor, bottom: self.bottomAnchor, paddingRight: 4, paddingBottom: 8)
         }
         

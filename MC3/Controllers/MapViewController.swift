@@ -31,13 +31,12 @@ class MapViewController: UIViewController {
     
     private var merchantDetailView = MerchantDetailView()
     
-    private var testLocation = LocationHandler.testLocation
     
     private var nearbyMerchants: [Merchant] = [Merchant]() {
         didSet {
-//            let userLocation = locationHandler.manager.location!
+            let userLocation = locationHandler.manager.location!
             self.nearbyMerchants = self.nearbyMerchants.sorted{  (merchant1, merchant2) -> Bool in
-                merchant1.location.distance(from: testLocation) < merchant2.location.distance(from: testLocation)
+                merchant1.location.distance(from: userLocation) < merchant2.location.distance(from: userLocation)
             }
             self.configureTableViewSnapshot(data: self.nearbyMerchants)
             zoomRect(annotations: self.mapView.annotations, width: 0.1, height: 0.1)
@@ -149,7 +148,7 @@ class MapViewController: UIViewController {
             if let annotation = annotations.first as? MerchantAnnotation {
                 mapRect = MKMapRect(origin: .init(annotation.coordinate), size: .init(width: width, height: height))
             } else {
-                mapRect = MKMapRect(origin: .init(testLocation.coordinate), size: .init(width: width, height: height))
+                mapRect = MKMapRect(origin: .init(LocationHandler.shared.manager.location!.coordinate), size: .init(width: width, height: height))
             }
         }
         
@@ -192,7 +191,7 @@ class MapViewController: UIViewController {
     
     private func showSelectedMerchantDetail(selectedMerchant: Merchant) {
         let userAnnotation = MKPointAnnotation()
-        userAnnotation.coordinate = testLocation.coordinate
+        userAnnotation.coordinate = locationHandler.manager.location!.coordinate
         
         self.mapView.annotations.forEach { (annotation) in
             if let annotation = annotation as? MerchantAnnotation {
@@ -212,7 +211,7 @@ class MapViewController: UIViewController {
     
     private func fetchNearbyMerchants() {
         var merchants = [Merchant]()
-        service.fetchNearbyMerchants(from: testLocation, withMaximumDistance: 1500) { (merchant, error) in
+        service.fetchNearbyMerchants(from: locationHandler.manager.location!, withMaximumDistance: 1500) { (merchant, error) in
             guard let merchant = merchant else {return}
             let merchAnno = MerchantAnnotation(merchant: merchant, coordinate: merchant.location.coordinate)
             self.mapView.addAnnotation(merchAnno)
@@ -226,7 +225,7 @@ class MapViewController: UIViewController {
     private func requestDirectionTo(_ merchant: Merchant) {
         let request = MKDirections.Request()
         request.transportType = .walking
-        let origin = MKMapItem(placemark: MKPlacemark(coordinate: testLocation.coordinate))
+        let origin = MKMapItem(placemark: MKPlacemark(coordinate: locationHandler.manager.location!.coordinate))
         let destination = MKMapItem(placemark: MKPlacemark(coordinate: merchant.location.coordinate))
         
         request.source = origin

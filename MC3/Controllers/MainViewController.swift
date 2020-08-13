@@ -25,15 +25,13 @@ class MainViewController: UIViewController {
     private var tableViewDataSource: SearchResultTableViewDataSource?
     private var tableViewSnapShot: SearchResultSnapshot?
     
-    private var testLocation = LocationHandler.testLocation
-    
     private var nearbyMerchants: [Merchant] = [Merchant]()  {
         didSet {
-//            if let userLocation = locationHandler.manager.location {
+            if let userLocation = locationHandler.manager.location {
                 self.nearbyMerchants = self.nearbyMerchants.sorted{  (merchant1, merchant2) -> Bool in
-                    merchant1.location.distance(from: testLocation) < merchant2.location.distance(from: testLocation)
+                    merchant1.location.distance(from: userLocation) < merchant2.location.distance(from: userLocation)
                 }
-//            }
+            }
             updateCollectionViewSnapshot(merchantData: self.nearbyMerchants, forSection: .nearby)
         }
     }
@@ -114,7 +112,30 @@ class MainViewController: UIViewController {
         authorizeUserLocationAndFetch()
         fetchUser()
         
-        
+//            let menus: [[String: Any]] = [
+//                [Menu.titleField : "Es Doger", Menu.priceField : 10000],
+////                [Menu.titleField : "Es Pisang Ijo Ceres", Menu.priceField : 16000],
+//            ]
+//        
+//            let badges : [String:Any] = [
+//                String(BadgeType.cleanIngredients.rawValue) : 0,
+//                String(BadgeType.cleanTools.rawValue) : 0,
+//                String(BadgeType.greatTaste.rawValue) : 0,
+//            ]
+//        
+//            let merchantdata: [String:Any] = [
+//                Merchant.nameField : "Es Doger Hendra",
+//                Merchant.addressField: "Jl. Kejaksaan",
+//                Merchant.menuField: menus,
+//                Merchant.badgeField: badges,
+//                Merchant.lovedByField: 0,
+//                Merchant.phoneNumberField: "0812172101",
+//                Merchant.ratingField: 0.0,
+//                Merchant.locationField: locationHandler.manager.location!
+//            ]
+//            FirebaseService.shared.addMerchant(merchantData: merchantdata) {
+//                print("Success add new merchant!")
+//            }
     }
     
 
@@ -185,7 +206,6 @@ class MainViewController: UIViewController {
                     if let err = error {
                         print(err.localizedDescription)
                     } else {
-                        print("USER IMAGE : \(image)")
                         self.headerContainerView.avatarImageView.configureAvatarView(avatarImage: image, dimension: 65)
                     }
                 }
@@ -278,8 +298,8 @@ class MainViewController: UIViewController {
     
     // MARK: - Fetch Data
     private func fetchMerchantsDataAndUpdateLocation() {
-//        if let location = locationHandler.manager.location {
-            service.fetchNearbyMerchants(from: testLocation, withMaximumDistance: 1500) { (merchant, error) in
+        if let location = locationHandler.manager.location {
+            service.fetchNearbyMerchants(from: location, withMaximumDistance: 1500) { (merchant, error) in
                 if let err = error {
                     print(err.localizedDescription)
                 } else {
@@ -290,10 +310,10 @@ class MainViewController: UIViewController {
                 }
             }
         
-            self.setPlacemark(withLocation: testLocation) { (placeMark) in
+            self.setPlacemark(withLocation: location) { (placeMark) in
                 self.userPlacemark = placeMark
             }
-//        }
+        }
         
         fetchHighRatingMerchants(limitMerchants: 5)
         fetchTrendingMerchants(limitMerchants: 3)

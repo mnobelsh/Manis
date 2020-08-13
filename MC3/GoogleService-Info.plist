@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>102092380777-s0pd9abcfa3t4qfqtcav0pba3geknr3n.apps.googleusercontent.com</string>
+	<string>714443259848-qnuul42mr8p8nv409ebmbevhrcol5cvs.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.102092380777-s0pd9abcfa3t4qfqtcav0pba3geknr3n</string>
+	<string>com.googleusercontent.apps.714443259848-qnuul42mr8p8nv409ebmbevhrcol5cvs</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDqx0I5Om0CxKYnKQSf9PyXPkLpd76uP8Y</string>
+	<string>AIzaSyBtP463X2gR8-h3y4dflvcv0BUSjOxIP7w</string>
 	<key>GCM_SENDER_ID</key>
-	<string>102092380777</string>
+	<string>714443259848</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.mnobelsh.MC3</string>
+	<string>com.mnobelsh.manis</string>
 	<key>PROJECT_ID</key>
-	<string>mini-challenge-3-62e40</string>
+	<string>manis-d314b</string>
 	<key>STORAGE_BUCKET</key>
-	<string>mini-challenge-3-62e40.appspot.com</string>
+	<string>manis-d314b.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:102092380777:ios:e6ecf93217086a0e76a0f8</string>
+	<string>1:714443259848:ios:2308dd7459ae06bb0fcafd</string>
 	<key>DATABASE_URL</key>
-	<string>https://mini-challenge-3-62e40.firebaseio.com</string>
+	<string>https://manis-d314b.firebaseio.com</string>
 </dict>
 </plist>

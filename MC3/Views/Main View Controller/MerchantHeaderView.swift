@@ -24,13 +24,16 @@ class MerchantHeaderView: UIView {
             nameMerchant.text = merchant.name
             phoneNumber = merchant.phoneNumber
             ratingLabel.text = String(merchant.rating)
+            
+            FirebaseService.shared.fetchMerchantRating(forMerchantID: merchant.id) { (rating,reviewersCount,error) in
+                if let rating = rating, let reviewersCount = reviewersCount {
+                    self.ratingLabel.text = String(rating)
+                    self.reviewerLabel.text = "(\(reviewersCount) Review)"
+                }
+            }
         }
     }
-    var user: User? {
-        didSet {
-            guard let user = user else {return}
-        }
-    }
+    var user: User? 
     static let height: CGFloat = 261
     private var phoneNumber: String = "+62218641727"
 
@@ -134,59 +137,23 @@ class MerchantHeaderView: UIView {
     
     @objc private func favisTapped(_ button: UIButton){
         button.isSelected = !button.isSelected
-        if button.isSelected == true{
-            FirebaseService.shared.addFavorite(userID: Auth.auth().currentUser!.uid, merchantID: merchant!.id) { (error) in
-                print("SUCCESS ADD FAV")
-            }
-            button.setImage(#imageLiteral(resourceName: "addToFavoriteButton"), for: .normal)
-        } else {
-            FirebaseService.shared.removeFavorite(userID: Auth.auth().currentUser!.uid, merchantID: merchant!.id) { (error) in
-                print("SUCCESS REMOVE FAV")
-            }
-            button.setImage(#imageLiteral(resourceName: "notfav"), for: .normal)
-        }
         delegate?.favDidTapped(button)
     }
     
     @objc private func callTapped(_ button: UIButton){
-        print("DEBUGS call button tapped: \(self.phoneNumber)")
         if let url = URL(string: "tel://\(self.phoneNumber)"), UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
-    
-<<<<<<< HEAD
-<<<<<<< HEAD
+
     func configureComponents(merchant: Merchant, userFavs: [String]?){
-        nameMerchant.text = merchant.name
-        phoneNumber = merchant.phoneNumber
-        ratingLabel.text = String(merchant.rating)
+        self.merchant = merchant
         
-        print("USER FAVS : \(userFavs)")
         if let userFavs = userFavs, userFavs.contains(merchant.id) {
             self.favButton.setImage(#imageLiteral(resourceName: "addToFavoriteButton"), for: .normal)
         } else {
             self.favButton.setImage(#imageLiteral(resourceName: "notfav"), for: .normal)
         }
-        
-=======
-=======
->>>>>>> test2
-    func configureComponents(merchant: Merchant){
-        self.merchant = merchant
-        if Auth.auth().currentUser != nil {
-            FirebaseService.shared.fetchUser(userID: Auth.auth().currentUser!.uid) { (user) in
-                self.user = user
-                if user.favorites.contains(merchant.id) {
-                    self.favButton.isSelected = true
-                    self.favButton.setImage(#imageLiteral(resourceName: "addToFavoriteButton"), for: .normal)
-                }
-            }
-        }
-<<<<<<< HEAD
->>>>>>> test2
-=======
->>>>>>> test2
-    }
     
+    }
 }
