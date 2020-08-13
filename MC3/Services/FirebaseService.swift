@@ -191,6 +191,35 @@ struct FirebaseService {
         }
     }
     
+    func addFavorite(userID: String, merchantID: String, completion: @escaping(Error?) -> Void) {
+        self.fetchUser(userID: userID) { (result) in
+            print(result)
+            var user = result
+            user.favorites.append(merchantID)
+            USER_REF.document(user.id).updateData([User.favoritesField: user.favorites]) { (error) in
+                if let err = error {
+                    completion(err)
+                } else {
+                    completion(nil)
+                }
+            }
+        }
+    }
+    
+    func removeFavorite(userID: String, merchantID: String, completion: @escaping(Error?) -> Void) {
+        self.fetchUser(userID: userID) { (user) in
+            print(user)
+            let userFav = user.favorites.filter { $0 != merchantID }
+            USER_REF.document(user.id).updateData([User.favoritesField: userFav]) { (error) in
+                if let err = error {
+                    completion(err)
+                } else {
+                    completion(nil)
+                }
+            }
+        }
+    }
+    
     func updateMerchantData(merchantID: String, data: [String:Any], completion: @escaping(Error?) -> Void) {
         MERCHANT_REF.document(merchantID).updateData(data) { (error) in
             if let err = error {

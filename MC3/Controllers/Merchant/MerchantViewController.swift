@@ -127,11 +127,13 @@ class MerchantViewController: UIViewController {
                 let menuLabel = UILabel()
                 menuLabel.configureTextLabel(title: menu.title, fontSize: 12, textColor: .black)
                 let priceLabel = UILabel()
+                priceLabel.setSize(width: 80)
                 priceLabel.configureTextLabel(title: priceFormatter(price: Int(menu.price)), fontSize: 12, textColor: .black)
 
                 let stack = UIStackView(arrangedSubviews: [menuLabel, priceLabel])
                 stack.axis = .horizontal
-                stack.spacing = 250
+                stack.distribution = .fillProportionally
+                
                 stacksArr.append(stack)
             }
         } else {
@@ -289,7 +291,7 @@ class MerchantViewController: UIViewController {
         self.scrollView.addSubview(menuView){
             self.menuView.setAnchor(top: self.menuLabel.bottomAnchor, right:self.view.rightAnchor, left: self.view.leftAnchor, paddingTop: 4, paddingRight: 16, paddingLeft: 16)
             self.menuView.addSubview(self.stackMenu){
-                self.stackMenu.setAnchor(top: self.menuView.topAnchor, left: self.menuView.leftAnchor, paddingTop: 8, paddingLeft: 8)
+                self.stackMenu.setAnchor(top: self.menuView.topAnchor, right: self.menuView.rightAnchor, bottom: self.menuView.bottomAnchor, left: self.menuView.leftAnchor, paddingTop: 8, paddingLeft: 8)
             }
         }
 
