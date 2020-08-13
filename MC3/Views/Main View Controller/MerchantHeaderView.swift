@@ -156,6 +156,7 @@ class MerchantHeaderView: UIView {
     }
     
 <<<<<<< HEAD
+<<<<<<< HEAD
     func configureComponents(merchant: Merchant, userFavs: [String]?){
         nameMerchant.text = merchant.name
         phoneNumber = merchant.phoneNumber
@@ -169,6 +170,8 @@ class MerchantHeaderView: UIView {
         }
         
 =======
+=======
+>>>>>>> test2
     func configureComponents(merchant: Merchant){
         self.merchant = merchant
         if Auth.auth().currentUser != nil {
@@ -180,6 +183,9 @@ class MerchantHeaderView: UIView {
                 }
             }
         }
+<<<<<<< HEAD
+>>>>>>> test2
+=======
 >>>>>>> test2
     }
     
