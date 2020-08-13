@@ -7,10 +7,22 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class ProfileViewController: UIViewController {
 
-    var user: User?
+    var user: User? {
+        didSet {
+            guard let user = user else { return }
+            FirebaseService.shared.downloadUserProfileImage(forUserID: user.id) { (image, error) in
+                if let err = error {
+                    print(err.localizedDescription)
+                } else {
+                    self.profileImage.image = image                }
+            }
+            self.nameLabel.text = user.name
+        }
+    }
     
     private lazy var profileImage: UIImageView = {
         let img = UIImageView()
@@ -127,6 +139,11 @@ class ProfileViewController: UIViewController {
         view.addSubview(rightButtonStacks){
             self.rightButtonStacks.setAnchor(top: self.nameLabel.bottomAnchor, right: self.view.rightAnchor, paddingTop: self.view.frame.height/10, paddingRight: 55)
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+//        self.profileImage.image =
+        self.nameLabel
     }
     
     override func viewWillDisappear(_ animated: Bool) {
