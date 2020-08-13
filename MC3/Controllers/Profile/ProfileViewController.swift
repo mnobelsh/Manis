@@ -141,11 +141,6 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-//        self.profileImage.image =
-        self.nameLabel
-    }
-    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         guard let vc = navigationController?.viewControllers.first as? MainViewController else {return}
