@@ -13,7 +13,7 @@ class SignUpViewController: UIViewController {
     private lazy var usernameTextField: UITextField = {
         let userName = UITextField()
         userName.configureInputTextField(placeholder: "Username", isSecureTextEntry: false)
-        userName.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingDidEnd)
+//        userName.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingDidEnd)
         return userName
     }()
 
