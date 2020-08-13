@@ -29,7 +29,6 @@ class MerchantDetailView: UIView {
             distanceLabel.text = String(format: "%.2f Km", distance)
             
             addressLabel.text = merchant.address
-            ratingLabel.text = String(merchant.rating)
             
             let estimatedTime = Int(route.expectedTravelTime.rounded()) / 60
             estimatedTimeLabel.text = estimatedTime < 3 ? "Less than 3 Minutes" : "\(estimatedTime) Minutes"

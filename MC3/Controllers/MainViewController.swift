@@ -42,9 +42,9 @@ class MainViewController: UIViewController {
     }
     private var trendingMerchants: [Merchant] = [Merchant]() {
         didSet{
-            self.trendingMerchants = self.trendingMerchants.sorted { (merchant1, merchant2) -> Bool in
-                merchant1.lovedBy > merchant2.lovedBy
-            }
+            self.trendingMerchants = self.trendingMerchants.sorted(by: { (merchant, merchant2) -> Bool in
+                merchant.favoritesCount > merchant2.favoritesCount
+            })
             updateCollectionViewSnapshot(merchantData: self.trendingMerchants, forSection: .trendings)
         }
     }

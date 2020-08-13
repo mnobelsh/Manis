@@ -17,7 +17,6 @@ class MerchantTableCell: UITableViewCell {
         didSet {
             guard let merchant = merchant else {return}
             merchantNameLabel.text = merchant.name
-            ratingLabel.text = String(merchant.rating)
             
             if merchant.section == MainCollectionViewSection.nearby {
                 let distance = merchant.location.distance(from: LocationHandler.shared.manager.location!).rounded()/1000

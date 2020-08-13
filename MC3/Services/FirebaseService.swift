@@ -32,11 +32,10 @@ struct FirebaseService {
         guard let merchantID = data[Merchant.merchantIDField] as? String else {return}
         guard let address = data[Merchant.addressField] as? String else {return}
         guard let name = data[Merchant.nameField] as? String else {return}
-        guard let lovedBy = data[Merchant.lovedByField] as? Int else {return}
         guard let menu = data[Merchant.menuField] as? [[String:Any]] else {return}
         guard let badge = data[Merchant.badgeField] as? [String:Any] else {return}
         guard let phoneNumber = data[Merchant.phoneNumberField] as? String else {return}
-        guard let rating = data[Merchant.ratingField] as? Double else {return}
+        guard let favCount = data[Merchant.favoritesCount] as? Int else {return}
         
         let greatTasteBadge = Badge(type: .greatTaste, count: badge[String(BadgeType.greatTaste.rawValue)] as! Int)
         let cleanToolsBadge = Badge(type: .cleanTools, count: badge[String(BadgeType.cleanTools.rawValue)] as! Int)
@@ -59,7 +58,8 @@ struct FirebaseService {
                     if let err = error {
                         completion(nil,err)
                     } else {
-                        let merchant = Merchant(id: merchantID, name: name, address: address, lovedBy: lovedBy, menu: merchantMenu, badges: [greatTasteBadge,cleanToolsBadge,cleanIngredientsBadge], phoneNumber: phoneNumber, rating: rating, location: location!, headerPhoto: image ?? #imageLiteral(resourceName: "default no photo"))
+                        
+                        let merchant = Merchant(id: merchantID, name: name, address: address, menu: merchantMenu, badges: [greatTasteBadge,cleanToolsBadge,cleanIngredientsBadge], phoneNumber: phoneNumber, favoritesCount: favCount, location: location!, headerPhoto: image ?? #imageLiteral(resourceName: "default no photo"))
                         completion(merchant,nil)
                     }
                 }
@@ -120,7 +120,7 @@ struct FirebaseService {
     
     func fetchHighRatingMerchants(limitMerchants limit: Int? = nil, completion: @escaping(Merchant?,Error?) -> Void) {
         let lim: Int = limit == nil ? .max : limit!
-        MERCHANT_REF.order(by: Merchant.ratingField, descending: true).limit(to: lim).addSnapshotListener { (querySnapshot, error) in
+        MERCHANT_REF.order(by: Merchant.favoritesCount, descending: true).limit(to: lim).addSnapshotListener { (querySnapshot, error) in
             if let err = error {
                 completion(nil,err)
             } else {
@@ -144,7 +144,7 @@ struct FirebaseService {
     
     func fetchTrendingMerchants(limitMerchants limit: Int? = nil, completion: @escaping(Merchant?,Error?) -> Void) {
         let lim: Int = limit == nil ? .max : limit!
-        MERCHANT_REF.order(by: Merchant.lovedByField, descending: true).limit(to: lim).addSnapshotListener { (querySnapshot, error) in
+        MERCHANT_REF.order(by: Merchant.favoritesCount, descending: true).limit(to: lim).addSnapshotListener { (querySnapshot, error) in
             if let err = error {
                 print("ERROR : ",err.localizedDescription)
                 return

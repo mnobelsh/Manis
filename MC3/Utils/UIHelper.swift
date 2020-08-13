@@ -192,9 +192,8 @@ func configureMerchantListCollectionViewLayout() -> UICollectionViewCompositiona
 //        Merchant.addressField: "Jalan Hayam Wuruk 5",
 //        Merchant.menuField: menus,
 //        Merchant.badgeField: badges,
-//        Merchant.lovedByField: 0,
 //        Merchant.phoneNumberField: "89172101",
-//        Merchant.ratingField: 0.0,
+//        Merchant.favoritesCount: 0,
 //        Merchant.locationField: locationHandler.manager.location!
 //    ]
 //    FirebaseService.shared.addMerchant(merchantData: merchantdata) {

@@ -19,12 +19,11 @@ class MerchantCollectionCell: UICollectionViewCell {
             if let data = data {
                 nameLabel.text = data.name
                 addressLabel.text = data.address
-                lovedLabel.text = "By \(data.lovedBy) Peoples"
+                lovedLabel.text = "By \(data.favoritesCount) Peoples"
                 merchantImageView.image = data.headerPhoto ?? #imageLiteral(resourceName: "default no photo")
 
                 let distance = data.location.distance(from: userLocation!).rounded()/1000
                 distanceLabel.configureHeadingLabel(title: String(format: "%.2f Km", distance), fontSize: 9, textColor: .darkGray)
-                ratingLabel.text = String(data.rating)
 
                 guard let section = data.section else {return}
                 switch section {

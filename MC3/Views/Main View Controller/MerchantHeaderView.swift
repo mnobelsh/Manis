@@ -23,7 +23,6 @@ class MerchantHeaderView: UIView {
             guard let merchant = merchant else {return}
             nameMerchant.text = merchant.name
             phoneNumber = merchant.phoneNumber
-            ratingLabel.text = String(merchant.rating)
             
             FirebaseService.shared.fetchMerchantRating(forMerchantID: merchant.id) { (rating,reviewersCount,error) in
                 if let rating = rating, let reviewersCount = reviewersCount {

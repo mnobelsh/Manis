@@ -16,12 +16,11 @@ struct Merchant: Hashable {
     static let photosField = "photos"
     static let menuField = "menu"
     static let locationField = "location"
-    static let lovedByField = "lovedBy"
     static let addressField = "address"
     static let nameField = "name"
     static let badgeField = "badges"
     static let phoneNumberField = "phone_number"
-    static let ratingField = "rating"
+    static let favoritesCount = "favorites_count"
     static let merchantIDField = "merchantID"
     
     static let latitudeField = "lat"
@@ -31,11 +30,10 @@ struct Merchant: Hashable {
     var id: String
     var name: String
     var address: String
-    var lovedBy: Int
     var menu: [Menu]
     var badges: [Badge]
     var phoneNumber: String
-    var rating: Double
+    var favoritesCount: Int
     var section: MainCollectionViewSection? = nil
     var location: CLLocation
     var headerPhoto: UIImage?
