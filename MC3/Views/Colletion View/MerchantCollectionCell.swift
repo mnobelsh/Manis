@@ -20,9 +20,8 @@ class MerchantCollectionCell: UICollectionViewCell {
                 nameLabel.text = data.name
                 addressLabel.text = data.address
                 lovedLabel.text = "By \(data.lovedBy) Peoples"
-                merchantImageView.image = #imageLiteral(resourceName: "default no photo")
-            
-                print(data)
+                merchantImageView.image = data.headerPhoto ?? #imageLiteral(resourceName: "default no photo")
+
                 let distance = Int(data.location.distance(from: userLocation!).rounded())
                 distanceLabel.configureHeadingLabel(title: "\(distance) m", fontSize: 9, textColor: .darkGray)
                 ratingLabel.text = String(data.rating)

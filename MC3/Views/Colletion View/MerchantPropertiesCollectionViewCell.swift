@@ -32,7 +32,11 @@ class MerchantPropertiesCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    var photoData: UIImage!
+    var photoData: UIImage? {
+        didSet {
+            photoImage.image = photoData
+        }
+    }
 
     
     private var badgeImage: UIImageView = {
@@ -75,11 +79,7 @@ class MerchantPropertiesCollectionViewCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .red
-
-//        self.configureRoundedCorners(corners: [.allCorners], radius: 8)
-//        self.configureShadow(shadowColor: .darkGray, radius: 2)
-
+        self.backgroundColor = .clear
     }
     
     required init?(coder: NSCoder) {

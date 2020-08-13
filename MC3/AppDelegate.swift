@@ -8,6 +8,9 @@
 
 import UIKit
 import Firebase
+import FirebaseAuth
+import FirebaseStorage
+import FirebaseFirestore
 import IQKeyboardManager
 
 @UIApplicationMain

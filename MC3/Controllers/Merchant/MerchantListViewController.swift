@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Firebase
+import FirebaseAuth
 
 typealias MerchantListDataSource = UICollectionViewDiffableDataSource<MerchantListCollectionViewSection, Merchant>
 typealias MerchantListSnapshot = NSDiffableDataSourceSnapshot<MerchantListCollectionViewSection, Merchant>
