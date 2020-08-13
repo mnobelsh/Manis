@@ -7,10 +7,22 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class ProfileViewController: UIViewController {
 
-    var user: User?
+    var user: User? {
+        didSet {
+            guard let user = user else { return }
+            FirebaseService.shared.downloadUserProfileImage(forUserID: user.id) { (image, error) in
+                if let err = error {
+                    print(err.localizedDescription)
+                } else {
+                    self.profileImage.image = image                }
+            }
+            self.nameLabel.text = user.name
+        }
+    }
     
     private lazy var profileImage: UIImageView = {
         let img = UIImageView()
