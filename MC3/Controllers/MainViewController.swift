@@ -109,33 +109,8 @@ class MainViewController: UIViewController {
         locationHandler.delegate = self
         locationHandler.requestLocation()
         configureComponents()
+        configureUI()
         authorizeUserLocationAndFetch()
-        fetchUser()
-        
-//            let menus: [[String: Any]] = [
-//                [Menu.titleField : "Es Doger", Menu.priceField : 10000],
-////                [Menu.titleField : "Es Pisang Ijo Ceres", Menu.priceField : 16000],
-//            ]
-//        
-//            let badges : [String:Any] = [
-//                String(BadgeType.cleanIngredients.rawValue) : 0,
-//                String(BadgeType.cleanTools.rawValue) : 0,
-//                String(BadgeType.greatTaste.rawValue) : 0,
-//            ]
-//        
-//            let merchantdata: [String:Any] = [
-//                Merchant.nameField : "Es Doger Hendra",
-//                Merchant.addressField: "Jl. Kejaksaan",
-//                Merchant.menuField: menus,
-//                Merchant.badgeField: badges,
-//                Merchant.lovedByField: 0,
-//                Merchant.phoneNumberField: "0812172101",
-//                Merchant.ratingField: 0.0,
-//                Merchant.locationField: locationHandler.manager.location!
-//            ]
-//            FirebaseService.shared.addMerchant(merchantData: merchantdata) {
-//                print("Success add new merchant!")
-//            }
     }
     
 
@@ -184,7 +159,7 @@ class MainViewController: UIViewController {
         switch CLLocationManager.authorizationStatus() {
         case .authorizedAlways,.authorizedWhenInUse:
             self.fetchMerchantsDataAndUpdateLocation()
-            configureUI()
+            self.fetchUser()
         case .denied :
             showSetting()
         default:
@@ -492,6 +467,11 @@ extension MainViewController: SectionTitleViewDelegate {
 
 // MARK: - Location Handler Delegate
 extension MainViewController: LocationHandlerDelegate {
+    func performFetch() {
+        self.fetchMerchantsDataAndUpdateLocation()
+        self.fetchUser()
+    }
+    
     func locationUnauthorized() {
         showSetting()
     }

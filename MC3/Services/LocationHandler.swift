@@ -11,6 +11,7 @@ import CoreLocation
 
 protocol LocationHandlerDelegate {
     func locationUnauthorized()
+    func performFetch()
 }
 
 class LocationHandler: NSObject, CLLocationManagerDelegate {
@@ -29,7 +30,7 @@ class LocationHandler: NSObject, CLLocationManagerDelegate {
     
     func requestLocation() {
         switch CLLocationManager.authorizationStatus() {
-        case .authorizedWhenInUse:
+        case .authorizedWhenInUse,.authorizedAlways:
             manager.desiredAccuracy = kCLLocationAccuracyBest
             manager.requestAlwaysAuthorization()
             manager.startUpdatingLocation()
@@ -39,18 +40,17 @@ class LocationHandler: NSObject, CLLocationManagerDelegate {
             
         case .notDetermined:
             manager.requestWhenInUseAuthorization()
-
-        case .authorizedAlways:
-            manager.startUpdatingLocation()
             
         @unknown default:
             print("RL : UNKNOWN")
         }
     }
     
+    
+    
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if status == .authorizedWhenInUse {
-            manager.requestAlwaysAuthorization()
+        if status == .authorizedWhenInUse || status == .authorizedAlways {
+            delegate?.performFetch()
         }
     }
     

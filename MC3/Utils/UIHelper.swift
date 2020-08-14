@@ -21,7 +21,6 @@ func configureMainCollectionViewLayout() -> UICollectionViewCompositionalLayout 
         var item: NSCollectionLayoutItem!
         var group: NSCollectionLayoutGroup!
         var section: NSCollectionLayoutSection!
-        print("DEBUGS : LAYOUT MAIN")
         let sectionTitleSupplementaryItem = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40)), elementKind: SectionTitleView.kind, alignment: .topLeading)
         
         if sectionIndex == MainCollectionViewSection.trendings.rawValue {
@@ -71,10 +70,7 @@ func configureReviewCollectionViewLayout() -> UICollectionViewCompositionalLayou
             //GROUP
             group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(330)), subitems: [item])
             
-        } else {
-            print("Layout ga masuk!")
         }
-        
         
         //SECTION
         let section = NSCollectionLayoutSection(group: group)
